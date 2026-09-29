@@ -37,7 +37,7 @@
 
     .container {
       padding: 30px;
-      max-width: 1400px;
+      max-width: 1450px;
       margin: auto;
     }
 
@@ -52,12 +52,30 @@
       font-size: 22px;
     }
 
-    .month-select {
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .month-select,
+    .refresh-btn {
       padding: 10px 15px;
       border: 1px solid #ccc;
       border-radius: 6px;
       background: white;
       font-size: 14px;
+    }
+
+    .refresh-btn {
+      cursor: pointer;
+      background: #172033;
+      color: white;
+      border: none;
+    }
+
+    .refresh-btn:hover {
+      opacity: 0.9;
     }
 
     .cards {
@@ -98,6 +116,10 @@
       font-size: 18px;
     }
 
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -105,7 +127,7 @@
 
     th,
     td {
-      padding: 12px;
+      padding: 13px;
       border-bottom: 1px solid #eee;
       text-align: left;
       font-size: 14px;
@@ -113,18 +135,59 @@
 
     th {
       background: #f7f8fa;
-    }
-
-    .status-completed {
       font-weight: bold;
     }
 
-    .status-progress {
+    .status {
       font-weight: bold;
     }
 
-    .status-pending {
-      font-weight: bold;
+    .completed {
+      color: #16803c;
+    }
+
+    .progress {
+      color: #c47a00;
+    }
+
+    .not-started {
+      color: #c62828;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e8ebef;
+      border-radius: 20px;
+      overflow: hidden;
+      min-width: 100px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #172033;
+      border-radius: 20px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+    }
+
+    .error {
+      background: #fff0f0;
+      color: #b00020;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .last-updated {
+      font-size: 12px;
+      color: #777;
+      margin-top: 15px;
     }
 
     @media (max-width: 900px) {
@@ -144,6 +207,14 @@
         gap: 15px;
       }
 
+      .controls {
+        width: 100%;
+      }
+
+      .month-select {
+        flex: 1;
+      }
+
       .container {
         padding: 15px;
       }
@@ -161,36 +232,45 @@
   <div class="container">
 
     <div class="top-bar">
+
       <h2>Monthly Audit Dashboard</h2>
 
-      <select class="month-select">
-        <option>September 2026</option>
-        <option>October 2026</option>
-        <option>November 2026</option>
-        <option>December 2026</option>
-      </select>
+      <div class="controls">
+
+        <select class="month-select" id="monthSelect">
+          <option value="2026-09">September 2026</option>
+        </select>
+
+        <button class="refresh-btn" onclick="loadDashboard()">
+          Refresh
+        </button>
+
+      </div>
+
     </div>
+
+    <div id="errorBox" class="error"></div>
 
     <div class="cards">
 
       <div class="card">
         <div class="card-title">TOTAL AUDITS</div>
-        <div class="card-value">20</div>
+        <div class="card-value" id="totalTarget">-</div>
       </div>
 
       <div class="card">
         <div class="card-title">COMPLETED</div>
-        <div class="card-value">19</div>
+        <div class="card-value" id="completed">-</div>
       </div>
 
       <div class="card">
         <div class="card-title">PENDING</div>
-        <div class="card-value">1</div>
+        <div class="card-value" id="pending">-</div>
       </div>
 
       <div class="card">
         <div class="card-title">COMPLETION</div>
-        <div class="card-value">95%</div>
+        <div class="card-value" id="completion">-</div>
       </div>
 
     </div>
@@ -199,127 +279,171 @@
 
       <h3>Monthly Audit Plan</h3>
 
-      <table>
+      <div id="loading" class="loading">
+        Loading live data...
+      </div>
 
-        <thead>
-          <tr>
-            <th>Audit Category</th>
-            <th>Target</th>
-            <th>Completed</th>
-            <th>Pending</th>
-            <th>Completion %</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+      <div class="table-wrapper">
 
-        <tbody>
+        <table id="auditTable" style="display:none;">
 
-          <tr>
-            <td>SOP Audit – Solan</td>
-            <td>2</td>
-            <td>1</td>
-            <td>1</td>
-            <td>50%</td>
-            <td class="status-progress">In Progress</td>
-          </tr>
+          <thead>
+            <tr>
+              <th>Audit Category</th>
+              <th>Target</th>
+              <th>Completed</th>
+              <th>Pending</th>
+              <th>Completion %</th>
+              <th>Progress</th>
+              <th>Status</th>
+            </tr>
+          </thead>
 
-          <tr>
-            <td>SOP Audit – Rohru</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
+          <tbody id="auditTableBody"></tbody>
 
-          <tr>
-            <td>Selection SOP Audit – Solan</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
+        </table>
 
-          <tr>
-            <td>Housekeeping – GF</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
+      </div>
 
-          <tr>
-            <td>Housekeeping – 1st Floor</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
-
-          <tr>
-            <td>Housekeeping – 2nd Floor</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
-
-          <tr>
-            <td>Housekeeping – 3rd Floor</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
-
-          <tr>
-            <td>Housekeeping – 4th + 5th Floor</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
-
-          <tr>
-            <td>Washroom Audit – Solan Store</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
-
-          <tr>
-            <td>Housekeeping – Silver Branch</td>
-            <td>2</td>
-            <td>2</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
-
-          <tr>
-            <td>Housekeeping + Washroom – Rohru</td>
-            <td>1</td>
-            <td>1</td>
-            <td>0</td>
-            <td>100%</td>
-            <td class="status-completed">Completed</td>
-          </tr>
-
-        </tbody>
-
-      </table>
+      <div class="last-updated" id="lastUpdated"></div>
 
     </div>
 
   </div>
+
+  <script>
+
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbywONXUh6NulIzlFctiQcEpFgShVUjoeqyMq9uqEMlImPNmshpryxKRfezzjmsSd7Op/exec";
+
+
+    async function loadDashboard() {
+
+      const loading = document.getElementById("loading");
+      const table = document.getElementById("auditTable");
+      const errorBox = document.getElementById("errorBox");
+
+      loading.style.display = "block";
+      table.style.display = "none";
+      errorBox.style.display = "none";
+
+      try {
+
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error("API response failed");
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(
+            data.error || "Unable to load dashboard data"
+          );
+        }
+
+        updateSummary(data.summary);
+        updateTable(data.plan);
+
+        loading.style.display = "none";
+        table.style.display = "table";
+
+        document.getElementById("lastUpdated").innerText =
+          "Last updated: " + new Date().toLocaleString();
+
+      }
+
+      catch (error) {
+
+        loading.style.display = "none";
+
+        errorBox.innerText =
+          "Unable to load live dashboard data. Please refresh the page.";
+
+        errorBox.style.display = "block";
+
+        console.error(error);
+      }
+
+    }
+
+
+    function updateSummary(summary) {
+
+      document.getElementById("totalTarget").innerText =
+        summary.totalTarget;
+
+      document.getElementById("completed").innerText =
+        summary.completed;
+
+      document.getElementById("pending").innerText =
+        summary.pending;
+
+      document.getElementById("completion").innerText =
+        summary.completion + "%";
+
+    }
+
+
+    function updateTable(plan) {
+
+      const tbody =
+        document.getElementById("auditTableBody");
+
+      tbody.innerHTML = "";
+
+      plan.forEach(item => {
+
+        const row = document.createElement("tr");
+
+        let statusClass = "completed";
+
+        if (item.status === "In Progress") {
+          statusClass = "progress";
+        }
+
+        if (item.status === "Not Started") {
+          statusClass = "not-started";
+        }
+
+        row.innerHTML = `
+
+          <td>${item.category}</td>
+
+          <td>${item.target}</td>
+
+          <td>${item.completed}</td>
+
+          <td>${item.pending}</td>
+
+          <td>${item.completion}%</td>
+
+          <td>
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                style="width:${Math.min(item.completion, 100)}%">
+              </div>
+            </div>
+          </td>
+
+          <td class="status ${statusClass}">
+            ${item.status}
+          </td>
+
+        `;
+
+        tbody.appendChild(row);
+
+      });
+
+    }
+
+
+    loadDashboard();
+
+  </script>
 
 </body>
 </html>
