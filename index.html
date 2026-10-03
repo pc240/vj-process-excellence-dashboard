@@ -44,9 +44,13 @@
 
     .container {
       padding: 30px;
-      max-width: 1450px;
+      max-width: 1500px;
       margin: auto;
     }
+
+    /* =========================
+       TOP BAR
+       ========================= */
 
     .top-bar {
       display: flex;
@@ -89,103 +93,165 @@
       opacity: 0.9;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      margin-bottom: 30px;
-    }
+    /* =========================
+       SUMMARY
+       ========================= */
 
-    .card {
+    .summary-card {
       background: white;
-      padding: 22px;
+      padding: 20px 25px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .card-title {
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 10px;
-    }
-
-    .card-value {
-      font-size: 30px;
-      font-weight: bold;
-    }
-
-    .section {
-      background: white;
-      border-radius: 10px;
-      padding: 25px;
       margin-bottom: 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
-    .section h3 {
-      margin-bottom: 20px;
-      font-size: 18px;
+    .summary-label {
+      font-size: 12px;
+      color: #777;
+      text-transform: uppercase;
+      margin-bottom: 5px;
     }
 
-    .category-card {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      margin-bottom: 18px;
-      overflow: hidden;
-    }
-
-    .category-header {
-      padding: 18px 20px;
-      background: #f7f8fa;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .category-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 14px;
-    }
-
-    .category-title {
-      font-size: 17px;
+    .summary-number {
+      font-size: 28px;
       font-weight: bold;
       color: #172033;
     }
 
-    .tracked {
-      font-size: 13px;
-      color: #666;
+    /* =========================
+       STORE GRID
+       ========================= */
+
+    .store-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .store-column {
+      min-width: 0;
+    }
+
+    .store-header {
+      background: #172033;
+      color: white;
+      padding: 17px 20px;
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 15px;
+    }
+
+    .store-header h2 {
+      font-size: 20px;
+    }
+
+    .store-header p {
+      font-size: 12px;
+      opacity: 0.75;
       margin-top: 4px;
+    }
+
+    /* =========================
+       PRIORITY SECTION
+       ========================= */
+
+    .priority-section {
+      background: white;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+
+    .priority-header {
+      padding: 14px 18px;
+      background: #f7f8fa;
+      border-bottom: 1px solid #e5e7eb;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .priority-header.red {
+      border-left: 5px solid #b00020;
+    }
+
+    .priority-header.yellow {
+      border-left: 5px solid #d6a500;
+    }
+
+    .priority-header.green {
+      border-left: 5px solid #16803c;
+    }
+
+    .priority-body {
+      padding: 15px;
+    }
+
+    /* =========================
+       CATEGORY CARD
+       ========================= */
+
+    .category-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .category-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .category-header {
+      padding: 15px 16px;
+      background: #fafafa;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .category-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #172033;
+      margin-bottom: 5px;
+    }
+
+    .category-description {
+      font-size: 12px;
+      color: #777;
+      line-height: 1.5;
     }
 
     .category-summary {
       display: flex;
-      gap: 25px;
+      gap: 22px;
       flex-wrap: wrap;
+      margin-top: 12px;
     }
 
     .summary-item {
-      min-width: 130px;
+      min-width: 100px;
     }
 
-    .summary-label {
-      font-size: 11px;
+    .summary-item .label {
+      font-size: 10px;
       color: #777;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
-    .summary-value {
-      font-size: 17px;
+    .summary-item .value {
+      font-size: 16px;
       font-weight: bold;
     }
 
     .category-body {
-      padding: 0 20px 20px 20px;
+      padding: 0 15px 15px 15px;
     }
+
+    /* =========================
+       TABLE
+       ========================= */
 
     .table-wrapper {
       overflow-x: auto;
@@ -198,15 +264,17 @@
 
     th,
     td {
-      padding: 13px;
+      padding: 11px 9px;
       border-bottom: 1px solid #eee;
       text-align: left;
-      font-size: 14px;
+      font-size: 13px;
+      white-space: nowrap;
     }
 
     th {
       background: #f7f8fa;
       font-weight: bold;
+      color: #444;
     }
 
     .score-cell {
@@ -226,11 +294,15 @@
       border-top: 2px solid #ddd;
     }
 
+    /* =========================
+       STATUS
+       ========================= */
+
     .status {
       display: inline-block;
-      padding: 5px 10px;
+      padding: 5px 9px;
       border-radius: 20px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: bold;
     }
 
@@ -254,15 +326,16 @@
       color: #666;
     }
 
-    .completed {
-      color: #16803c;
-      font-weight: bold;
-    }
+    /* =========================
+       LOADING / ERROR
+       ========================= */
 
     .loading {
       text-align: center;
-      padding: 30px;
+      padding: 40px;
       color: #666;
+      background: white;
+      border-radius: 10px;
     }
 
     .error {
@@ -274,50 +347,49 @@
       display: none;
     }
 
-    .last-updated {
-      font-size: 12px;
-      color: #777;
-      margin-top: 15px;
-    }
-
     .empty {
       text-align: center;
-      padding: 25px;
+      padding: 20px;
       color: #777;
-    }
-
-    .no-records {
-      text-align: center;
-      padding: 25px;
-      color: #777;
+      font-size: 13px;
       background: #fafafa;
       border-radius: 6px;
     }
 
-    @media (max-width: 900px) {
+    .last-updated {
+      font-size: 12px;
+      color: #777;
+      margin-top: 18px;
+    }
 
-      .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
+    /* =========================
+       GOLD COMBINED
+       ========================= */
 
-      .category-title-row {
-        flex-direction: column;
-        align-items: flex-start;
+    .combined-note {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .combined-score {
+      font-weight: bold;
+    }
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media (max-width: 1000px) {
+
+      .store-grid {
+        grid-template-columns: 1fr;
       }
 
     }
 
-    @media (max-width: 600px) {
-
-      .controls {
-        width: 100%;
-      }
-
-      .month-select {
-        flex: 1;
-      }
+    @media (max-width: 700px) {
 
       .container {
         padding: 15px;
@@ -331,14 +403,18 @@
         font-size: 22px;
       }
 
-      .category-summary {
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
         gap: 15px;
       }
 
-      th,
-      td {
-        padding: 10px;
-        font-size: 13px;
+      .controls {
+        width: 100%;
+      }
+
+      .month-select {
+        flex: 1;
       }
 
     }
@@ -351,7 +427,9 @@
 <body>
 
 
-  <!-- HEADER -->
+  <!-- =========================
+       HEADER
+       ========================= -->
 
   <div class="header">
 
@@ -366,19 +444,18 @@
   </div>
 
 
-  <!-- MAIN CONTAINER -->
-
   <div class="container">
 
 
-    <!-- TOP BAR -->
+    <!-- =========================
+         COMMON FILTER
+         ========================= -->
 
     <div class="top-bar">
 
       <h2>
         Monthly Audit Dashboard
       </h2>
-
 
       <div class="controls">
 
@@ -395,7 +472,7 @@
             August 2026
           </option>
 
-          <option value="2026-09">
+          <option value="2026-09" selected>
             September 2026
           </option>
 
@@ -404,7 +481,6 @@
           </option>
 
         </select>
-
 
         <button
           class="refresh-btn"
@@ -426,518 +502,648 @@
     ></div>
 
 
-    <!-- TOTAL AUDITS CARD -->
+    <!-- TOTAL AUDITS -->
 
-    <div class="cards">
+    <div class="summary-card">
 
-      <div class="card">
-
-        <div class="card-title">
-          TOTAL AUDITS
-        </div>
-
-        <div
-          class="card-value"
-          id="totalAudits"
-        >
-          -
-        </div>
-
+      <div class="summary-label">
+        TOTAL AUDITS
       </div>
 
-    </div>
-
-
-    <!-- AUDIT DETAILS -->
-
-    <div class="section">
-
-      <h3>
-        Actual Audits Completed
-      </h3>
-
-
       <div
-        id="loading"
-        class="loading"
+        class="summary-number"
+        id="totalAudits"
       >
-        Loading live data...
+        -
+      </div>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      id="loading"
+      class="loading"
+    >
+      Loading live data...
+    </div>
+
+
+    <!-- =========================
+         TWO STORE COLUMNS
+         ========================= -->
+
+    <div
+      id="storeGrid"
+      class="store-grid"
+      style="display:none;"
+    >
+
+
+      <!-- =========================
+           SOLAN
+           ========================= -->
+
+      <div class="store-column">
+
+
+        <div class="store-header">
+
+          <h2>
+            VJ Solan Store
+          </h2>
+
+          <p>
+            Solan Gold Store + Silver Branch
+          </p>
+
+        </div>
+
+
+        <!-- SOP -->
+
+        <div class="priority-section">
+
+          <div class="priority-header red">
+
+            🔴 MOST IMPORTANT — SOP / Process Audit
+
+          </div>
+
+          <div
+            class="priority-body"
+            id="solanSop"
+          ></div>
+
+        </div>
+
+
+        <!-- SELECTION -->
+
+        <div class="priority-section">
+
+          <div class="priority-header yellow">
+
+            🟡 SECOND PRIORITY — Selection SOP Audit
+
+          </div>
+
+          <div
+            class="priority-body"
+            id="solanSelection"
+          ></div>
+
+        </div>
+
+
+        <!-- HOUSEKEEPING -->
+
+        <div class="priority-section">
+
+          <div class="priority-header green">
+
+            🟢 LEAST IMPORTANT — Housekeeping
+
+          </div>
+
+          <div class="priority-body">
+
+
+            <!-- GOLD -->
+
+            <div
+              id="solanGold"
+            ></div>
+
+
+            <!-- SILVER -->
+
+            <div
+              id="solanSilver"
+              style="margin-top:15px;"
+            ></div>
+
+
+          </div>
+
+        </div>
+
+
       </div>
 
 
-      <div
-        id="auditDetails"
-      ></div>
+      <!-- =========================
+           ROHRU
+           ========================= -->
+
+      <div class="store-column">
 
 
-      <div
-        class="last-updated"
-        id="lastUpdated"
-      ></div>
+        <div class="store-header">
+
+          <h2>
+            VJ Rohru Store
+          </h2>
+
+          <p>
+            Rohru Store
+          </p>
+
+        </div>
+
+
+        <!-- SOP -->
+
+        <div class="priority-section">
+
+          <div class="priority-header red">
+
+            🔴 MOST IMPORTANT — SOP / Process Audit
+
+          </div>
+
+          <div
+            class="priority-body"
+            id="rohruSop"
+          ></div>
+
+        </div>
+
+
+        <!-- HOUSEKEEPING -->
+
+        <div class="priority-section">
+
+          <div class="priority-header green">
+
+            🟢 LEAST IMPORTANT — Housekeeping
+
+          </div>
+
+          <div
+            class="priority-body"
+            id="rohruHousekeeping"
+          ></div>
+
+        </div>
+
+
+      </div>
+
 
     </div>
+
+
+    <div
+      class="last-updated"
+      id="lastUpdated"
+    ></div>
 
 
   </div>
 
 
 
-  <script>
+<script>
 
 
-    /* =========================
-       GOOGLE APPS SCRIPT API
-       ========================= */
+/* =====================================================
+   GOOGLE APPS SCRIPT API
+   ===================================================== */
 
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3JrDdbkqH1A-zAE4S1bazx1b1ZNeUA6J9a/exec";
-
-
-    /* =========================
-       LOAD DASHBOARD
-       ========================= */
-
-    async function loadDashboard() {
-
-      const loading =
-        document.getElementById("loading");
-
-      const details =
-        document.getElementById("auditDetails");
-
-      const errorBox =
-        document.getElementById("errorBox");
-
-      const selectedMonth =
-        document.getElementById("monthSelect").value;
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3JrDdbkqH1A-zAE4S1bazx1b1ZNeUA6J9a/exec";
 
 
-      loading.style.display = "block";
+/* =====================================================
+   STATUS
+   ===================================================== */
 
-      details.innerHTML = "";
+function getStatusClass(compliance) {
 
-      errorBox.style.display = "none";
+  if (
+    compliance === null ||
+    compliance === undefined ||
+    compliance === "" ||
+    isNaN(Number(compliance))
+  ) {
+    return "status-na";
+  }
 
+  const value = Number(compliance);
 
-      try {
+  if (value < 70) {
+    return "status-red";
+  }
 
-        const response =
-          await fetch(
-            API_URL +
-            "?month=" +
-            encodeURIComponent(selectedMonth)
-          );
+  if (value >= 70 && value <= 75) {
+    return "status-yellow";
+  }
 
+  if (value > 75 && value <= 100) {
+    return "status-green";
+  }
 
-        if (!response.ok) {
+  return "status-na";
 
-          throw new Error(
-            "API response failed"
-          );
-
-        }
-
-
-        const data =
-          await response.json();
-
-
-        if (!data.success) {
-
-          throw new Error(
-            data.error ||
-            "Unable to load dashboard data"
-          );
-
-        }
+}
 
 
-        updateSummary(
-          data.summary
-        );
+function getStatusText(compliance) {
+
+  if (
+    compliance === null ||
+    compliance === undefined ||
+    compliance === "" ||
+    isNaN(Number(compliance))
+  ) {
+    return "N/A";
+  }
+
+  const value = Number(compliance);
+
+  if (value < 70) {
+    return "RED";
+  }
+
+  if (value >= 70 && value <= 75) {
+    return "YELLOW";
+  }
+
+  if (value > 75 && value <= 100) {
+    return "GREEN";
+  }
+
+  return "N/A";
+
+}
 
 
-        updateAuditDetails(
-          data.plan
-        );
+/* =====================================================
+   FORMAT NUMBER
+   ===================================================== */
+
+function numberValue(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === "" ||
+    isNaN(Number(value))
+  ) {
+    return null;
+  }
+
+  return Number(value);
+
+}
 
 
-        loading.style.display =
-          "none";
+function formatNumber(value) {
+
+  const number = numberValue(value);
+
+  if (number === null) {
+    return "N/A";
+  }
+
+  return Number.isInteger(number)
+    ? number
+    : number.toFixed(2);
+
+}
 
 
-        document.getElementById(
-          "lastUpdated"
-        ).innerText =
-          "Last updated: " +
-          new Date().toLocaleString();
+/* =====================================================
+   NORMALIZE CATEGORY
+   ===================================================== */
 
-      }
+function normalizeCategory(category) {
+
+  return String(category || "")
+    .trim()
+    .toLowerCase();
+
+}
 
 
-      catch (error) {
+/* =====================================================
+   FIND CATEGORY
+   ===================================================== */
 
-        loading.style.display =
-          "none";
+function findCategory(plan, searchText) {
 
-        details.innerHTML = "";
+  const search =
+    searchText.toLowerCase();
 
-        errorBox.innerText =
-          "Unable to load live dashboard data. Please refresh the page.";
+  return plan.find(item =>
+    normalizeCategory(item.category)
+      .includes(search)
+  );
 
-        errorBox.style.display =
-          "block";
+}
 
-        console.error(
-          "Dashboard Error:",
-          error
-        );
 
-      }
+/* =====================================================
+   FIND ALL CATEGORIES
+   ===================================================== */
+
+function findCategories(plan, searchText) {
+
+  const search =
+    searchText.toLowerCase();
+
+  return plan.filter(item =>
+    normalizeCategory(item.category)
+      .includes(search)
+  );
+
+}
+
+
+/* =====================================================
+   DATE SORT
+   ===================================================== */
+
+function sortRecords(records) {
+
+  return [...records].sort(
+    (a, b) => {
+
+      const dateA =
+        new Date(a.date);
+
+      const dateB =
+        new Date(b.date);
+
+      return dateA - dateB;
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   STANDARD CATEGORY CARD
+   ===================================================== */
+
+function createStandardCard(
+  item,
+  title,
+  description,
+  dateHeading = "Date"
+) {
+
+  if (!item) {
+
+    return `
+
+      <div class="empty">
+        No audit data available.
+      </div>
+
+    `;
+
+  }
+
+
+  const records =
+    sortRecords(item.records || []);
+
+
+  if (records.length === 0) {
+
+    return `
+
+      <div class="category-card">
+
+        <div class="category-header">
+
+          <div class="category-title">
+            ${title}
+          </div>
+
+          <div class="category-description">
+            ${description}
+          </div>
+
+        </div>
+
+        <div class="category-body">
+
+          <div class="empty">
+            No audits found for the selected month.
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  let totalCompliance = 0;
+  let totalScore = 0;
+  let validComplianceCount = 0;
+
+
+  records.forEach(record => {
+
+    const score =
+      numberValue(record.score);
+
+    const compliance =
+      numberValue(record.compliance);
+
+    if (score !== null) {
+      totalScore += score;
+    }
+
+    if (compliance !== null) {
+
+      totalCompliance += compliance;
+      validComplianceCount++;
 
     }
 
+  });
 
 
-    /* =========================
-       UPDATE SUMMARY
-       ========================= */
+  const averageScore =
+    records.length > 0
+      ? totalScore / records.length
+      : null;
 
-    function updateSummary(summary) {
 
-      document.getElementById(
-        "totalAudits"
-      ).innerText =
-        summary.totalAudits ?? 0;
+  const averageCompliance =
+    validComplianceCount > 0
+      ? totalCompliance / validComplianceCount
+      : null;
 
-    }
 
+  let rows = "";
 
 
-    /* =========================
-       FORMAT SCORE
-       ========================= */
+  records.forEach(record => {
 
-    function formatScore(score) {
+    const compliance =
+      numberValue(record.compliance);
 
-      if (
-        score === null ||
-        score === undefined ||
-        score === ""
-      ) {
 
-        return "N/A";
+    const status =
+      getStatusText(compliance);
 
-      }
 
+    const statusClass =
+      getStatusClass(compliance);
 
-      return Number(score);
 
-    }
+    rows += `
 
+      <tr>
 
+        <td>
+          ${record.date || "N/A"}
+        </td>
 
-    /* =========================
-       COMPLIANCE STATUS
-       
-       0–69%   = RED
-       70–75%  = YELLOW
-       76–100% = GREEN
-       ========================= */
+        <td class="score-cell">
+          ${formatNumber(record.score)}
+        </td>
 
-    function getStatusClass(compliance) {
+        <td class="compliance-cell">
+          ${
+            compliance !== null
+              ? compliance.toFixed(1) + "%"
+              : "N/A"
+          }
+        </td>
 
-      if (
-        compliance === null ||
-        compliance === undefined ||
-        compliance === ""
-      ) {
+        <td>
 
-        return "status-na";
+          <span class="status ${statusClass}">
+            ${status}
+          </span>
 
-      }
+        </td>
 
+      </tr>
 
-      const value =
-        Number(compliance);
+    `;
 
+  });
 
-      if (value < 70) {
 
-        return "status-red";
+  const averageStatus =
+    getStatusText(averageCompliance);
 
-      }
 
+  const averageStatusClass =
+    getStatusClass(averageCompliance);
 
-      if (
-        value >= 70 &&
-        value <= 75
-      ) {
 
-        return "status-yellow";
+  return `
 
-      }
+    <div class="category-card">
 
+      <div class="category-header">
 
-      if (
-        value > 75 &&
-        value <= 100
-      ) {
+        <div class="category-title">
+          ${title}
+        </div>
 
-        return "status-green";
+        <div class="category-description">
+          ${description}
+        </div>
 
-      }
 
+        <div class="category-summary">
 
-      return "status-na";
+          <div class="summary-item">
 
-    }
+            <div class="label">
+              Audits Tracked
+            </div>
 
-
-
-    /* =========================
-       GET STATUS TEXT
-       ========================= */
-
-    function getStatusText(compliance) {
-
-      if (
-        compliance === null ||
-        compliance === undefined ||
-        compliance === ""
-      ) {
-
-        return "N/A";
-
-      }
-
-
-      const value =
-        Number(compliance);
-
-
-      if (value < 70) {
-
-        return "RED";
-
-      }
-
-
-      if (
-        value >= 70 &&
-        value <= 75
-      ) {
-
-        return "YELLOW";
-
-      }
-
-
-      if (
-        value > 75 &&
-        value <= 100
-      ) {
-
-        return "GREEN";
-
-      }
-
-
-      return "N/A";
-
-    }
-
-
-
-    /* =========================
-       CREATE CATEGORY CARD
-       ========================= */
-
-    function createCategoryCard(item) {
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "category-card";
-
-
-      const records =
-        item.records || [];
-
-
-      let averageScoreText =
-        "N/A";
-
-
-      if (
-        item.averageScore !== null &&
-        item.averageScore !== undefined
-      ) {
-
-        averageScoreText =
-          Number(item.averageScore);
-
-      }
-
-
-      let averageComplianceText =
-        "N/A";
-
-
-      if (
-        item.averageCompliance !== null &&
-        item.averageCompliance !== undefined
-      ) {
-
-        averageComplianceText =
-          Number(
-            item.averageCompliance
-          ).toFixed(2) +
-          "%";
-
-      }
-
-
-      let tableHTML = "";
-
-
-      if (records.length === 0) {
-
-        tableHTML = `
-
-          <div class="no-records">
-
-            No audits found for this category
-            in the selected month.
+            <div class="value">
+              ${records.length}
+            </div>
 
           </div>
 
-        `;
 
-      }
+          <div class="summary-item">
 
+            <div class="label">
+              Average Score
+            </div>
 
-      else {
+            <div class="value">
+              ${formatNumber(averageScore)}
+            </div>
 
-        tableHTML = `
-
-          <div class="table-wrapper">
-
-            <table>
-
-              <thead>
-
-                <tr>
-
-                  <th>
-                    Date
-                  </th>
-
-                  <th>
-                    Score
-                  </th>
-
-                  <th>
-                    Compliance
-                  </th>
-
-                  <th>
-                    Status
-                  </th>
-
-                </tr>
-
-              </thead>
-
-              <tbody>
-
-        `;
+          </div>
 
 
-        records.forEach(
-          record => {
+          <div class="summary-item">
+
+            <div class="label">
+              Average Compliance
+            </div>
+
+            <div class="value">
+              ${
+                averageCompliance !== null
+                  ? averageCompliance.toFixed(1) + "%"
+                  : "N/A"
+              }
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
 
 
-            /* =========================
-               COMPLIANCE
-               ========================= */
+      <div class="category-body">
 
-            const complianceValue =
-              record.compliance !== null &&
-              record.compliance !== undefined &&
-              record.compliance !== ""
-                ? Number(record.compliance)
-                : null;
+        <div class="table-wrapper">
 
+          <table>
 
-            const compliance =
-              complianceValue !== null
-                ? complianceValue.toFixed(2) + "%"
-                : "N/A";
-
-
-            /* =========================
-               STATUS FROM COMPLIANCE
-               ========================= */
-
-            const status =
-              getStatusText(
-                complianceValue
-              );
-
-
-            const statusClass =
-              getStatusClass(
-                complianceValue
-              );
-
-
-            /* =========================
-               TABLE ROW
-               ========================= */
-
-            tableHTML += `
+            <thead>
 
               <tr>
 
-                <td>
-                  ${record.date || "N/A"}
-                </td>
+                <th>
+                  ${dateHeading}
+                </th>
 
-                <td class="score-cell">
-                  ${formatScore(
-                    record.score
-                  )}
-                </td>
+                <th>
+                  Score
+                </th>
 
-                <td class="compliance-cell">
-                  ${compliance}
-                </td>
+                <th>
+                  Compliance
+                </th>
 
-                <td>
-
-                  <span
-                    class="status ${statusClass}"
-                  >
-                    ${status}
-                  </span>
-
-                </td>
+                <th>
+                  Status
+                </th>
 
               </tr>
 
-            `;
-
-          }
-        );
+            </thead>
 
 
-        /* =========================
-           AVERAGE ROW
-           ========================= */
+            <tbody>
 
-        tableHTML += `
+              ${rows}
+
 
               <tr class="average-row">
 
@@ -946,200 +1152,902 @@
                 </td>
 
                 <td>
-                  ${averageScoreText}
+                  ${formatNumber(averageScore)}
                 </td>
 
                 <td>
-                  ${averageComplianceText}
+                  ${
+                    averageCompliance !== null
+                      ? averageCompliance.toFixed(1) + "%"
+                      : "N/A"
+                  }
+                </td>
+
+                <td>
+
+                  <span
+                    class="status ${averageStatusClass}"
+                  >
+                    ${averageStatus}
+                  </span>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   SOLAN SOP
+   ===================================================== */
+
+function renderSolanSOP(plan) {
+
+  const item =
+    findCategory(
+      plan,
+      "SOP Audit – Solan"
+    ) ||
+    findCategory(
+      plan,
+      "SOP Audit - Solan"
+    );
+
+
+  document.getElementById(
+    "solanSop"
+  ).innerHTML =
+    createStandardCard(
+      item,
+      "SOP / Process Audit",
+      "Most important process compliance audit.",
+      "Date"
+    );
+
+}
+
+
+/* =====================================================
+   SOLAN SELECTION
+   ===================================================== */
+
+function renderSolanSelection(plan) {
+
+  const item =
+    findCategory(
+      plan,
+      "Selection SOP Audit – Solan"
+    ) ||
+    findCategory(
+      plan,
+      "Selection SOP Audit - Solan"
+    ) ||
+    findCategory(
+      plan,
+      "Selection Audit – Solan"
+    );
+
+
+  document.getElementById(
+    "solanSelection"
+  ).innerHTML =
+    createStandardCard(
+      item,
+      "Selection SOP Audit",
+      "Selection process compliance and control audit.",
+      "Date"
+    );
+
+}
+
+
+/* =====================================================
+   ROHRU SOP
+   ===================================================== */
+
+function renderRohruSOP(plan) {
+
+  const item =
+    findCategory(
+      plan,
+      "SOP Audit – Rohru"
+    ) ||
+    findCategory(
+      plan,
+      "SOP Audit - Rohru"
+    );
+
+
+  document.getElementById(
+    "rohruSop"
+  ).innerHTML =
+    createStandardCard(
+      item,
+      "SOP / Process Audit Checklist (Monthly)",
+      "Monthly process audit for VJ Rohru.",
+      "Month"
+    );
+
+}
+
+
+/* =====================================================
+   ROHRU HOUSEKEEPING
+   ===================================================== */
+
+function renderRohruHousekeeping(plan) {
+
+  const item =
+    findCategory(
+      plan,
+      "Housekeeping – Rohru"
+    ) ||
+    findCategory(
+      plan,
+      "Housekeeping - Rohru"
+    );
+
+
+  document.getElementById(
+    "rohruHousekeeping"
+  ).innerHTML =
+    createStandardCard(
+      item,
+      "Housekeeping — VJ Rohru",
+      "Weekly housekeeping compliance tracking.",
+      "Week"
+    );
+
+}
+
+
+/* =====================================================
+   ESTIMATE MAX SCORE
+   Used only when API does not provide maxScore.
+   ===================================================== */
+
+function estimateMaxScore(score, compliance) {
+
+  if (
+    score === null ||
+    compliance === null ||
+    compliance <= 0
+  ) {
+    return null;
+  }
+
+  return score / (compliance / 100);
+
+}
+
+
+/* =====================================================
+   SOLAN GOLD HOUSEKEEPING + WASHROOM
+   ===================================================== */
+
+function renderSolanGold(plan) {
+
+  const housekeepingCategories = [
+
+    "Housekeeping – GF",
+    "Housekeeping - GF",
+
+    "Housekeeping – 1st Floor",
+    "Housekeeping - 1st Floor",
+
+    "Housekeeping – 2nd Floor",
+    "Housekeeping - 2nd Floor",
+
+    "Housekeeping – 3rd Floor",
+    "Housekeeping - 3rd Floor",
+
+    "Housekeeping – 4th + 5th Floor",
+    "Housekeeping - 4th + 5th Floor"
+
+  ];
+
+
+  let hkItems = [];
+
+
+  housekeepingCategories.forEach(name => {
+
+    const item =
+      findCategory(plan, name);
+
+    if (item) {
+      hkItems.push(item);
+    }
+
+  });
+
+
+  const washroom =
+    findCategory(
+      plan,
+      "Washroom Audit – Solan"
+    ) ||
+    findCategory(
+      plan,
+      "Washroom Audit - Solan"
+    );
+
+
+  /*
+   * Collect all HK records by date.
+   */
+
+  const grouped = {};
+
+
+  hkItems.forEach(item => {
+
+    (item.records || []).forEach(record => {
+
+      const date =
+        record.date || "N/A";
+
+
+      if (!grouped[date]) {
+
+        grouped[date] = {
+
+          hkScore: 0,
+          hkMax: 0,
+          hkValidMax: true,
+
+          washScore: 0,
+          washMax: 0,
+          washValidMax: true
+
+        };
+
+      }
+
+
+      const score =
+        numberValue(record.score);
+
+
+      const compliance =
+        numberValue(record.compliance);
+
+
+      if (score !== null) {
+
+        grouped[date].hkScore += score;
+
+      }
+
+
+      let maxScore =
+        record.maxScore !== undefined
+          ? numberValue(record.maxScore)
+          : null;
+
+
+      if (maxScore === null) {
+
+        maxScore =
+          estimateMaxScore(
+            score,
+            compliance
+          );
+
+      }
+
+
+      if (maxScore !== null) {
+
+        grouped[date].hkMax += maxScore;
+
+      }
+      else {
+
+        grouped[date].hkValidMax = false;
+
+      }
+
+    });
+
+  });
+
+
+  /*
+   * Add washroom records.
+   */
+
+  if (washroom) {
+
+    (washroom.records || []).forEach(record => {
+
+      const date =
+        record.date || "N/A";
+
+
+      if (!grouped[date]) {
+
+        grouped[date] = {
+
+          hkScore: 0,
+          hkMax: 0,
+          hkValidMax: true,
+
+          washScore: 0,
+          washMax: 0,
+          washValidMax: true
+
+        };
+
+      }
+
+
+      const score =
+        numberValue(record.score);
+
+
+      const compliance =
+        numberValue(record.compliance);
+
+
+      if (score !== null) {
+
+        grouped[date].washScore += score;
+
+      }
+
+
+      let maxScore =
+        record.maxScore !== undefined
+          ? numberValue(record.maxScore)
+          : null;
+
+
+      if (maxScore === null) {
+
+        maxScore =
+          estimateMaxScore(
+            score,
+            compliance
+          );
+
+      }
+
+
+      if (maxScore !== null) {
+
+        grouped[date].washMax += maxScore;
+
+      }
+      else {
+
+        grouped[date].washValidMax = false;
+
+      }
+
+    });
+
+  }
+
+
+  const dates =
+    Object.keys(grouped).sort(
+      (a, b) =>
+        new Date(a) - new Date(b)
+    );
+
+
+  if (dates.length === 0) {
+
+    document.getElementById(
+      "solanGold"
+    ).innerHTML = `
+
+      <div class="category-card">
+
+        <div class="category-header">
+
+          <div class="category-title">
+            Housekeeping & Washroom — Combined (Gold Section)
+          </div>
+
+          <div class="category-description">
+            Housekeeping and Washroom scores are combined for Solan Gold Store.
+          </div>
+
+        </div>
+
+        <div class="category-body">
+
+          <div class="empty">
+            No Gold Housekeeping data found.
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let rows = [];
+
+  let totalCombinedScore = 0;
+  let totalCombinedMax = 0;
+
+
+  dates.forEach(date => {
+
+    const data =
+      grouped[date];
+
+
+    const hkScore =
+      data.hkScore;
+
+
+    const hkMax =
+      data.hkMax;
+
+
+    const washScore =
+      data.washScore;
+
+
+    const washMax =
+      data.washMax;
+
+
+    const combinedScore =
+      hkScore + washScore;
+
+
+    const combinedMax =
+      hkMax + washMax;
+
+
+    let compliance = null;
+
+
+    if (combinedMax > 0) {
+
+      compliance =
+        (combinedScore / combinedMax) * 100;
+
+    }
+
+
+    totalCombinedScore +=
+      combinedScore;
+
+
+    totalCombinedMax +=
+      combinedMax;
+
+
+    const status =
+      getStatusText(compliance);
+
+
+    const statusClass =
+      getStatusClass(compliance);
+
+
+    rows.push(`
+
+      <tr>
+
+        <td>
+          ${date}
+        </td>
+
+        <td class="score-cell">
+          ${formatNumber(hkScore)}/${formatNumber(hkMax)}
+        </td>
+
+        <td class="score-cell">
+          ${formatNumber(washScore)}/${formatNumber(washMax)}
+        </td>
+
+        <td class="combined-score">
+          ${
+            compliance !== null
+              ? compliance.toFixed(1) + "%"
+              : "N/A"
+          }
+        </td>
+
+        <td>
+
+          <span class="status ${statusClass}">
+            ${status}
+          </span>
+
+        </td>
+
+      </tr>
+
+    `);
+
+  });
+
+
+  const averageCompliance =
+    totalCombinedMax > 0
+      ? (
+          totalCombinedScore /
+          totalCombinedMax
+        ) * 100
+      : null;
+
+
+  const averageStatus =
+    getStatusText(
+      averageCompliance
+    );
+
+
+  const averageStatusClass =
+    getStatusClass(
+      averageCompliance
+    );
+
+
+  document.getElementById(
+    "solanGold"
+  ).innerHTML = `
+
+    <div class="category-card">
+
+      <div class="category-header">
+
+        <div class="category-title">
+          Housekeeping & Washroom — Combined (Gold Section)
+        </div>
+
+        <div class="category-description">
+
+          ${dates.length} weeks tracked ·
+          Housekeeping (5 areas) and Washroom scores merged —
+          points from both are added together each week.
+
+        </div>
+
+        <div class="category-summary">
+
+          <div class="summary-item">
+
+            <div class="label">
+              Weeks Tracked
+            </div>
+
+            <div class="value">
+              ${dates.length}
+            </div>
+
+          </div>
+
+          <div class="summary-item">
+
+            <div class="label">
+              Average Compliance
+            </div>
+
+            <div class="value">
+
+              ${
+                averageCompliance !== null
+                  ? averageCompliance.toFixed(1) + "%"
+                  : "N/A"
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="category-body">
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Week
+                </th>
+
+                <th>
+                  HK Score
+                </th>
+
+                <th>
+                  Washroom Score
+                </th>
+
+                <th>
+                  Combined
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              ${rows.join("")}
+
+
+              <tr class="average-row">
+
+                <td>
+                  Average
                 </td>
 
                 <td>
                   —
                 </td>
 
+                <td>
+                  —
+                </td>
+
+                <td>
+
+                  ${
+                    averageCompliance !== null
+                      ? averageCompliance.toFixed(1) + "%"
+                      : "N/A"
+                  }
+
+                </td>
+
+                <td>
+
+                  <span
+                    class="status ${averageStatusClass}"
+                  >
+                    ${averageStatus}
+                  </span>
+
+                </td>
+
               </tr>
 
-              </tbody>
+            </tbody>
 
-            </table>
-
-          </div>
-
-        `;
-
-      }
-
-
-      /* =========================
-         CATEGORY CARD
-         ========================= */
-
-      card.innerHTML = `
-
-        <div class="category-header">
-
-          <div class="category-title-row">
-
-            <div>
-
-              <div class="category-title">
-
-                ${item.category}
-
-              </div>
-
-              <div class="tracked">
-
-                ${item.tracked ?? records.length}
-                audit(s) tracked
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="category-summary">
-
-
-            <div class="summary-item">
-
-              <div class="summary-label">
-                Audits Tracked
-              </div>
-
-              <div class="summary-value">
-
-                ${item.tracked ?? records.length}
-
-              </div>
-
-            </div>
-
-
-            <div class="summary-item">
-
-              <div class="summary-label">
-                Average Score
-              </div>
-
-              <div class="summary-value">
-
-                ${averageScoreText}
-
-              </div>
-
-            </div>
-
-
-            <div class="summary-item">
-
-              <div class="summary-label">
-                Average Compliance
-              </div>
-
-              <div class="summary-value">
-
-                ${averageComplianceText}
-
-              </div>
-
-            </div>
-
-
-          </div>
+          </table>
 
         </div>
 
+      </div>
 
-        <div class="category-body">
+    </div>
 
-          ${tableHTML}
+  `;
 
-        </div>
-
-      `;
-
-
-      return card;
-
-    }
+}
 
 
+/* =====================================================
+   SOLAN SILVER
+   ===================================================== */
 
-    /* =========================
-       UPDATE AUDIT DETAILS
-       ========================= */
+function renderSolanSilver(plan) {
 
-    function updateAuditDetails(plan) {
-
-      const container =
-        document.getElementById(
-          "auditDetails"
-        );
-
-
-      container.innerHTML = "";
-
-
-      if (
-        !plan ||
-        plan.length === 0
-      ) {
-
-        container.innerHTML = `
-
-          <div class="empty">
-
-            No audit data available
-            for the selected month.
-
-          </div>
-
-        `;
-
-        return;
-
-      }
+  const item =
+    findCategory(
+      plan,
+      "Housekeeping – Silver Branch"
+    ) ||
+    findCategory(
+      plan,
+      "Housekeeping - Silver Branch"
+    );
 
 
-      plan.forEach(
-        item => {
+  document.getElementById(
+    "solanSilver"
+  ).innerHTML =
+    createStandardCard(
+      item,
+      "Housekeeping — Silver Section",
+      "Silver Branch only · no separate Washroom checklist here, so nothing to combine.",
+      "Week"
+    );
 
-          const card =
-            createCategoryCard(item);
+}
 
-          container.appendChild(card);
 
-        }
+/* =====================================================
+   RENDER ALL
+   ===================================================== */
+
+function updateDashboard(plan) {
+
+  renderSolanSOP(plan);
+
+  renderSolanSelection(plan);
+
+  renderSolanGold(plan);
+
+  renderSolanSilver(plan);
+
+  renderRohruSOP(plan);
+
+  renderRohruHousekeeping(plan);
+
+}
+
+
+/* =====================================================
+   LOAD DASHBOARD
+   ===================================================== */
+
+async function loadDashboard() {
+
+  const loading =
+    document.getElementById("loading");
+
+  const storeGrid =
+    document.getElementById("storeGrid");
+
+  const errorBox =
+    document.getElementById("errorBox");
+
+  const selectedMonth =
+    document.getElementById(
+      "monthSelect"
+    ).value;
+
+
+  loading.style.display = "block";
+
+  storeGrid.style.display = "none";
+
+  errorBox.style.display = "none";
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL +
+        "?month=" +
+        encodeURIComponent(
+          selectedMonth
+        )
+      );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "API response failed"
       );
 
     }
 
 
+    const data =
+      await response.json();
 
-    /* =========================
-       MONTH CHANGE
-       ========================= */
 
-    document
-      .getElementById("monthSelect")
-      .addEventListener(
-        "change",
-        loadDashboard
+    if (!data.success) {
+
+      throw new Error(
+        data.error ||
+        "Unable to load dashboard data"
       );
 
+    }
 
 
-    /* =========================
-       INITIAL LOAD
-       ========================= */
+    /*
+     * TOTAL AUDITS
+     */
 
-    loadDashboard();
+    document.getElementById(
+      "totalAudits"
+    ).innerText =
+      data.summary &&
+      data.summary.totalAudits !== undefined
+        ? data.summary.totalAudits
+        : 0;
 
 
-  </script>
+    /*
+     * RENDER STORE DATA
+     */
+
+    updateDashboard(
+      data.plan || []
+    );
+
+
+    loading.style.display = "none";
+
+    storeGrid.style.display = "grid";
+
+
+    document.getElementById(
+      "lastUpdated"
+    ).innerText =
+      "Last updated: " +
+      new Date().toLocaleString();
+
+
+  }
+
+  catch (error) {
+
+    loading.style.display = "none";
+
+    storeGrid.style.display = "none";
+
+    errorBox.innerText =
+      "Unable to load live dashboard data. Please refresh the page.";
+
+    errorBox.style.display = "block";
+
+    console.error(
+      "Dashboard Error:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   MONTH CHANGE
+   ===================================================== */
+
+document
+  .getElementById("monthSelect")
+  .addEventListener(
+    "change",
+    loadDashboard
+  );
+
+
+/* =====================================================
+   INITIAL LOAD
+   ===================================================== */
+
+loadDashboard();
+
+
+</script>
 
 
 </body>
