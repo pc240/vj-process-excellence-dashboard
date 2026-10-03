@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>VJ Process Excellence AI</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -168,19 +175,23 @@
       margin-top: 15px;
     }
 
-    @media (max-width: 900px) {
-      .cards {
-        grid-template-columns: 1fr;
-      }
+    .empty {
+      text-align: center;
+      padding: 25px;
+      color: #777;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 900px) {
 
       .top-bar {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
       }
+
+    }
+
+    @media (max-width: 600px) {
 
       .controls {
         width: 100%;
@@ -193,110 +204,232 @@
       .container {
         padding: 15px;
       }
+
+      .header {
+        padding: 20px;
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+  <!-- HEADER -->
+
   <div class="header">
-    <h1>VJ PROCESS EXCELLENCE AI</h1>
-    <p>Verma Jewellers — Process & Audit Management Dashboard</p>
+
+    <h1>
+      VJ PROCESS EXCELLENCE AI
+    </h1>
+
+    <p>
+      Verma Jewellers — Process & Audit Management Dashboard
+    </p>
+
   </div>
+
+
+  <!-- MAIN CONTAINER -->
 
   <div class="container">
 
+
+    <!-- TOP BAR -->
+
     <div class="top-bar">
 
-      <h2>Monthly Audit Dashboard</h2>
+      <h2>
+        Monthly Audit Dashboard
+      </h2>
+
 
       <div class="controls">
 
-        <select class="month-select" id="monthSelect">
-          <option value="2026-07">July 2026</option>
-          <option value="2026-08">August 2026</option>
-          <option value="2026-09">September 2026</option>
-          <option value="2026-10">October 2026</option>
+
+        <select
+          class="month-select"
+          id="monthSelect"
+        >
+
+          <option value="2026-07">
+            July 2026
+          </option>
+
+          <option value="2026-08">
+            August 2026
+          </option>
+
+          <option value="2026-09">
+            September 2026
+          </option>
+
+          <option value="2026-10">
+            October 2026
+          </option>
+
         </select>
 
-        <button class="refresh-btn" onclick="loadDashboard()">
+
+        <button
+          class="refresh-btn"
+          onclick="loadDashboard()"
+        >
           Refresh
         </button>
+
 
       </div>
 
     </div>
 
-    <div id="errorBox" class="error"></div>
+
+    <!-- ERROR -->
+
+    <div
+      id="errorBox"
+      class="error"
+    ></div>
+
+
+    <!-- TOTAL AUDITS CARD -->
 
     <div class="cards">
 
       <div class="card">
-        <div class="card-title">TOTAL AUDITS</div>
-        <div class="card-value" id="totalAudits">-</div>
+
+        <div class="card-title">
+          TOTAL AUDITS
+        </div>
+
+        <div
+          class="card-value"
+          id="totalAudits"
+        >
+          -
+        </div>
+
       </div>
 
     </div>
 
+
+    <!-- AUDIT TABLE -->
+
     <div class="section">
 
-      <h3>Actual Audits Completed</h3>
+      <h3>
+        Actual Audits Completed
+      </h3>
 
-      <div id="loading" class="loading">
+
+      <div
+        id="loading"
+        class="loading"
+      >
         Loading live data...
       </div>
 
+
       <div class="table-wrapper">
 
-        <table id="auditTable" style="display:none;">
+        <table
+          id="auditTable"
+          style="display:none;"
+        >
 
           <thead>
+
             <tr>
-              <th>Audit Category</th>
-              <th>Completed</th>
+
+              <th>
+                Audit Category
+              </th>
+
+              <th>
+                Completed
+              </th>
+
             </tr>
+
           </thead>
 
-          <tbody id="auditTableBody"></tbody>
+
+          <tbody
+            id="auditTableBody"
+          ></tbody>
+
 
         </table>
 
       </div>
 
-      <div class="last-updated" id="lastUpdated"></div>
+
+      <div
+        class="last-updated"
+        id="lastUpdated"
+      ></div>
+
 
     </div>
 
+
   </div>
 
+
+
   <script>
+
+
+    /* =========================
+       GOOGLE APPS SCRIPT API
+       ========================= */
 
     const API_URL =
       "https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3jRDbBqkH1A-zAE4S1bazx1b1ZNeUA6J9a/exec";
 
 
+
+    /* =========================
+       LOAD DASHBOARD
+       ========================= */
+
     async function loadDashboard() {
+
 
       const loading =
         document.getElementById("loading");
 
+
       const table =
         document.getElementById("auditTable");
+
 
       const errorBox =
         document.getElementById("errorBox");
 
-      const monthSelect =
-        document.getElementById("monthSelect");
 
       const selectedMonth =
-        monthSelect.value;
+        document.getElementById("monthSelect").value;
+
 
       loading.style.display = "block";
+
       table.style.display = "none";
+
       errorBox.style.display = "none";
 
+
       try {
+
 
         const response =
           await fetch(
@@ -305,27 +438,47 @@
             encodeURIComponent(selectedMonth)
           );
 
+
         if (!response.ok) {
-          throw new Error("API response failed");
+
+          throw new Error(
+            "API response failed"
+          );
+
         }
+
 
         const data =
           await response.json();
 
+
         if (!data.success) {
+
           throw new Error(
             data.error ||
             "Unable to load dashboard data"
           );
+
         }
 
-        updateSummary(data.summary);
 
-        updateTable(data.plan);
+        updateSummary(
+          data.summary
+        );
 
-        loading.style.display = "none";
 
-        table.style.display = "table";
+        updateTable(
+          data.plan
+        );
+
+
+        loading.style.display =
+          "none";
+
+
+        table.style.display =
+          "table";
+
 
         document.getElementById(
           "lastUpdated"
@@ -333,64 +486,147 @@
           "Last updated: " +
           new Date().toLocaleString();
 
+
       }
+
 
       catch (error) {
 
-        loading.style.display = "none";
+
+        loading.style.display =
+          "none";
+
+
+        table.style.display =
+          "none";
+
 
         errorBox.innerText =
           "Unable to load live dashboard data. Please refresh the page.";
 
-        errorBox.style.display = "block";
 
-        console.error(error);
+        errorBox.style.display =
+          "block";
+
+
+        console.error(
+          "Dashboard Error:",
+          error
+        );
+
 
       }
 
     }
 
 
-    function updateSummary(summary) {
+
+    /* =========================
+       UPDATE SUMMARY
+       ========================= */
+
+    function updateSummary(
+      summary
+    ) {
+
 
       document.getElementById(
         "totalAudits"
       ).innerText =
-        summary.totalAudits || 0;
+        summary.totalAudits ?? 0;
+
 
     }
 
 
-    function updateTable(plan) {
+
+    /* =========================
+       UPDATE TABLE
+       ========================= */
+
+    function updateTable(
+      plan
+    ) {
+
 
       const tbody =
         document.getElementById(
           "auditTableBody"
         );
 
+
       tbody.innerHTML = "";
 
-      plan.forEach(item => {
+
+      if (
+        !plan ||
+        plan.length === 0
+      ) {
+
 
         const row =
           document.createElement("tr");
 
+
         row.innerHTML = `
 
-          <td>${item.category}</td>
-
-          <td class="completed">
-            ${item.completed || 0}
+          <td
+            colspan="2"
+            class="empty"
+          >
+            No audit data available
+            for the selected month.
           </td>
 
         `;
 
+
         tbody.appendChild(row);
 
-      });
+
+        return;
+
+      }
+
+
+
+      plan.forEach(
+        item => {
+
+
+          const row =
+            document.createElement("tr");
+
+
+          row.innerHTML = `
+
+            <td>
+              ${item.category}
+            </td>
+
+            <td class="completed">
+              ${item.completed ?? 0}
+            </td>
+
+          `;
+
+
+          tbody.appendChild(
+            row
+          );
+
+
+        }
+      );
+
 
     }
 
+
+
+    /* =========================
+       MONTH CHANGE
+       ========================= */
 
     document
       .getElementById("monthSelect")
@@ -400,9 +636,17 @@
       );
 
 
+
+    /* =========================
+       INITIAL LOAD
+       ========================= */
+
     loadDashboard();
+
 
   </script>
 
+
 </body>
+
 </html>
