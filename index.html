@@ -67,6 +67,10 @@
       font-size: 14px;
     }
 
+    .month-select {
+      cursor: pointer;
+    }
+
     .refresh-btn {
       cursor: pointer;
       background: #172033;
@@ -80,7 +84,7 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: 1fr;
       gap: 18px;
       margin-bottom: 30px;
     }
@@ -138,35 +142,9 @@
       font-weight: bold;
     }
 
-    .status {
-      font-weight: bold;
-    }
-
     .completed {
       color: #16803c;
-    }
-
-    .progress {
-      color: #c47a00;
-    }
-
-    .not-started {
-      color: #c62828;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: #e8ebef;
-      border-radius: 20px;
-      overflow: hidden;
-      min-width: 100px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: #172033;
-      border-radius: 20px;
+      font-weight: bold;
     }
 
     .loading {
@@ -192,14 +170,11 @@
 
     @media (max-width: 900px) {
       .cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 600px) {
-      .cards {
-        grid-template-columns: 1fr;
-      }
 
       .top-bar {
         flex-direction: column;
@@ -238,7 +213,10 @@
       <div class="controls">
 
         <select class="month-select" id="monthSelect">
+          <option value="2026-07">July 2026</option>
+          <option value="2026-08">August 2026</option>
           <option value="2026-09">September 2026</option>
+          <option value="2026-10">October 2026</option>
         </select>
 
         <button class="refresh-btn" onclick="loadDashboard()">
@@ -255,29 +233,14 @@
 
       <div class="card">
         <div class="card-title">TOTAL AUDITS</div>
-        <div class="card-value" id="totalTarget">-</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">COMPLETED</div>
-        <div class="card-value" id="completed">-</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">PENDING</div>
-        <div class="card-value" id="pending">-</div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">COMPLETION</div>
-        <div class="card-value" id="completion">-</div>
+        <div class="card-value" id="totalAudits">-</div>
       </div>
 
     </div>
 
     <div class="section">
 
-      <h3>Monthly Audit Plan</h3>
+      <h3>Actual Audits Completed</h3>
 
       <div id="loading" class="loading">
         Loading live data...
@@ -290,12 +253,7 @@
           <thead>
             <tr>
               <th>Audit Category</th>
-              <th>Target</th>
               <th>Completed</th>
-              <th>Pending</th>
-              <th>Completion %</th>
-              <th>Progress</th>
-              <th>Status</th>
             </tr>
           </thead>
 
@@ -319,9 +277,20 @@
 
     async function loadDashboard() {
 
-      const loading = document.getElementById("loading");
-      const table = document.getElementById("auditTable");
-      const errorBox = document.getElementById("errorBox");
+      const loading =
+        document.getElementById("loading");
+
+      const table =
+        document.getElementById("auditTable");
+
+      const errorBox =
+        document.getElementById("errorBox");
+
+      const monthSelect =
+        document.getElementById("monthSelect");
+
+      const selectedMonth =
+        monthSelect.value;
 
       loading.style.display = "block";
       table.style.display = "none";
@@ -329,28 +298,40 @@
 
       try {
 
-        const response = await fetch(API_URL);
+        const response =
+          await fetch(
+            API_URL +
+            "?month=" +
+            encodeURIComponent(selectedMonth)
+          );
 
         if (!response.ok) {
           throw new Error("API response failed");
         }
 
-        const data = await response.json();
+        const data =
+          await response.json();
 
         if (!data.success) {
           throw new Error(
-            data.error || "Unable to load dashboard data"
+            data.error ||
+            "Unable to load dashboard data"
           );
         }
 
         updateSummary(data.summary);
+
         updateTable(data.plan);
 
         loading.style.display = "none";
+
         table.style.display = "table";
 
-        document.getElementById("lastUpdated").innerText =
-          "Last updated: " + new Date().toLocaleString();
+        document.getElementById(
+          "lastUpdated"
+        ).innerText =
+          "Last updated: " +
+          new Date().toLocaleString();
 
       }
 
@@ -364,6 +345,7 @@
         errorBox.style.display = "block";
 
         console.error(error);
+
       }
 
     }
@@ -371,17 +353,10 @@
 
     function updateSummary(summary) {
 
-      document.getElementById("totalTarget").innerText =
-        summary.totalTarget;
-
-      document.getElementById("completed").innerText =
-        summary.completed;
-
-      document.getElementById("pending").innerText =
-        summary.pending;
-
-      document.getElementById("completion").innerText =
-        summary.completion + "%";
+      document.getElementById(
+        "totalAudits"
+      ).innerText =
+        summary.totalAudits || 0;
 
     }
 
@@ -389,47 +364,23 @@
     function updateTable(plan) {
 
       const tbody =
-        document.getElementById("auditTableBody");
+        document.getElementById(
+          "auditTableBody"
+        );
 
       tbody.innerHTML = "";
 
       plan.forEach(item => {
 
-        const row = document.createElement("tr");
-
-        let statusClass = "completed";
-
-        if (item.status === "In Progress") {
-          statusClass = "progress";
-        }
-
-        if (item.status === "Not Started") {
-          statusClass = "not-started";
-        }
+        const row =
+          document.createElement("tr");
 
         row.innerHTML = `
 
           <td>${item.category}</td>
 
-          <td>${item.target}</td>
-
-          <td>${item.completed}</td>
-
-          <td>${item.pending}</td>
-
-          <td>${item.completion}%</td>
-
-          <td>
-            <div class="progress-bar">
-              <div
-                class="progress-fill"
-                style="width:${Math.min(item.completion, 100)}%">
-              </div>
-            </div>
-          </td>
-
-          <td class="status ${statusClass}">
-            ${item.status}
+          <td class="completed">
+            ${item.completed || 0}
           </td>
 
         `;
@@ -439,6 +390,14 @@
       });
 
     }
+
+
+    document
+      .getElementById("monthSelect")
+      .addEventListener(
+        "change",
+        loadDashboard
+      );
 
 
     loadDashboard();
