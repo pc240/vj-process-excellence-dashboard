@@ -2,2054 +2,1655 @@
 <html lang="en">
 
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta charset="UTF-8">
+<title>VJ Process Excellence AI</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<style>
 
-  <title>VJ Process Excellence AI</title>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-  <style>
+body {
+    background: #f4f6f9;
+    color: #1f2937;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+/* HEADER */
 
-    body {
-      background: #f4f6f8;
-      color: #222;
+.header {
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: white;
+    padding: 22px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 24px;
+    letter-spacing: .5px;
+}
+
+.header p {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #d1d5db;
+}
+
+/* FILTER AREA */
+
+.filter-bar {
+    background: white;
+    margin: 20px auto;
+    max-width: 1400px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filters {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+select {
+    padding: 9px 35px 9px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.refresh-btn {
+    border: none;
+    background: #111827;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.refresh-btn:hover {
+    background: #374151;
+}
+
+/* MAIN */
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 0 20px 40px;
+}
+
+.filter-info {
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* STORE GRID */
+
+.store-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.store-grid.single {
+    grid-template-columns: 1fr;
+}
+
+.store-column {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.store-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.store-description {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+/* PRIORITY */
+
+.priority-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .7px;
+    color: #6b7280;
+    margin: 20px 0 8px;
+}
+
+/* AUDIT CARD */
+
+.audit-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 11px;
+    margin-bottom: 13px;
+    overflow: hidden;
+    background: white;
+}
+
+.audit-header {
+    padding: 17px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.audit-header:hover {
+    background: #f9fafb;
+}
+
+.audit-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.audit-subtitle {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 13px;
+}
+
+.audit-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.average-box {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.average-label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.average-value {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.status {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 20px;
+}
+
+.status-red {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.status-yellow {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.expand-text {
+    font-size: 11px;
+    color: #4b5563;
+    white-space: nowrap;
+}
+
+/* DETAILS */
+
+.audit-details {
+    display: none;
+    padding: 0 17px 17px;
+}
+
+.audit-details.open {
+    display: block;
+}
+
+.details-table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+th {
+    background: #f3f4f6;
+    color: #374151;
+    font-weight: 700;
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eef0f2;
+}
+
+.average-row {
+    background: #f9fafb;
+    font-weight: 700;
+}
+
+.no-data {
+    padding: 18px;
+    background: #f9fafb;
+    border-radius: 8px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* NO STORE DATA */
+
+.empty-state {
+    padding: 35px 20px;
+    text-align: center;
+    color: #6b7280;
+    background: white;
+    border-radius: 12px;
+}
+
+/* LOADING */
+
+.loading {
+    padding: 40px;
+    text-align: center;
+    color: #6b7280;
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+    .store-grid {
+        grid-template-columns: 1fr;
     }
 
     .header {
-      background: #172033;
-      color: white;
-      padding: 25px 35px;
+        padding: 18px;
     }
 
     .header h1 {
-      font-size: 26px;
-      margin-bottom: 6px;
-    }
-
-    .header p {
-      font-size: 14px;
-      opacity: 0.8;
+        font-size: 20px;
     }
 
     .container {
-      padding: 30px;
-      max-width: 1500px;
-      margin: auto;
+        padding: 0 12px 30px;
     }
 
-    /* =========================
-       TOP BAR
-       ========================= */
-
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
+    .filter-bar {
+        margin: 12px;
     }
 
-    .top-bar h2 {
-      font-size: 22px;
-    }
+}
 
-    .controls {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .month-select,
-    .refresh-btn {
-      padding: 10px 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: white;
-      font-size: 14px;
-    }
-
-    .month-select {
-      cursor: pointer;
-    }
-
-    .refresh-btn {
-      cursor: pointer;
-      background: #172033;
-      color: white;
-      border: none;
-    }
-
-    .refresh-btn:hover {
-      opacity: 0.9;
-    }
-
-    /* =========================
-       SUMMARY
-       ========================= */
-
-    .summary-card {
-      background: white;
-      padding: 20px 25px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      margin-bottom: 25px;
-    }
-
-    .summary-label {
-      font-size: 12px;
-      color: #777;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-    }
-
-    .summary-number {
-      font-size: 28px;
-      font-weight: bold;
-      color: #172033;
-    }
-
-    /* =========================
-       STORE GRID
-       ========================= */
-
-    .store-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    .store-column {
-      min-width: 0;
-    }
-
-    .store-header {
-      background: #172033;
-      color: white;
-      padding: 17px 20px;
-      border-radius: 10px 10px 0 0;
-      margin-bottom: 15px;
-    }
-
-    .store-header h2 {
-      font-size: 20px;
-    }
-
-    .store-header p {
-      font-size: 12px;
-      opacity: 0.75;
-      margin-top: 4px;
-    }
-
-    /* =========================
-       PRIORITY SECTION
-       ========================= */
-
-    .priority-section {
-      background: white;
-      border-radius: 10px;
-      margin-bottom: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      overflow: hidden;
-    }
-
-    .priority-header {
-      padding: 14px 18px;
-      background: #f7f8fa;
-      border-bottom: 1px solid #e5e7eb;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .priority-header.red {
-      border-left: 5px solid #b00020;
-    }
-
-    .priority-header.yellow {
-      border-left: 5px solid #d6a500;
-    }
-
-    .priority-header.green {
-      border-left: 5px solid #16803c;
-    }
-
-    .priority-body {
-      padding: 15px;
-    }
-
-    /* =========================
-       CATEGORY CARD
-       ========================= */
-
-    .category-card {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      margin-bottom: 14px;
-      overflow: hidden;
-    }
-
-    .category-card:last-child {
-      margin-bottom: 0;
-    }
-
-    .category-header {
-      padding: 15px 16px;
-      background: #fafafa;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .category-title {
-      font-size: 16px;
-      font-weight: bold;
-      color: #172033;
-      margin-bottom: 5px;
-    }
-
-    .category-description {
-      font-size: 12px;
-      color: #777;
-      line-height: 1.5;
-    }
-
-    .category-summary {
-      display: flex;
-      gap: 22px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .summary-item {
-      min-width: 100px;
-    }
-
-    .summary-item .label {
-      font-size: 10px;
-      color: #777;
-      text-transform: uppercase;
-      margin-bottom: 3px;
-    }
-
-    .summary-item .value {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .category-body {
-      padding: 0 15px 15px 15px;
-    }
-
-    /* =========================
-       TABLE
-       ========================= */
-
-    .table-wrapper {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 11px 9px;
-      border-bottom: 1px solid #eee;
-      text-align: left;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    th {
-      background: #f7f8fa;
-      font-weight: bold;
-      color: #444;
-    }
-
-    .score-cell {
-      font-weight: bold;
-    }
-
-    .compliance-cell {
-      font-weight: 600;
-    }
-
-    .average-row {
-      background: #fafafa;
-      font-weight: bold;
-    }
-
-    .average-row td {
-      border-top: 2px solid #ddd;
-    }
-
-    /* =========================
-       STATUS
-       ========================= */
-
-    .status {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 10px;
-      font-weight: bold;
-    }
-
-    .status-red {
-      background: #fde8e8;
-      color: #b00020;
-    }
-
-    .status-yellow {
-      background: #fff4cc;
-      color: #8a6500;
-    }
-
-    .status-green {
-      background: #e6f6ec;
-      color: #16803c;
-    }
-
-    .status-na {
-      background: #eeeeee;
-      color: #666;
-    }
-
-    /* =========================
-       LOADING / ERROR
-       ========================= */
-
-    .loading {
-      text-align: center;
-      padding: 40px;
-      color: #666;
-      background: white;
-      border-radius: 10px;
-    }
-
-    .error {
-      background: #fff0f0;
-      color: #b00020;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 20px;
-      color: #777;
-      font-size: 13px;
-      background: #fafafa;
-      border-radius: 6px;
-    }
-
-    .last-updated {
-      font-size: 12px;
-      color: #777;
-      margin-top: 18px;
-    }
-
-    /* =========================
-       GOLD COMBINED
-       ========================= */
-
-    .combined-note {
-      font-size: 12px;
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-
-    .combined-score {
-      font-weight: bold;
-    }
-
-    /* =========================
-       RESPONSIVE
-       ========================= */
-
-    @media (max-width: 1000px) {
-
-      .store-grid {
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-    @media (max-width: 700px) {
-
-      .container {
-        padding: 15px;
-      }
-
-      .header {
-        padding: 20px;
-      }
-
-      .header h1 {
-        font-size: 22px;
-      }
-
-      .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-
-      .controls {
-        width: 100%;
-      }
-
-      .month-select {
-        flex: 1;
-      }
-
-    }
-
-  </style>
-
+</style>
 </head>
 
 
 <body>
 
+<!-- HEADER -->
 
-  <!-- =========================
-       HEADER
-       ========================= -->
+<div class="header">
 
-  <div class="header">
+    <div>
+        <h1>VJ PROCESS EXCELLENCE AI</h1>
+        <p>Audit Compliance & Process Monitoring Dashboard</p>
+    </div>
 
-    <h1>
-      VJ PROCESS EXCELLENCE AI
-    </h1>
-
-    <p>
-      Verma Jewellers — Process & Audit Management Dashboard
-    </p>
-
-  </div>
+</div>
 
 
-  <div class="container">
+<!-- FILTER -->
+
+<div class="filter-bar">
+
+    <div class="filters">
+
+        <div class="filter-group">
+
+            <label for="storeSelect">
+                Store
+            </label>
+
+            <select id="storeSelect">
+
+                <option value="all">
+                    All Stores
+                </option>
+
+                <option value="solan">
+                    VJ Solan
+                </option>
+
+                <option value="rohru">
+                    VJ Rohru
+                </option>
+
+            </select>
+
+        </div>
 
 
-    <!-- =========================
-         COMMON FILTER
-         ========================= -->
+        <div class="filter-group">
 
-    <div class="top-bar">
+            <label for="monthSelect">
+                Month
+            </label>
 
-      <h2>
-        Monthly Audit Dashboard
-      </h2>
+            <select id="monthSelect">
 
-      <div class="controls">
+                <option value="2026-07">
+                    July 2026
+                </option>
 
-        <select
-          class="month-select"
-          id="monthSelect"
-        >
+                <option value="2026-08">
+                    August 2026
+                </option>
 
-          <option value="2026-07">
-            July 2026
-          </option>
+                <option value="2026-09">
+                    September 2026
+                </option>
 
-          <option value="2026-08">
-            August 2026
-          </option>
+                <option value="2026-10">
+                    October 2026
+                </option>
 
-          <option value="2026-09" selected>
-            September 2026
-          </option>
+            </select>
 
-          <option value="2026-10">
-            October 2026
-          </option>
-
-        </select>
-
-        <button
-          class="refresh-btn"
-          onclick="loadDashboard()"
-        >
-          Refresh
-        </button>
-
-      </div>
+        </div>
 
     </div>
 
 
-    <!-- ERROR -->
-
-    <div
-      id="errorBox"
-      class="error"
-    ></div>
-
-
-    <!-- TOTAL AUDITS -->
-
-    <div class="summary-card">
-
-      <div class="summary-label">
-        TOTAL AUDITS
-      </div>
-
-      <div
-        class="summary-number"
-        id="totalAudits"
-      >
-        -
-      </div>
-
-    </div>
-
-
-    <!-- LOADING -->
-
-    <div
-      id="loading"
-      class="loading"
+    <button
+        class="refresh-btn"
+        onclick="loadDashboard()"
     >
-      Loading live data...
+        ↻ Refresh
+    </button>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+    <div
+        class="filter-info"
+        id="filterInfo"
+    >
+        Showing July 2026 only.
     </div>
 
 
-    <!-- =========================
-         TWO STORE COLUMNS
-         ========================= -->
-
     <div
-      id="storeGrid"
-      class="store-grid"
-      style="display:none;"
+        id="dashboard"
+        class="store-grid"
     >
 
-
-      <!-- =========================
-           SOLAN
-           ========================= -->
-
-      <div class="store-column">
-
-
-        <div class="store-header">
-
-          <h2>
-            VJ Solan Store
-          </h2>
-
-          <p>
-            Solan Gold Store + Silver Branch
-          </p>
-
+        <div class="loading">
+            Loading dashboard...
         </div>
-
-
-        <!-- SOP -->
-
-        <div class="priority-section">
-
-          <div class="priority-header red">
-
-            🔴 MOST IMPORTANT — SOP / Process Audit
-
-          </div>
-
-          <div
-            class="priority-body"
-            id="solanSop"
-          ></div>
-
-        </div>
-
-
-        <!-- SELECTION -->
-
-        <div class="priority-section">
-
-          <div class="priority-header yellow">
-
-            🟡 SECOND PRIORITY — Selection SOP Audit
-
-          </div>
-
-          <div
-            class="priority-body"
-            id="solanSelection"
-          ></div>
-
-        </div>
-
-
-        <!-- HOUSEKEEPING -->
-
-        <div class="priority-section">
-
-          <div class="priority-header green">
-
-            🟢 LEAST IMPORTANT — Housekeeping
-
-          </div>
-
-          <div class="priority-body">
-
-
-            <!-- GOLD -->
-
-            <div
-              id="solanGold"
-            ></div>
-
-
-            <!-- SILVER -->
-
-            <div
-              id="solanSilver"
-              style="margin-top:15px;"
-            ></div>
-
-
-          </div>
-
-        </div>
-
-
-      </div>
-
-
-      <!-- =========================
-           ROHRU
-           ========================= -->
-
-      <div class="store-column">
-
-
-        <div class="store-header">
-
-          <h2>
-            VJ Rohru Store
-          </h2>
-
-          <p>
-            Rohru Store
-          </p>
-
-        </div>
-
-
-        <!-- SOP -->
-
-        <div class="priority-section">
-
-          <div class="priority-header red">
-
-            🔴 MOST IMPORTANT — SOP / Process Audit
-
-          </div>
-
-          <div
-            class="priority-body"
-            id="rohruSop"
-          ></div>
-
-        </div>
-
-
-        <!-- HOUSEKEEPING -->
-
-        <div class="priority-section">
-
-          <div class="priority-header green">
-
-            🟢 LEAST IMPORTANT — Housekeeping
-
-          </div>
-
-          <div
-            class="priority-body"
-            id="rohruHousekeeping"
-          ></div>
-
-        </div>
-
-
-      </div>
-
 
     </div>
 
-
-    <div
-      class="last-updated"
-      id="lastUpdated"
-    ></div>
-
-
-  </div>
-
+</div>
 
 
 <script>
 
-
-/* =====================================================
-   GOOGLE APPS SCRIPT API
-   ===================================================== */
+/* =========================================================
+   API
+========================================================= */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3JrDdbkqH1A-zAE4S1bazx1b1ZNeUA6J9a/exec";
+"https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3JrDdbkqH1A-zAE4S1bazx1b1ZNeUA6J9a/exec";
 
 
-/* =====================================================
+/* =========================================================
+   MONTH NAMES
+========================================================= */
+
+const MONTH_NAMES = {
+
+    "01": "January",
+    "02": "February",
+    "03": "March",
+    "04": "April",
+    "05": "May",
+    "06": "June",
+    "07": "July",
+    "08": "August",
+    "09": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+
+};
+
+
+/* =========================================================
+   AUDIT CONFIGURATION
+========================================================= */
+
+const AUDITS = {
+
+    solan: [
+
+        {
+            priority: "MOST IMPORTANT",
+            title: "SOP / Process Audit",
+            subtitle: "SOP / Process Audit Checklist",
+            categories: [
+                "SOP Audit – Solan"
+            ],
+            type: "monthly"
+        },
+
+        {
+            priority: "SECOND PRIORITY",
+            title: "Selection SOP Audit",
+            subtitle: "Selection SOP Audit Checklist",
+            categories: [
+                "Selection SOP Audit – Solan"
+            ],
+            type: "monthly"
+        },
+
+        {
+            priority: "LEAST IMPORTANT",
+            title: "Housekeeping & Washroom — Combined (Gold Section)",
+            subtitle: "Gold Section Housekeeping + Washroom",
+            categories: [
+                "Housekeeping – GF",
+                "Housekeeping – 1st Floor",
+                "Housekeeping – 2nd Floor",
+                "Housekeeping – 3rd Floor",
+                "Housekeeping – 4th + 5th Floor",
+                "Washroom Audit – Solan"
+            ],
+            type: "combined"
+        },
+
+        {
+            priority: "LEAST IMPORTANT",
+            title: "Housekeeping — Silver Branch",
+            subtitle: "Silver Branch Housekeeping",
+            categories: [
+                "Housekeeping – Silver Branch"
+            ],
+            type: "weekly"
+        }
+
+    ],
+
+
+    rohru: [
+
+        {
+            priority: "MOST IMPORTANT",
+            title: "SOP / Process Audit",
+            subtitle: "SOP / Process Audit Checklist (Monthly)",
+            categories: [
+                "SOP Audit – Rohru"
+            ],
+            type: "monthly"
+        },
+
+        {
+            priority: "LEAST IMPORTANT",
+            title: "Housekeeping — VJ Rohru",
+            subtitle: "Housekeeping — VJ Rohru",
+            categories: [
+                "Housekeeping – Rohru"
+            ],
+            type: "weekly"
+        }
+
+    ]
+
+};
+
+
+/* =========================================================
    STATUS
-   ===================================================== */
+========================================================= */
 
-function getStatusClass(compliance) {
+function getStatus(compliance) {
 
-  if (
-    compliance === null ||
-    compliance === undefined ||
-    compliance === "" ||
-    isNaN(Number(compliance))
-  ) {
-    return "status-na";
-  }
+    compliance = Number(compliance) || 0;
 
-  const value = Number(compliance);
-
-  if (value < 70) {
-    return "status-red";
-  }
-
-  if (value >= 70 && value <= 75) {
-    return "status-yellow";
-  }
-
-  if (value > 75 && value <= 100) {
-    return "status-green";
-  }
-
-  return "status-na";
-
-}
-
-
-function getStatusText(compliance) {
-
-  if (
-    compliance === null ||
-    compliance === undefined ||
-    compliance === "" ||
-    isNaN(Number(compliance))
-  ) {
-    return "N/A";
-  }
-
-  const value = Number(compliance);
-
-  if (value < 70) {
-    return "RED";
-  }
-
-  if (value >= 70 && value <= 75) {
-    return "YELLOW";
-  }
-
-  if (value > 75 && value <= 100) {
-    return "GREEN";
-  }
-
-  return "N/A";
-
-}
-
-
-/* =====================================================
-   FORMAT NUMBER
-   ===================================================== */
-
-function numberValue(value) {
-
-  if (
-    value === null ||
-    value === undefined ||
-    value === "" ||
-    isNaN(Number(value))
-  ) {
-    return null;
-  }
-
-  return Number(value);
-
-}
-
-
-function formatNumber(value) {
-
-  const number = numberValue(value);
-
-  if (number === null) {
-    return "N/A";
-  }
-
-  return Number.isInteger(number)
-    ? number
-    : number.toFixed(2);
-
-}
-
-
-/* =====================================================
-   NORMALIZE CATEGORY
-   ===================================================== */
-
-function normalizeCategory(category) {
-
-  return String(category || "")
-    .trim()
-    .toLowerCase();
-
-}
-
-
-/* =====================================================
-   FIND CATEGORY
-   ===================================================== */
-
-function findCategory(plan, searchText) {
-
-  const search =
-    searchText.toLowerCase();
-
-  return plan.find(item =>
-    normalizeCategory(item.category)
-      .includes(search)
-  );
-
-}
-
-
-/* =====================================================
-   FIND ALL CATEGORIES
-   ===================================================== */
-
-function findCategories(plan, searchText) {
-
-  const search =
-    searchText.toLowerCase();
-
-  return plan.filter(item =>
-    normalizeCategory(item.category)
-      .includes(search)
-  );
-
-}
-
-
-/* =====================================================
-   DATE SORT
-   ===================================================== */
-
-function sortRecords(records) {
-
-  return [...records].sort(
-    (a, b) => {
-
-      const dateA =
-        new Date(a.date);
-
-      const dateB =
-        new Date(b.date);
-
-      return dateA - dateB;
-
+    if (compliance >= 76) {
+        return {
+            text: "GREEN",
+            className: "status-green"
+        };
     }
-  );
+
+    if (compliance >= 70) {
+        return {
+            text: "YELLOW",
+            className: "status-yellow"
+        };
+    }
+
+    return {
+        text: "RED",
+        className: "status-red"
+    };
 
 }
 
 
-/* =====================================================
-   STANDARD CATEGORY CARD
-   ===================================================== */
+/* =========================================================
+   MONTH FORMAT
+========================================================= */
 
-function createStandardCard(
-  item,
-  title,
-  description,
-  dateHeading = "Date"
+function formatMonth(value) {
+
+    const parts = value.split("-");
+
+    return MONTH_NAMES[parts[1]] + " " + parts[0];
+
+}
+
+
+/* =========================================================
+   DATE HELPERS
+========================================================= */
+
+function getRecordMonth(dateValue) {
+
+    if (!dateValue) {
+        return "";
+    }
+
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) {
+        return "";
+    }
+
+    return (
+        date.getFullYear() +
+        "-" +
+        String(date.getMonth() + 1).padStart(2, "0")
+    );
+
+}
+
+
+/* =========================================================
+   FILTER RECORDS
+========================================================= */
+
+function filterRecords(records, selectedMonth) {
+
+    if (!Array.isArray(records)) {
+        return [];
+    }
+
+    return records.filter(record => {
+
+        return getRecordMonth(record.date) === selectedMonth;
+
+    });
+
+}
+
+
+/* =========================================================
+   AVERAGE
+========================================================= */
+
+function calculateAverage(records) {
+
+    if (!records.length) {
+        return 0;
+    }
+
+    const total = records.reduce(
+        (sum, record) =>
+            sum + Number(record.compliance || 0),
+        0
+    );
+
+    return total / records.length;
+
+}
+
+
+/* =========================================================
+   COMBINED GOLD SECTION
+========================================================= */
+
+function createCombinedRecords(plan, categories, selectedMonth) {
+
+    const recordsByCategory = {};
+
+    categories.forEach(category => {
+
+        const item = plan.find(
+            p => p.category === category
+        );
+
+        recordsByCategory[category] =
+            item && Array.isArray(item.records)
+                ? filterRecords(item.records, selectedMonth)
+                : [];
+
+    });
+
+
+    /*
+       For the combined Gold section, records from the
+       different housekeeping floors and washroom checklist
+       are combined by date.
+
+       If exact maxScore is available from API, it is used.
+       Otherwise compliance values are averaged.
+    */
+
+    const allDates = new Set();
+
+    categories.forEach(category => {
+
+        recordsByCategory[category].forEach(record => {
+
+            allDates.add(
+                record.date
+            );
+
+        });
+
+    });
+
+
+    const combined = [];
+
+    allDates.forEach(date => {
+
+        const dayRecords = [];
+
+        categories.forEach(category => {
+
+            const record =
+                recordsByCategory[category]
+                .find(r => r.date === date);
+
+            if (record) {
+                dayRecords.push(record);
+            }
+
+        });
+
+
+        if (!dayRecords.length) {
+            return;
+        }
+
+
+        let totalScore = 0;
+        let totalMax = 0;
+        let hasMax = true;
+
+        dayRecords.forEach(record => {
+
+            totalScore +=
+                Number(record.score || 0);
+
+            if (
+                record.maxScore !== undefined &&
+                record.maxScore !== null
+            ) {
+
+                totalMax +=
+                    Number(record.maxScore);
+
+            } else {
+
+                hasMax = false;
+
+            }
+
+        });
+
+
+        let compliance;
+
+
+        if (hasMax && totalMax > 0) {
+
+            compliance =
+                (totalScore / totalMax) * 100;
+
+        } else {
+
+            compliance =
+                dayRecords.reduce(
+                    (sum, r) =>
+                        sum + Number(r.compliance || 0),
+                    0
+                ) / dayRecords.length;
+
+        }
+
+
+        combined.push({
+
+            date: date,
+
+            score: Math.round(totalScore * 100) / 100,
+
+            compliance:
+                Math.round(compliance * 10) / 10
+
+        });
+
+    });
+
+
+    return combined.sort(
+        (a, b) =>
+            new Date(a.date) -
+            new Date(b.date)
+    );
+
+}
+
+
+/* =========================================================
+   NORMAL RECORDS
+========================================================= */
+
+function getNormalRecords(
+    plan,
+    categories,
+    selectedMonth
 ) {
 
-  if (!item) {
-
-    return `
-
-      <div class="empty">
-        No audit data available.
-      </div>
-
-    `;
-
-  }
-
-
-  const records =
-    sortRecords(item.records || []);
-
-
-  if (records.length === 0) {
-
-    return `
-
-      <div class="category-card">
-
-        <div class="category-header">
-
-          <div class="category-title">
-            ${title}
-          </div>
-
-          <div class="category-description">
-            ${description}
-          </div>
-
-        </div>
-
-        <div class="category-body">
-
-          <div class="empty">
-            No audits found for the selected month.
-          </div>
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-
-  let totalCompliance = 0;
-  let totalScore = 0;
-  let validComplianceCount = 0;
-
-
-  records.forEach(record => {
-
-    const score =
-      numberValue(record.score);
-
-    const compliance =
-      numberValue(record.compliance);
-
-    if (score !== null) {
-      totalScore += score;
-    }
-
-    if (compliance !== null) {
-
-      totalCompliance += compliance;
-      validComplianceCount++;
-
-    }
-
-  });
-
-
-  const averageScore =
-    records.length > 0
-      ? totalScore / records.length
-      : null;
-
-
-  const averageCompliance =
-    validComplianceCount > 0
-      ? totalCompliance / validComplianceCount
-      : null;
-
-
-  let rows = "";
-
-
-  records.forEach(record => {
-
-    const compliance =
-      numberValue(record.compliance);
-
-
-    const status =
-      getStatusText(compliance);
-
-
-    const statusClass =
-      getStatusClass(compliance);
-
-
-    rows += `
-
-      <tr>
-
-        <td>
-          ${record.date || "N/A"}
-        </td>
-
-        <td class="score-cell">
-          ${formatNumber(record.score)}
-        </td>
-
-        <td class="compliance-cell">
-          ${
-            compliance !== null
-              ? compliance.toFixed(1) + "%"
-              : "N/A"
-          }
-        </td>
-
-        <td>
-
-          <span class="status ${statusClass}">
-            ${status}
-          </span>
-
-        </td>
-
-      </tr>
-
-    `;
-
-  });
-
-
-  const averageStatus =
-    getStatusText(averageCompliance);
-
-
-  const averageStatusClass =
-    getStatusClass(averageCompliance);
-
-
-  return `
-
-    <div class="category-card">
-
-      <div class="category-header">
-
-        <div class="category-title">
-          ${title}
-        </div>
-
-        <div class="category-description">
-          ${description}
-        </div>
-
-
-        <div class="category-summary">
-
-          <div class="summary-item">
-
-            <div class="label">
-              Audits Tracked
-            </div>
-
-            <div class="value">
-              ${records.length}
-            </div>
-
-          </div>
-
-
-          <div class="summary-item">
-
-            <div class="label">
-              Average Score
-            </div>
-
-            <div class="value">
-              ${formatNumber(averageScore)}
-            </div>
-
-          </div>
-
-
-          <div class="summary-item">
-
-            <div class="label">
-              Average Compliance
-            </div>
-
-            <div class="value">
-              ${
-                averageCompliance !== null
-                  ? averageCompliance.toFixed(1) + "%"
-                  : "N/A"
-              }
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="category-body">
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  ${dateHeading}
-                </th>
-
-                <th>
-                  Score
-                </th>
-
-                <th>
-                  Compliance
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-              </tr>
-
-            </thead>
-
-
-            <tbody>
-
-              ${rows}
-
-
-              <tr class="average-row">
-
-                <td>
-                  Average
-                </td>
-
-                <td>
-                  ${formatNumber(averageScore)}
-                </td>
-
-                <td>
-                  ${
-                    averageCompliance !== null
-                      ? averageCompliance.toFixed(1) + "%"
-                      : "N/A"
-                  }
-                </td>
-
-                <td>
-
-                  <span
-                    class="status ${averageStatusClass}"
-                  >
-                    ${averageStatus}
-                  </span>
-
-                </td>
-
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   SOLAN SOP
-   ===================================================== */
-
-function renderSolanSOP(plan) {
-
-  const item =
-    findCategory(
-      plan,
-      "SOP Audit – Solan"
-    ) ||
-    findCategory(
-      plan,
-      "SOP Audit - Solan"
-    );
-
-
-  document.getElementById(
-    "solanSop"
-  ).innerHTML =
-    createStandardCard(
-      item,
-      "SOP / Process Audit",
-      "Most important process compliance audit.",
-      "Date"
-    );
-
-}
-
-
-/* =====================================================
-   SOLAN SELECTION
-   ===================================================== */
-
-function renderSolanSelection(plan) {
-
-  const item =
-    findCategory(
-      plan,
-      "Selection SOP Audit – Solan"
-    ) ||
-    findCategory(
-      plan,
-      "Selection SOP Audit - Solan"
-    ) ||
-    findCategory(
-      plan,
-      "Selection Audit – Solan"
-    );
-
-
-  document.getElementById(
-    "solanSelection"
-  ).innerHTML =
-    createStandardCard(
-      item,
-      "Selection SOP Audit",
-      "Selection process compliance and control audit.",
-      "Date"
-    );
-
-}
-
-
-/* =====================================================
-   ROHRU SOP
-   ===================================================== */
-
-function renderRohruSOP(plan) {
-
-  const item =
-    findCategory(
-      plan,
-      "SOP Audit – Rohru"
-    ) ||
-    findCategory(
-      plan,
-      "SOP Audit - Rohru"
-    );
-
-
-  document.getElementById(
-    "rohruSop"
-  ).innerHTML =
-    createStandardCard(
-      item,
-      "SOP / Process Audit Checklist (Monthly)",
-      "Monthly process audit for VJ Rohru.",
-      "Month"
-    );
-
-}
-
-
-/* =====================================================
-   ROHRU HOUSEKEEPING
-   ===================================================== */
-
-function renderRohruHousekeeping(plan) {
-
-  const item =
-    findCategory(
-      plan,
-      "Housekeeping – Rohru"
-    ) ||
-    findCategory(
-      plan,
-      "Housekeeping - Rohru"
-    );
-
-
-  document.getElementById(
-    "rohruHousekeeping"
-  ).innerHTML =
-    createStandardCard(
-      item,
-      "Housekeeping — VJ Rohru",
-      "Weekly housekeeping compliance tracking.",
-      "Week"
-    );
-
-}
-
-
-/* =====================================================
-   ESTIMATE MAX SCORE
-   Used only when API does not provide maxScore.
-   ===================================================== */
-
-function estimateMaxScore(score, compliance) {
-
-  if (
-    score === null ||
-    compliance === null ||
-    compliance <= 0
-  ) {
-    return null;
-  }
-
-  return score / (compliance / 100);
-
-}
-
-
-/* =====================================================
-   SOLAN GOLD HOUSEKEEPING + WASHROOM
-   ===================================================== */
-
-function renderSolanGold(plan) {
-
-  const housekeepingCategories = [
-
-    "Housekeeping – GF",
-    "Housekeeping - GF",
-
-    "Housekeeping – 1st Floor",
-    "Housekeeping - 1st Floor",
-
-    "Housekeeping – 2nd Floor",
-    "Housekeeping - 2nd Floor",
-
-    "Housekeeping – 3rd Floor",
-    "Housekeeping - 3rd Floor",
-
-    "Housekeeping – 4th + 5th Floor",
-    "Housekeeping - 4th + 5th Floor"
-
-  ];
-
-
-  let hkItems = [];
-
-
-  housekeepingCategories.forEach(name => {
-
-    const item =
-      findCategory(plan, name);
-
-    if (item) {
-      hkItems.push(item);
-    }
-
-  });
-
-
-  const washroom =
-    findCategory(
-      plan,
-      "Washroom Audit – Solan"
-    ) ||
-    findCategory(
-      plan,
-      "Washroom Audit - Solan"
-    );
-
-
-  /*
-   * Collect all HK records by date.
-   */
-
-  const grouped = {};
-
-
-  hkItems.forEach(item => {
-
-    (item.records || []).forEach(record => {
-
-      const date =
-        record.date || "N/A";
-
-
-      if (!grouped[date]) {
-
-        grouped[date] = {
-
-          hkScore: 0,
-          hkMax: 0,
-          hkValidMax: true,
-
-          washScore: 0,
-          washMax: 0,
-          washValidMax: true
-
-        };
-
-      }
-
-
-      const score =
-        numberValue(record.score);
-
-
-      const compliance =
-        numberValue(record.compliance);
-
-
-      if (score !== null) {
-
-        grouped[date].hkScore += score;
-
-      }
-
-
-      let maxScore =
-        record.maxScore !== undefined
-          ? numberValue(record.maxScore)
-          : null;
-
-
-      if (maxScore === null) {
-
-        maxScore =
-          estimateMaxScore(
-            score,
-            compliance
-          );
-
-      }
-
-
-      if (maxScore !== null) {
-
-        grouped[date].hkMax += maxScore;
-
-      }
-      else {
-
-        grouped[date].hkValidMax = false;
-
-      }
+    let records = [];
+
+    categories.forEach(category => {
+
+        const item =
+            plan.find(
+                p => p.category === category
+            );
+
+        if (
+            item &&
+            Array.isArray(item.records)
+        ) {
+
+            records =
+                records.concat(
+                    filterRecords(
+                        item.records,
+                        selectedMonth
+                    )
+                );
+
+        }
 
     });
 
-  });
 
-
-  /*
-   * Add washroom records.
-   */
-
-  if (washroom) {
-
-    (washroom.records || []).forEach(record => {
-
-      const date =
-        record.date || "N/A";
-
-
-      if (!grouped[date]) {
-
-        grouped[date] = {
-
-          hkScore: 0,
-          hkMax: 0,
-          hkValidMax: true,
-
-          washScore: 0,
-          washMax: 0,
-          washValidMax: true
-
-        };
-
-      }
-
-
-      const score =
-        numberValue(record.score);
-
-
-      const compliance =
-        numberValue(record.compliance);
-
-
-      if (score !== null) {
-
-        grouped[date].washScore += score;
-
-      }
-
-
-      let maxScore =
-        record.maxScore !== undefined
-          ? numberValue(record.maxScore)
-          : null;
-
-
-      if (maxScore === null) {
-
-        maxScore =
-          estimateMaxScore(
-            score,
-            compliance
-          );
-
-      }
-
-
-      if (maxScore !== null) {
-
-        grouped[date].washMax += maxScore;
-
-      }
-      else {
-
-        grouped[date].washValidMax = false;
-
-      }
-
-    });
-
-  }
-
-
-  const dates =
-    Object.keys(grouped).sort(
-      (a, b) =>
-        new Date(a) - new Date(b)
+    return records.sort(
+        (a, b) =>
+            new Date(a.date) -
+            new Date(b.date)
     );
 
-
-  if (dates.length === 0) {
-
-    document.getElementById(
-      "solanGold"
-    ).innerHTML = `
-
-      <div class="category-card">
-
-        <div class="category-header">
-
-          <div class="category-title">
-            Housekeeping & Washroom — Combined (Gold Section)
-          </div>
-
-          <div class="category-description">
-            Housekeeping and Washroom scores are combined for Solan Gold Store.
-          </div>
-
-        </div>
-
-        <div class="category-body">
-
-          <div class="empty">
-            No Gold Housekeeping data found.
-          </div>
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
+}
 
 
-  let rows = [];
+/* =========================================================
+   DATE LABEL
+========================================================= */
 
-  let totalCombinedScore = 0;
-  let totalCombinedMax = 0;
+function formatDate(dateValue) {
 
+    const date = new Date(dateValue);
 
-  dates.forEach(date => {
+    if (isNaN(date.getTime())) {
+        return dateValue || "";
+    }
 
-    const data =
-      grouped[date];
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
 
-
-    const hkScore =
-      data.hkScore;
-
-
-    const hkMax =
-      data.hkMax;
-
-
-    const washScore =
-      data.washScore;
-
-
-    const washMax =
-      data.washMax;
+}
 
 
-    const combinedScore =
-      hkScore + washScore;
+/* =========================================================
+   CREATE AUDIT CARD
+========================================================= */
+
+function createAuditCard(
+    audit,
+    plan,
+    selectedMonth
+) {
+
+    let records = [];
 
 
-    const combinedMax =
-      hkMax + washMax;
+    if (audit.type === "combined") {
 
+        records =
+            createCombinedRecords(
+                plan,
+                audit.categories,
+                selectedMonth
+            );
 
-    let compliance = null;
+    } else {
 
-
-    if (combinedMax > 0) {
-
-      compliance =
-        (combinedScore / combinedMax) * 100;
+        records =
+            getNormalRecords(
+                plan,
+                audit.categories,
+                selectedMonth
+            );
 
     }
 
 
-    totalCombinedScore +=
-      combinedScore;
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "audit-card";
 
 
-    totalCombinedMax +=
-      combinedMax;
+    /* ---------- HEADER ---------- */
+
+    const header =
+        document.createElement("div");
+
+    header.className =
+        "audit-header";
+
+
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "audit-title";
+
+    title.textContent =
+        audit.title;
+
+
+    const subtitle =
+        document.createElement("div");
+
+    subtitle.className =
+        "audit-subtitle";
+
+    subtitle.textContent =
+        audit.subtitle;
+
+
+    const summary =
+        document.createElement("div");
+
+    summary.className =
+        "audit-summary";
+
+
+    const averageBox =
+        document.createElement("div");
+
+    averageBox.className =
+        "average-box";
+
+
+    const averageLabel =
+        document.createElement("span");
+
+    averageLabel.className =
+        "average-label";
+
+    averageLabel.textContent =
+        "Average Compliance";
+
+
+    const averageValue =
+        document.createElement("span");
+
+    averageValue.className =
+        "average-value";
+
+
+    const expandText =
+        document.createElement("span");
+
+    expandText.className =
+        "expand-text";
+
+
+    /* ---------- NO DATA ---------- */
+
+    if (!records.length) {
+
+        averageValue.textContent =
+            "No data";
+
+        expandText.textContent =
+            "No July submission";
+
+        averageBox.appendChild(
+            averageValue
+        );
+
+        summary.appendChild(
+            averageBox
+        );
+
+        summary.appendChild(
+            expandText
+        );
+
+        header.appendChild(title);
+        header.appendChild(subtitle);
+        header.appendChild(summary);
+
+        card.appendChild(header);
+
+        return card;
+
+    }
+
+
+    /* ---------- AVERAGE ---------- */
+
+    const average =
+        calculateAverage(records);
 
 
     const status =
-      getStatusText(compliance);
+        getStatus(average);
 
 
-    const statusClass =
-      getStatusClass(compliance);
+    averageValue.textContent =
+        average.toFixed(1) + "%";
 
 
-    rows.push(`
+    const statusBadge =
+        document.createElement("span");
 
-      <tr>
+    statusBadge.className =
+        "status " + status.className;
 
-        <td>
-          ${date}
-        </td>
-
-        <td class="score-cell">
-          ${formatNumber(hkScore)}/${formatNumber(hkMax)}
-        </td>
-
-        <td class="score-cell">
-          ${formatNumber(washScore)}/${formatNumber(washMax)}
-        </td>
-
-        <td class="combined-score">
-          ${
-            compliance !== null
-              ? compliance.toFixed(1) + "%"
-              : "N/A"
-          }
-        </td>
-
-        <td>
-
-          <span class="status ${statusClass}">
-            ${status}
-          </span>
-
-        </td>
-
-      </tr>
-
-    `);
-
-  });
+    statusBadge.textContent =
+        status.text;
 
 
-  const averageCompliance =
-    totalCombinedMax > 0
-      ? (
-          totalCombinedScore /
-          totalCombinedMax
-        ) * 100
-      : null;
+    averageBox.appendChild(
+        averageLabel
+    );
 
+    averageBox.appendChild(
+        averageValue
+    );
 
-  const averageStatus =
-    getStatusText(
-      averageCompliance
+    averageBox.appendChild(
+        statusBadge
     );
 
 
-  const averageStatusClass =
-    getStatusClass(
-      averageCompliance
+    expandText.textContent =
+        "▼ View Audit Details";
+
+
+    summary.appendChild(
+        averageBox
+    );
+
+    summary.appendChild(
+        expandText
     );
 
 
-  document.getElementById(
-    "solanGold"
-  ).innerHTML = `
-
-    <div class="category-card">
-
-      <div class="category-header">
-
-        <div class="category-title">
-          Housekeeping & Washroom — Combined (Gold Section)
-        </div>
-
-        <div class="category-description">
-
-          ${dates.length} weeks tracked ·
-          Housekeeping (5 areas) and Washroom scores merged —
-          points from both are added together each week.
-
-        </div>
-
-        <div class="category-summary">
-
-          <div class="summary-item">
-
-            <div class="label">
-              Weeks Tracked
-            </div>
-
-            <div class="value">
-              ${dates.length}
-            </div>
-
-          </div>
-
-          <div class="summary-item">
-
-            <div class="label">
-              Average Compliance
-            </div>
-
-            <div class="value">
-
-              ${
-                averageCompliance !== null
-                  ? averageCompliance.toFixed(1) + "%"
-                  : "N/A"
-              }
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
+    header.appendChild(title);
+    header.appendChild(subtitle);
+    header.appendChild(summary);
 
 
-      <div class="category-body">
+    /* ---------- DETAILS ---------- */
 
-        <div class="table-wrapper">
+    const details =
+        document.createElement("div");
 
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Week
-                </th>
-
-                <th>
-                  HK Score
-                </th>
-
-                <th>
-                  Washroom Score
-                </th>
-
-                <th>
-                  Combined
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              ${rows.join("")}
+    details.className =
+        "audit-details";
 
 
-              <tr class="average-row">
+    const wrapper =
+        document.createElement("div");
 
-                <td>
-                  Average
-                </td>
+    wrapper.className =
+        "details-table-wrapper";
 
-                <td>
-                  —
-                </td>
 
-                <td>
-                  —
-                </td>
+    const table =
+        document.createElement("table");
 
-                <td>
 
-                  ${
-                    averageCompliance !== null
-                      ? averageCompliance.toFixed(1) + "%"
-                      : "N/A"
-                  }
+    const thead =
+        document.createElement("thead");
 
-                </td>
+    const headerRow =
+        document.createElement("tr");
 
-                <td>
 
-                  <span
-                    class="status ${averageStatusClass}"
-                  >
-                    ${averageStatus}
-                  </span>
+    const firstHeader =
+        document.createElement("th");
 
-                </td>
+    firstHeader.textContent =
+        audit.type === "weekly"
+            ? "Week"
+            : "Month";
 
-              </tr>
 
-            </tbody>
+    const scoreHeader =
+        document.createElement("th");
 
-          </table>
+    scoreHeader.textContent =
+        "Score";
 
-        </div>
 
-      </div>
+    const complianceHeader =
+        document.createElement("th");
 
-    </div>
+    complianceHeader.textContent =
+        "Compliance";
 
-  `;
+
+    const statusHeader =
+        document.createElement("th");
+
+    statusHeader.textContent =
+        "Status";
+
+
+    headerRow.appendChild(
+        firstHeader
+    );
+
+    headerRow.appendChild(
+        scoreHeader
+    );
+
+    headerRow.appendChild(
+        complianceHeader
+    );
+
+    headerRow.appendChild(
+        statusHeader
+    );
+
+    thead.appendChild(
+        headerRow
+    );
+
+    table.appendChild(
+        thead
+    );
+
+
+    const tbody =
+        document.createElement("tbody");
+
+
+    /* ---------- DATA ROWS ---------- */
+
+    records.forEach(record => {
+
+        const row =
+            document.createElement("tr");
+
+
+        const dateCell =
+            document.createElement("td");
+
+        dateCell.textContent =
+            audit.type === "weekly"
+                ? formatDate(record.date)
+                : formatMonth(
+                    getRecordMonth(
+                        record.date
+                    )
+                );
+
+
+        const scoreCell =
+            document.createElement("td");
+
+        scoreCell.textContent =
+            record.score ?? "-";
+
+
+        const complianceCell =
+            document.createElement("td");
+
+        const compliance =
+            Number(
+                record.compliance || 0
+            );
+
+        complianceCell.textContent =
+            compliance.toFixed(1) + "%";
+
+
+        const rowStatus =
+            getStatus(compliance);
+
+
+        const statusCell =
+            document.createElement("td");
+
+
+        const rowBadge =
+            document.createElement("span");
+
+        rowBadge.className =
+            "status " +
+            rowStatus.className;
+
+        rowBadge.textContent =
+            rowStatus.text;
+
+
+        statusCell.appendChild(
+            rowBadge
+        );
+
+
+        row.appendChild(
+            dateCell
+        );
+
+        row.appendChild(
+            scoreCell
+        );
+
+        row.appendChild(
+            complianceCell
+        );
+
+        row.appendChild(
+            statusCell
+        );
+
+
+        tbody.appendChild(
+            row
+        );
+
+    });
+
+
+    /* ---------- AVERAGE ROW ---------- */
+
+    const averageRow =
+        document.createElement("tr");
+
+    averageRow.className =
+        "average-row";
+
+
+    const averageLabelCell =
+        document.createElement("td");
+
+    averageLabelCell.textContent =
+        "Average";
+
+
+    const emptyScoreCell =
+        document.createElement("td");
+
+    emptyScoreCell.textContent =
+        "";
+
+
+    const averageComplianceCell =
+        document.createElement("td");
+
+    averageComplianceCell.textContent =
+        average.toFixed(1) + "%";
+
+
+    const averageStatusCell =
+        document.createElement("td");
+
+
+    const averageBadge =
+        document.createElement("span");
+
+    averageBadge.className =
+        "status " +
+        status.className;
+
+    averageBadge.textContent =
+        status.text;
+
+
+    averageStatusCell.appendChild(
+        averageBadge
+    );
+
+
+    averageRow.appendChild(
+        averageLabelCell
+    );
+
+    averageRow.appendChild(
+        emptyScoreCell
+    );
+
+    averageRow.appendChild(
+        averageComplianceCell
+    );
+
+    averageRow.appendChild(
+        averageStatusCell
+    );
+
+
+    tbody.appendChild(
+        averageRow
+    );
+
+
+    table.appendChild(
+        tbody
+    );
+
+    wrapper.appendChild(
+        table
+    );
+
+    details.appendChild(
+        wrapper
+    );
+
+
+    /* ---------- CLICK TO EXPAND ---------- */
+
+    header.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                details.classList.contains(
+                    "open"
+                );
+
+
+            if (isOpen) {
+
+                details.classList.remove(
+                    "open"
+                );
+
+                expandText.textContent =
+                    "▼ View Audit Details";
+
+            } else {
+
+                details.classList.add(
+                    "open"
+                );
+
+                expandText.textContent =
+                    "▲ Hide Audit Details";
+
+            }
+
+        }
+    );
+
+
+    card.appendChild(
+        header
+    );
+
+    card.appendChild(
+        details
+    );
+
+
+    return card;
 
 }
 
 
-/* =====================================================
-   SOLAN SILVER
-   ===================================================== */
+/* =========================================================
+   STORE COLUMN
+========================================================= */
 
-function renderSolanSilver(plan) {
+function createStoreColumn(
+    store,
+    plan,
+    selectedMonth
+) {
 
-  const item =
-    findCategory(
-      plan,
-      "Housekeeping – Silver Branch"
-    ) ||
-    findCategory(
-      plan,
-      "Housekeeping - Silver Branch"
-    );
+    const column =
+        document.createElement("div");
+
+    column.className =
+        "store-column";
 
 
-  document.getElementById(
-    "solanSilver"
-  ).innerHTML =
-    createStandardCard(
-      item,
-      "Housekeeping — Silver Section",
-      "Silver Branch only · no separate Washroom checklist here, so nothing to combine.",
-      "Week"
-    );
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "store-title";
+
+    title.textContent =
+        store === "solan"
+            ? "VJ Solan"
+            : "VJ Rohru";
+
+
+    const description =
+        document.createElement("div");
+
+    description.className =
+        "store-description";
+
+    description.textContent =
+        "Audits below are ordered by criticality, not blended into one score.";
+
+
+    column.appendChild(title);
+    column.appendChild(description);
+
+
+    AUDITS[store].forEach(audit => {
+
+        const priority =
+            document.createElement(
+                "div"
+            );
+
+        priority.className =
+            "priority-label";
+
+        priority.textContent =
+            audit.priority;
+
+
+        column.appendChild(
+            priority
+        );
+
+
+        if (
+            store === "rohru" &&
+            audit.title ===
+                "Housekeeping — VJ Rohru"
+        ) {
+
+            const note =
+                document.createElement(
+                    "div"
+                );
+
+            note.className =
+                "audit-subtitle";
+
+            note.textContent =
+                "No separate Washroom checklist runs at Rohru, so there is nothing to combine here.";
+
+            column.appendChild(
+                note
+            );
+
+        }
+
+
+        column.appendChild(
+            createAuditCard(
+                audit,
+                plan,
+                selectedMonth
+            )
+        );
+
+    });
+
+
+    return column;
 
 }
 
 
-/* =====================================================
-   RENDER ALL
-   ===================================================== */
-
-function updateDashboard(plan) {
-
-  renderSolanSOP(plan);
-
-  renderSolanSelection(plan);
-
-  renderSolanGold(plan);
-
-  renderSolanSilver(plan);
-
-  renderRohruSOP(plan);
-
-  renderRohruHousekeeping(plan);
-
-}
-
-
-/* =====================================================
+/* =========================================================
    LOAD DASHBOARD
-   ===================================================== */
+========================================================= */
 
 async function loadDashboard() {
 
-  const loading =
-    document.getElementById("loading");
+    const dashboard =
+        document.getElementById(
+            "dashboard"
+        );
 
-  const storeGrid =
-    document.getElementById("storeGrid");
 
-  const errorBox =
-    document.getElementById("errorBox");
+    const selectedStore =
+        document.getElementById(
+            "storeSelect"
+        ).value;
 
-  const selectedMonth =
+
+    const selectedMonth =
+        document.getElementById(
+            "monthSelect"
+        ).value;
+
+
+    const monthText =
+        formatMonth(
+            selectedMonth
+        );
+
+
     document.getElementById(
-      "monthSelect"
-    ).value;
+        "filterInfo"
+    ).textContent =
+        "Showing " +
+        monthText +
+        " only. Audits with no " +
+        monthText +
+        " submission show \"No data\".";
 
 
-  loading.style.display = "block";
-
-  storeGrid.style.display = "none";
-
-  errorBox.style.display = "none";
+    dashboard.innerHTML =
+        '<div class="loading">Loading dashboard...</div>';
 
 
-  try {
+    try {
 
-    const response =
-      await fetch(
-        API_URL +
-        "?month=" +
-        encodeURIComponent(
-          selectedMonth
-        )
-      );
+        const response =
+            await fetch(
+                API_URL +
+                "?month=" +
+                encodeURIComponent(
+                    selectedMonth
+                )
+            );
 
 
-    if (!response.ok) {
+        if (!response.ok) {
+            throw new Error(
+                "API request failed"
+            );
+        }
 
-      throw new Error(
-        "API response failed"
-      );
+
+        const data =
+            await response.json();
+
+
+        const plan =
+            Array.isArray(data.plan)
+                ? data.plan
+                : [];
+
+
+        dashboard.innerHTML = "";
+
+
+        if (
+            selectedStore === "all"
+        ) {
+
+            dashboard.classList.remove(
+                "single"
+            );
+
+
+            dashboard.appendChild(
+                createStoreColumn(
+                    "solan",
+                    plan,
+                    selectedMonth
+                )
+            );
+
+
+            dashboard.appendChild(
+                createStoreColumn(
+                    "rohru",
+                    plan,
+                    selectedMonth
+                )
+            );
+
+        } else {
+
+            dashboard.classList.add(
+                "single"
+            );
+
+
+            dashboard.appendChild(
+                createStoreColumn(
+                    selectedStore,
+                    plan,
+                    selectedMonth
+                )
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        dashboard.innerHTML = `
+            <div class="empty-state">
+                <strong>Unable to load dashboard</strong>
+                <br><br>
+                Please click Refresh and try again.
+            </div>
+        `;
 
     }
-
-
-    const data =
-      await response.json();
-
-
-    if (!data.success) {
-
-      throw new Error(
-        data.error ||
-        "Unable to load dashboard data"
-      );
-
-    }
-
-
-    /*
-     * TOTAL AUDITS
-     */
-
-    document.getElementById(
-      "totalAudits"
-    ).innerText =
-      data.summary &&
-      data.summary.totalAudits !== undefined
-        ? data.summary.totalAudits
-        : 0;
-
-
-    /*
-     * RENDER STORE DATA
-     */
-
-    updateDashboard(
-      data.plan || []
-    );
-
-
-    loading.style.display = "none";
-
-    storeGrid.style.display = "grid";
-
-
-    document.getElementById(
-      "lastUpdated"
-    ).innerText =
-      "Last updated: " +
-      new Date().toLocaleString();
-
-
-  }
-
-  catch (error) {
-
-    loading.style.display = "none";
-
-    storeGrid.style.display = "none";
-
-    errorBox.innerText =
-      "Unable to load live dashboard data. Please refresh the page.";
-
-    errorBox.style.display = "block";
-
-    console.error(
-      "Dashboard Error:",
-      error
-    );
-
-  }
 
 }
 
 
-/* =====================================================
-   MONTH CHANGE
-   ===================================================== */
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
 
 document
-  .getElementById("monthSelect")
-  .addEventListener(
-    "change",
-    loadDashboard
-  );
+    .getElementById("storeSelect")
+    .addEventListener(
+        "change",
+        loadDashboard
+    );
 
 
-/* =====================================================
+document
+    .getElementById("monthSelect")
+    .addEventListener(
+        "change",
+        loadDashboard
+    );
+
+
+/* =========================================================
    INITIAL LOAD
-   ===================================================== */
+========================================================= */
 
 loadDashboard();
 
-
 </script>
 
-
 </body>
-
 </html>
