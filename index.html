@@ -638,37 +638,112 @@
 
 
     /* =========================
-       FORMAT STATUS
+       COMPLIANCE STATUS
+       
+       0–69%   = RED
+       70–75%  = YELLOW
+       76–100% = GREEN
        ========================= */
 
-    function getStatusClass(status) {
+    function getStatusClass(compliance) {
 
-      if (!status) {
+      if (
+        compliance === null ||
+        compliance === undefined ||
+        compliance === ""
+      ) {
+
         return "status-na";
+
       }
 
 
       const value =
-        String(status)
-          .toUpperCase();
+        Number(compliance);
 
 
-      if (value === "RED") {
+      if (value < 70) {
+
         return "status-red";
+
       }
 
 
-      if (value === "YELLOW") {
+      if (
+        value >= 70 &&
+        value <= 75
+      ) {
+
         return "status-yellow";
+
       }
 
 
-      if (value === "GREEN") {
+      if (
+        value > 75 &&
+        value <= 100
+      ) {
+
         return "status-green";
+
       }
 
 
       return "status-na";
+
+    }
+
+
+
+    /* =========================
+       GET STATUS TEXT
+       ========================= */
+
+    function getStatusText(compliance) {
+
+      if (
+        compliance === null ||
+        compliance === undefined ||
+        compliance === ""
+      ) {
+
+        return "N/A";
+
+      }
+
+
+      const value =
+        Number(compliance);
+
+
+      if (value < 70) {
+
+        return "RED";
+
+      }
+
+
+      if (
+        value >= 70 &&
+        value <= 75
+      ) {
+
+        return "YELLOW";
+
+      }
+
+
+      if (
+        value > 75 &&
+        value <= 100
+      ) {
+
+        return "GREEN";
+
+      }
+
+
+      return "N/A";
 
     }
 
@@ -741,6 +816,8 @@
         `;
 
       }
+
+
       else {
 
         tableHTML = `
@@ -774,28 +851,51 @@
               </thead>
 
               <tbody>
+
         `;
 
 
         records.forEach(
           record => {
 
-            const compliance =
+
+            /* =========================
+               COMPLIANCE
+               ========================= */
+
+            const complianceValue =
               record.compliance !== null &&
-              record.compliance !== undefined
-                ? Number(
-                    record.compliance
-                  ).toFixed(2) + "%"
+              record.compliance !== undefined &&
+              record.compliance !== ""
+                ? Number(record.compliance)
+                : null;
+
+
+            const compliance =
+              complianceValue !== null
+                ? complianceValue.toFixed(2) + "%"
                 : "N/A";
 
 
+            /* =========================
+               STATUS FROM COMPLIANCE
+               ========================= */
+
             const status =
-              record.status || "N/A";
+              getStatusText(
+                complianceValue
+              );
 
 
             const statusClass =
-              getStatusClass(status);
+              getStatusClass(
+                complianceValue
+              );
 
+
+            /* =========================
+               TABLE ROW
+               ========================= */
 
             tableHTML += `
 
@@ -833,9 +933,9 @@
         );
 
 
-        /*
-          AVERAGE ROW
-        */
+        /* =========================
+           AVERAGE ROW
+           ========================= */
 
         tableHTML += `
 
@@ -870,6 +970,10 @@
       }
 
 
+      /* =========================
+         CATEGORY CARD
+         ========================= */
+
       card.innerHTML = `
 
         <div class="category-header">
@@ -897,6 +1001,7 @@
 
 
           <div class="category-summary">
+
 
             <div class="summary-item">
 
@@ -941,6 +1046,7 @@
               </div>
 
             </div>
+
 
           </div>
 
