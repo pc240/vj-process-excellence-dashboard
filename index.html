@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -494,43 +493,6 @@
       "https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3JrDdbkqH1A-zAE4S1bazx1b1ZNeUA6J9a/exec";
 
 
-    /*
-      MAXIMUM SCORE
-
-      Yahan category-wise maximum score define kiya gaya hai.
-
-      IMPORTANT:
-      Agar kisi audit ka actual maximum score alag hai,
-      sirf yahan number change karna hoga.
-    */
-
-    const MAX_SCORES = {
-
-      "SOP Audit – Solan": 165,
-
-      "SOP Audit – Rohru": 165,
-
-      "Selection SOP Audit – Solan": 165,
-
-      "Housekeeping – GF": 14,
-
-      "Housekeeping – 1st Floor": 14,
-
-      "Housekeeping – 2nd Floor": 14,
-
-      "Housekeeping – 3rd Floor": 14,
-
-      "Housekeeping – 4th + 5th Floor": 13,
-
-      "Housekeeping – Rohru": 17,
-
-      "Washroom Audit – Solan": 12,
-
-      "Housekeeping – Silver Branch": 14
-
-    };
-
-
     /* =========================
        LOAD DASHBOARD
        ========================= */
@@ -656,10 +618,7 @@
        FORMAT SCORE
        ========================= */
 
-    function formatScore(
-      score,
-      category
-    ) {
+    function formatScore(score) {
 
       if (
         score === null ||
@@ -672,24 +631,7 @@
       }
 
 
-      const maximum =
-        MAX_SCORES[category];
-
-
-      if (
-        maximum === undefined
-      ) {
-
-        return Number(score);
-
-      }
-
-
-      return (
-        Number(score) +
-        " / " +
-        maximum
-      );
+      return Number(score);
 
     }
 
@@ -749,10 +691,6 @@
         item.records || [];
 
 
-      const maximum =
-        MAX_SCORES[item.category];
-
-
       let averageScoreText =
         "N/A";
 
@@ -762,20 +700,8 @@
         item.averageScore !== undefined
       ) {
 
-        if (maximum !== undefined) {
-
-          averageScoreText =
-            Number(item.averageScore) +
-            " / " +
-            maximum;
-
-        }
-        else {
-
-          averageScoreText =
-            Number(item.averageScore);
-
-        }
+        averageScoreText =
+          Number(item.averageScore);
 
       }
 
@@ -881,8 +807,7 @@
 
                 <td class="score-cell">
                   ${formatScore(
-                    record.score,
-                    item.category
+                    record.score
                   )}
                 </td>
 
@@ -921,15 +846,11 @@
                 </td>
 
                 <td>
-
                   ${averageScoreText}
-
                 </td>
 
                 <td>
-
                   ${averageComplianceText}
-
                 </td>
 
                 <td>
@@ -1118,4 +1039,3 @@
 </body>
 
 </html>
-```
