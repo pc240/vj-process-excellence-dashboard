@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,6 +128,66 @@
       font-size: 18px;
     }
 
+    .category-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+
+    .category-header {
+      padding: 18px 20px;
+      background: #f7f8fa;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .category-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 14px;
+    }
+
+    .category-title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #172033;
+    }
+
+    .tracked {
+      font-size: 13px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .category-summary {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .summary-item {
+      min-width: 130px;
+    }
+
+    .summary-label {
+      font-size: 11px;
+      color: #777;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .category-body {
+      padding: 0 20px 20px 20px;
+    }
+
     .table-wrapper {
       overflow-x: auto;
     }
@@ -147,6 +208,51 @@
     th {
       background: #f7f8fa;
       font-weight: bold;
+    }
+
+    .score-cell {
+      font-weight: bold;
+    }
+
+    .compliance-cell {
+      font-weight: 600;
+    }
+
+    .average-row {
+      background: #fafafa;
+      font-weight: bold;
+    }
+
+    .average-row td {
+      border-top: 2px solid #ddd;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .status-red {
+      background: #fde8e8;
+      color: #b00020;
+    }
+
+    .status-yellow {
+      background: #fff4cc;
+      color: #8a6500;
+    }
+
+    .status-green {
+      background: #e6f6ec;
+      color: #16803c;
+    }
+
+    .status-na {
+      background: #eeeeee;
+      color: #666;
     }
 
     .completed {
@@ -181,12 +287,25 @@
       color: #777;
     }
 
+    .no-records {
+      text-align: center;
+      padding: 25px;
+      color: #777;
+      background: #fafafa;
+      border-radius: 6px;
+    }
+
     @media (max-width: 900px) {
 
       .top-bar {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
+      }
+
+      .category-title-row {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
     }
@@ -211,6 +330,16 @@
 
       .header h1 {
         font-size: 22px;
+      }
+
+      .category-summary {
+        gap: 15px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        font-size: 13px;
       }
 
     }
@@ -254,7 +383,6 @@
 
       <div class="controls">
 
-
         <select
           class="month-select"
           id="monthSelect"
@@ -285,7 +413,6 @@
         >
           Refresh
         </button>
-
 
       </div>
 
@@ -322,7 +449,7 @@
     </div>
 
 
-    <!-- AUDIT TABLE -->
+    <!-- AUDIT DETAILS -->
 
     <div class="section">
 
@@ -339,45 +466,15 @@
       </div>
 
 
-      <div class="table-wrapper">
-
-        <table
-          id="auditTable"
-          style="display:none;"
-        >
-
-          <thead>
-
-            <tr>
-
-              <th>
-                Audit Category
-              </th>
-
-              <th>
-                Completed
-              </th>
-
-            </tr>
-
-          </thead>
-
-
-          <tbody
-            id="auditTableBody"
-          ></tbody>
-
-
-        </table>
-
-      </div>
+      <div
+        id="auditDetails"
+      ></div>
 
 
       <div
         class="last-updated"
         id="lastUpdated"
       ></div>
-
 
     </div>
 
@@ -394,8 +491,44 @@
        ========================= */
 
     const API_URL =
-  "https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3JrDdbkqH1A-zAE4S1bazx1b1ZNeUA6J9a/exec";
+      "https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3JrDdbkqH1A-zAE4S1bazx1b1ZNeUA6J9a/exec";
 
+
+    /*
+      MAXIMUM SCORE
+
+      Yahan category-wise maximum score define kiya gaya hai.
+
+      IMPORTANT:
+      Agar kisi audit ka actual maximum score alag hai,
+      sirf yahan number change karna hoga.
+    */
+
+    const MAX_SCORES = {
+
+      "SOP Audit – Solan": 165,
+
+      "SOP Audit – Rohru": 165,
+
+      "Selection SOP Audit – Solan": 165,
+
+      "Housekeeping – GF": 14,
+
+      "Housekeeping – 1st Floor": 14,
+
+      "Housekeeping – 2nd Floor": 14,
+
+      "Housekeeping – 3rd Floor": 14,
+
+      "Housekeeping – 4th + 5th Floor": 13,
+
+      "Housekeeping – Rohru": 17,
+
+      "Washroom Audit – Solan": 12,
+
+      "Housekeeping – Silver Branch": 14
+
+    };
 
 
     /* =========================
@@ -404,18 +537,14 @@
 
     async function loadDashboard() {
 
-
       const loading =
         document.getElementById("loading");
 
-
-      const table =
-        document.getElementById("auditTable");
-
+      const details =
+        document.getElementById("auditDetails");
 
       const errorBox =
         document.getElementById("errorBox");
-
 
       const selectedMonth =
         document.getElementById("monthSelect").value;
@@ -423,13 +552,12 @@
 
       loading.style.display = "block";
 
-      table.style.display = "none";
+      details.innerHTML = "";
 
       errorBox.style.display = "none";
 
 
       try {
-
 
         const response =
           await fetch(
@@ -467,7 +595,7 @@
         );
 
 
-        updateTable(
+        updateAuditDetails(
           data.plan
         );
 
@@ -476,44 +604,32 @@
           "none";
 
 
-        table.style.display =
-          "table";
-
-
         document.getElementById(
           "lastUpdated"
         ).innerText =
           "Last updated: " +
           new Date().toLocaleString();
 
-
       }
 
 
       catch (error) {
 
-
         loading.style.display =
           "none";
 
-
-        table.style.display =
-          "none";
-
+        details.innerHTML = "";
 
         errorBox.innerText =
           "Unable to load live dashboard data. Please refresh the page.";
 
-
         errorBox.style.display =
           "block";
-
 
         console.error(
           "Dashboard Error:",
           error
         );
-
 
       }
 
@@ -525,37 +641,419 @@
        UPDATE SUMMARY
        ========================= */
 
-    function updateSummary(
-      summary
-    ) {
-
+    function updateSummary(summary) {
 
       document.getElementById(
         "totalAudits"
       ).innerText =
         summary.totalAudits ?? 0;
 
+    }
+
+
+
+    /* =========================
+       FORMAT SCORE
+       ========================= */
+
+    function formatScore(
+      score,
+      category
+    ) {
+
+      if (
+        score === null ||
+        score === undefined ||
+        score === ""
+      ) {
+
+        return "N/A";
+
+      }
+
+
+      const maximum =
+        MAX_SCORES[category];
+
+
+      if (
+        maximum === undefined
+      ) {
+
+        return Number(score);
+
+      }
+
+
+      return (
+        Number(score) +
+        " / " +
+        maximum
+      );
 
     }
 
 
 
     /* =========================
-       UPDATE TABLE
+       FORMAT STATUS
        ========================= */
 
-    function updateTable(
-      plan
-    ) {
+    function getStatusClass(status) {
+
+      if (!status) {
+        return "status-na";
+      }
 
 
-      const tbody =
-        document.getElementById(
-          "auditTableBody"
+      const value =
+        String(status)
+          .toUpperCase();
+
+
+      if (value === "RED") {
+        return "status-red";
+      }
+
+
+      if (value === "YELLOW") {
+        return "status-yellow";
+      }
+
+
+      if (value === "GREEN") {
+        return "status-green";
+      }
+
+
+      return "status-na";
+
+    }
+
+
+
+    /* =========================
+       CREATE CATEGORY CARD
+       ========================= */
+
+    function createCategoryCard(item) {
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "category-card";
+
+
+      const records =
+        item.records || [];
+
+
+      const maximum =
+        MAX_SCORES[item.category];
+
+
+      let averageScoreText =
+        "N/A";
+
+
+      if (
+        item.averageScore !== null &&
+        item.averageScore !== undefined
+      ) {
+
+        if (maximum !== undefined) {
+
+          averageScoreText =
+            Number(item.averageScore) +
+            " / " +
+            maximum;
+
+        }
+        else {
+
+          averageScoreText =
+            Number(item.averageScore);
+
+        }
+
+      }
+
+
+      let averageComplianceText =
+        "N/A";
+
+
+      if (
+        item.averageCompliance !== null &&
+        item.averageCompliance !== undefined
+      ) {
+
+        averageComplianceText =
+          Number(
+            item.averageCompliance
+          ).toFixed(2) +
+          "%";
+
+      }
+
+
+      let tableHTML = "";
+
+
+      if (records.length === 0) {
+
+        tableHTML = `
+
+          <div class="no-records">
+
+            No audits found for this category
+            in the selected month.
+
+          </div>
+
+        `;
+
+      }
+      else {
+
+        tableHTML = `
+
+          <div class="table-wrapper">
+
+            <table>
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Date
+                  </th>
+
+                  <th>
+                    Score
+                  </th>
+
+                  <th>
+                    Compliance
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody>
+        `;
+
+
+        records.forEach(
+          record => {
+
+            const compliance =
+              record.compliance !== null &&
+              record.compliance !== undefined
+                ? Number(
+                    record.compliance
+                  ).toFixed(2) + "%"
+                : "N/A";
+
+
+            const status =
+              record.status || "N/A";
+
+
+            const statusClass =
+              getStatusClass(status);
+
+
+            tableHTML += `
+
+              <tr>
+
+                <td>
+                  ${record.date || "N/A"}
+                </td>
+
+                <td class="score-cell">
+                  ${formatScore(
+                    record.score,
+                    item.category
+                  )}
+                </td>
+
+                <td class="compliance-cell">
+                  ${compliance}
+                </td>
+
+                <td>
+
+                  <span
+                    class="status ${statusClass}"
+                  >
+                    ${status}
+                  </span>
+
+                </td>
+
+              </tr>
+
+            `;
+
+          }
         );
 
 
-      tbody.innerHTML = "";
+        /*
+          AVERAGE ROW
+        */
+
+        tableHTML += `
+
+              <tr class="average-row">
+
+                <td>
+                  Average
+                </td>
+
+                <td>
+
+                  ${averageScoreText}
+
+                </td>
+
+                <td>
+
+                  ${averageComplianceText}
+
+                </td>
+
+                <td>
+                  —
+                </td>
+
+              </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        `;
+
+      }
+
+
+      card.innerHTML = `
+
+        <div class="category-header">
+
+          <div class="category-title-row">
+
+            <div>
+
+              <div class="category-title">
+
+                ${item.category}
+
+              </div>
+
+              <div class="tracked">
+
+                ${item.tracked ?? records.length}
+                audit(s) tracked
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="category-summary">
+
+            <div class="summary-item">
+
+              <div class="summary-label">
+                Audits Tracked
+              </div>
+
+              <div class="summary-value">
+
+                ${item.tracked ?? records.length}
+
+              </div>
+
+            </div>
+
+
+            <div class="summary-item">
+
+              <div class="summary-label">
+                Average Score
+              </div>
+
+              <div class="summary-value">
+
+                ${averageScoreText}
+
+              </div>
+
+            </div>
+
+
+            <div class="summary-item">
+
+              <div class="summary-label">
+                Average Compliance
+              </div>
+
+              <div class="summary-value">
+
+                ${averageComplianceText}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="category-body">
+
+          ${tableHTML}
+
+        </div>
+
+      `;
+
+
+      return card;
+
+    }
+
+
+
+    /* =========================
+       UPDATE AUDIT DETAILS
+       ========================= */
+
+    function updateAuditDetails(plan) {
+
+      const container =
+        document.getElementById(
+          "auditDetails"
+        );
+
+
+      container.innerHTML = "";
 
 
       if (
@@ -563,62 +1061,32 @@
         plan.length === 0
       ) {
 
+        container.innerHTML = `
 
-        const row =
-          document.createElement("tr");
+          <div class="empty">
 
-
-        row.innerHTML = `
-
-          <td
-            colspan="2"
-            class="empty"
-          >
             No audit data available
             for the selected month.
-          </td>
+
+          </div>
 
         `;
-
-
-        tbody.appendChild(row);
-
 
         return;
 
       }
 
 
-
       plan.forEach(
         item => {
 
+          const card =
+            createCategoryCard(item);
 
-          const row =
-            document.createElement("tr");
-
-
-          row.innerHTML = `
-
-            <td>
-              ${item.category}
-            </td>
-
-            <td class="completed">
-              ${item.completed ?? 0}
-            </td>
-
-          `;
-
-
-          tbody.appendChild(
-            row
-          );
-
+          container.appendChild(card);
 
         }
       );
-
 
     }
 
@@ -650,3 +1118,4 @@
 </body>
 
 </html>
+```
