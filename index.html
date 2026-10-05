@@ -279,6 +279,9 @@
   th{
     background:var(--champagne);
     color:var(--dark);
+    text-align:left;
+    padding:6px 8px;
+    font-weight:bold;
   }
   td{
     padding:6px 8px;
@@ -329,7 +332,7 @@
     </div>
   </div>
   <h1>Store-wise Monthly Compliance Dashboard</h1>
-  <div class="period">Period: 01 Jul 2026 – Ongoing &nbsp;·&nbsp; Prepared by: Vandana Katoch, Process Coordinator</div>
+  <div class="period">Period: 01 Jul 2026 – 31 Oct 2026 &nbsp;·&nbsp; Prepared by: Vandana Katoch, Process Coordinator</div>
 </header>
 
 <div class="store-tabs">
@@ -339,7 +342,7 @@
 
 <div class="filter-bar">
   <button class="filter-toggle" id="filter-toggle" onclick="toggleDropdown()">
-    Filter <span class="current" id="filter-current">— All</span> <span class="arrow">▾</span>
+    Filter <span class="current" id="filter-current">— All (Jul–Oct)</span> <span class="arrow">▾</span>
   </button>
   <div class="filter-dropdown" id="filter-dropdown"></div>
   <div class="filter-note" id="filter-note"></div>
@@ -550,11 +553,10 @@
 
 <footer>
   <div class="rule"></div>
-  VERMA JEWELLERS — CONFIDENTIAL &nbsp;|&nbsp; Process Excellence &nbsp;|&nbsp; Data source: Taqtics audit checklists
+  VERMA JEWELLERS — CONFIDENTIAL &nbsp;|&nbsp; Process Excellence &nbsp;|&nbsp; Data source: Taqtics audit checklists, 01 Jul – 31 Oct 2026
 </footer>
 
 <script>
-  // Tab switching
   document.querySelectorAll('.store-tab').forEach(tab=>{
     tab.addEventListener('click', ()=>{
       document.querySelectorAll('.store-tab').forEach(t=>t.classList.remove('active'));
@@ -582,21 +584,25 @@
   const monthOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   let availableMonths = [];
 
-  // Scans all rows in tables and builds the dropdown automatically
   function initDynamicDropdown(){
     const rows = document.querySelectorAll('tr[data-month]');
     const monthsSet = new Set();
+    
+    // Scans existing rows
     rows.forEach(r => {
       const m = r.dataset.month;
       if(m) monthsSet.add(m);
     });
+
+    // Ensure October is included even before audit rows are entered
+    monthsSet.add('Oct');
 
     availableMonths = Array.from(monthsSet).sort((a,b) => monthOrder.indexOf(a) - monthOrder.indexOf(b));
 
     const dropdown = document.getElementById('filter-dropdown');
     dropdown.innerHTML = '';
 
-    // "All" button
+    // "All" option
     const allBtn = document.createElement('button');
     allBtn.className = 'filter-option active';
     allBtn.dataset.month = 'all';
@@ -607,7 +613,7 @@
     allBtn.onclick = () => setFilter('all');
     dropdown.appendChild(allBtn);
 
-    // Dynamic month buttons based strictly on present audit rows
+    // Monthly buttons
     availableMonths.forEach(m => {
       const btn = document.createElement('button');
       btn.className = 'filter-option';
@@ -624,7 +630,7 @@
     });
 
     const currentLabel = month === 'all' 
-      ? `— All (${availableMonths.length > 0 ? availableMonths[0] + '–' + availableMonths[availableMonths.length - 1] : ''})`
+      ? `— All (${availableMonths[0]}–${availableMonths[availableMonths.length - 1]})`
       : `— ${monthNames[month] || month} 2026`;
     document.getElementById('filter-current').textContent = currentLabel;
 
@@ -694,10 +700,10 @@
 
     const note = document.getElementById('filter-note');
     if (month === 'all'){
-      note.textContent = `Showing all data (${availableMonths.join(', ')}).`;
+      note.textContent = `Showing combined July + August + September + October 2026 data.`;
     } else {
       const fullMonth = monthNames[month] || month;
-      note.textContent = `Showing ${fullMonth} 2026 only. Audits with no ${fullMonth} submission show "No data".`;
+      note.textContent = `Showing ${fullMonth} 2026 only. Audits with no ${fullMonth} submission show "NO DATA".`;
     }
   }
 
