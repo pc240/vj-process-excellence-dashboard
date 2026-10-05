@@ -1,93 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verma Jewellers — Store-wise Compliance Dashboard</title>
-<style>
-  :root{
-    --dark:#0F2A4D;
-    --dark2:#173a66;
-    --gold:#B8962E;
-    --cream:#F5F0E8;
-    --charcoal:#2D2D2D;
-    --champagne:#E8D9B0;
-    --warmgray:#7A7060;
-    --white:#FFFFFF;
-    --green:#1F7A4D;
-    --green-bg:#E7F3EC;
-    --red:#B3352C;
-    --red-bg:#FBEAE8;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--cream);
-    color:var(--charcoal);
-    font-family:Calibri, "Segoe UI", Arial, sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  header{
-    background:var(--dark);
-    color:var(--white);
-    padding:20px 20px 20px;
-  }
-  header .top-row{
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  header .logo{
-    width:46px;
-    height:46px;
-    border-radius:6px;
-    flex-shrink:0;
-  }
-  header .brand{
-    font-family:Cambria, Georgia, serif;
-    color:var(--gold);
-    font-size:22px;
-    font-weight:bold;
-    letter-spacing:0.5px;
-  }
-  header .tagline{
-    color:var(--champagne);
-    font-size:12px;
-    margin-top:2px;
-  }
-  header h1{
-    font-family:Cambria, Georgia, serif;
-    font-size:19px;
-    margin:14px 0 4px;
-    font-weight:bold;
-  }
-  header .period{
-    font-size:12px;
-    color:#D8CBB8;
-  }
-
-  .store-tabs{
-    display:flex;
-    gap:8px;
-    padding:14px 16px 0;
-    background:var(--dark);
-    overflow-x:auto;
-  }
-  .store-tab{
-    flex:1;
-    min-width:110px;
-    text-align:center;
-    padding:10px 8px;
-    border-radius:8px 8px 0 0;
-    background:var(--dark2);
-    color:#C9D3E0;
-    font-size:13px;
-    font-weight:bold;
-    cursor:pointer;
-    border:none;
-    transition:background .15s ease, color .15s ease;
-  }
-  .store-tab.active{
+b.active{
     background:var(--cream);
     color:var(--dark);
   }
@@ -332,438 +243,254 @@
     </div>
   </div>
   <h1>Store-wise Monthly Compliance Dashboard</h1>
-  <div class="period">Period: 01 Jul 2026 – 30 Sep 2026 &nbsp;·&nbsp; Prepared by: Vandana Katoch, Process Coordinator</div>
+  <div class="period">Live API data · Jul 2026 – Current &nbsp;·&nbsp; Prepared by: Vandana Katoch, Process Coordinator</div>
 </header>
 
 <div class="store-tabs">
-  <button class="store-tab active" data-store="solan">VJ Solan<span class="sub">4 audits</span></button>
-  <button class="store-tab" data-store="rohru">VJ Rohru<span class="sub">2 audits</span></button>
+  <button class="store-tab active" data-store="solan">VJ Solan<span class="sub">Live API</span></button>
+  <button class="store-tab" data-store="rohru">VJ Rohru<span class="sub">Live API</span></button>
 </div>
 
 <div class="filter-bar">
   <button class="filter-toggle" id="filter-toggle" onclick="toggleDropdown()">
-    Filter <span class="current" id="filter-current">— All (Jul–Sep)</span> <span class="arrow">▾</span>
+    Filter <span class="current" id="filter-current">— All Months</span> <span class="arrow">▾</span>
   </button>
   <div class="filter-dropdown" id="filter-dropdown">
     <button class="filter-option active" data-month="all" onclick="setFilter('all')">All Months</button>
-    <button class="filter-option" data-month="Jul" onclick="setFilter('Jul')">July 2026</button>
-    <button class="filter-option" data-month="Aug" onclick="setFilter('Aug')">August 2026</button>
-    <button class="filter-option" data-month="Sep" onclick="setFilter('Sep')">September 2026</button>
-    <button class="filter-option" data-month="Oct" onclick="setFilter('Oct')">October 2026</button>
-</div>
-  <div class="filter-note" id="filter-note"></div>
+  </div>
+  <div class="filter-note" id="filter-note">Connecting to live API…</div>
 </div>
 
 <main>
-
-  <!-- SOLAN -->
   <section class="store-panel active" id="panel-solan">
     <div class="store-heading">VJ Solan</div>
-    <div class="store-subnote">Covers both the Gold and Silver sections of the Solan store. Audits below are ordered by criticality, not blended into one score — each checks a different risk and shouldn't be averaged together.</div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier1">MOST IMPORTANT</span>
-        <span class="tier-label">SOP / Process Audit</span>
-        <span class="freq-pill">Weekly</span>
-      </div>
-      <div class="audit-card">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">SOP / Process Audit Checklist</div>
-            <div class="meta">10 weeks tracked</div>
-          </div>
-          <div class="score"><span class="pct">53.0%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Week</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Jul"><td>10 Jul 2026</td><td>60</td><td>63.2%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Jul"><td>17 Jul 2026</td><td>50</td><td>52.6%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Jul"><td>24 Jul 2026</td><td>50</td><td>52.6%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Jul"><td>31 Jul 2026</td><td>55</td><td>57.9%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>07 Aug 2026</td><td>55</td><td>57.9%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>13 Aug 2026</td><td>60</td><td>63.2%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>21 Aug 2026</td><td>55</td><td>64.7%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>29 Aug 2026</td><td>45</td><td>52.9%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep"><td>03 Sep 2026</td><td>35</td><td>41.2%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep"><td>29 Sep 2026</td><td>20</td><td>23.5%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>53.0%</td><td><span class="status-pill red">RED</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier2">SECOND PRIORITY</span>
-        <span class="tier-label">Selection SOP Audit</span>
-        <span class="freq-pill">Weekly</span>
-      </div>
-      <div class="audit-card">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">Selection SOP Audit</div>
-            <div class="meta">7 weeks tracked</div>
-          </div>
-          <div class="score"><span class="pct">48.6%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Week</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Aug"><td>03 Aug 2026</td><td>40</td><td>80.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>10 Aug 2026</td><td>30</td><td>60.0%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>17 Aug 2026</td><td>15</td><td>27.3%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>24 Aug 2026</td><td>25</td><td>45.5%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>31 Aug 2026</td><td>25</td><td>45.5%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep"><td>15 Sep 2026</td><td>25</td><td>45.5%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep"><td>24 Sep 2026</td><td>20</td><td>36.4%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>48.6%</td><td><span class="status-pill red">RED</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier3">LEAST IMPORTANT</span>
-        <span class="tier-label">Housekeeping</span>
-        <span class="freq-pill">Weekly</span>
-      </div>
-      <div class="audit-card pass">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">Housekeeping &amp; Washroom — Combined (Gold Section)</div>
-            <div class="meta">11 weeks tracked</div>
-          </div>
-          <div class="score"><span class="pct">83.5%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <div class="combine-note">Housekeeping (5 areas) and Washroom Housekeeping scores merged — points from both added together each week.</div>
-          <table>
-            <tr><th>Week</th><th>HK Score</th><th>Washroom Score</th><th>Combined</th><th>Status</th></tr>
-            <tr data-month="Jul" data-a="58" data-atot="69" data-b="10" data-btot="12"><td>02 Jul 2026</td><td>58/69</td><td>10/12</td><td>83.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul" data-a="56" data-atot="68" data-b="12" data-btot="12"><td>09 Jul 2026</td><td>56/68</td><td>12/12</td><td>85.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul" data-a="60" data-atot="67" data-b="10" data-btot="12"><td>16 Jul 2026</td><td>60/67</td><td>10/12</td><td>88.6%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul" data-a="63" data-atot="69" data-b="11" data-btot="12"><td>23 Jul 2026</td><td>63/69</td><td>11/12</td><td>91.4%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul" data-a="64" data-atot="69" data-b="12" data-btot="12"><td>30 Jul 2026</td><td>64/69</td><td>12/12</td><td>93.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug" data-a="54" data-atot="69" data-b="10" data-btot="12"><td>04 Aug 2026</td><td>54/69</td><td>10/12</td><td>79.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug" data-a="57" data-atot="67" data-b="9" data-btot="12"><td>13 Aug 2026</td><td>57/67</td><td>9/12</td><td>83.5%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug" data-a="56" data-atot="68" data-b="9" data-btot="12"><td>19 Aug 2026</td><td>56/68</td><td>9/12</td><td>81.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug" data-a="54" data-atot="67" data-b="11" data-btot="12"><td>25 Aug 2026</td><td>54/67</td><td>11/12</td><td>82.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep" data-a="45" data-atot="67" data-b="11" data-btot="12"><td>01 Sep 2026</td><td>45/67</td><td>11/12</td><td>70.9%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep" data-a="51" data-atot="68" data-b="12" data-btot="12"><td>11 Sep 2026</td><td>51/68</td><td>12/12</td><td>78.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td></td><td>83.5%</td><td><span class="status-pill green">GREEN</span></td></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="audit-card pass">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">Housekeeping — Silver Section</div>
-            <div class="meta">11 weeks tracked · no separate Washroom checklist here, so nothing to combine</div>
-          </div>
-          <div class="score"><span class="pct">93.8%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Week</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Jul"><td>02 Jul 2026</td><td>13</td><td>92.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>09 Jul 2026</td><td>14</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>16 Jul 2026</td><td>12</td><td>92.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>23 Jul 2026</td><td>14</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>30 Jul 2026</td><td>13</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>04 Aug 2026</td><td>13</td><td>92.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>13 Aug 2026</td><td>12</td><td>92.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>19 Aug 2026</td><td>13</td><td>92.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>25 Aug 2026</td><td>12</td><td>92.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>01 Sep 2026</td><td>12</td><td>85.7%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>11 Sep 2026</td><td>10</td><td>90.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>93.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
+    <div class="store-subnote">Covers the Gold and Silver sections of the Solan store. Live audit data is loaded from the Google Sheets API.</div>
+    <div id="dashboard-content"></div>
   </section>
-
-  <!-- ROHRU -->
-  <section class="store-panel" id="panel-rohru">
-    <div class="store-heading">VJ Rohru</div>
-    <div class="store-subnote">Audits below are ordered by criticality, not blended into one score.</div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier1">MOST IMPORTANT</span>
-        <span class="tier-label">SOP / Process Audit</span>
-        <span class="freq-pill">Monthly</span>
-      </div>
-      <div class="audit-card pass">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">SOP / Process Audit Checklist (Monthly)</div>
-            <div class="meta">2 months tracked so far</div>
-          </div>
-          <div class="score"><span class="pct">81.8%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Month</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Jul"><td>Jul 2026</td><td>72</td><td>75.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>Sep 2026</td><td>145</td><td>87.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>81.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier3">LEAST IMPORTANT</span>
-        <span class="tier-label">Housekeeping</span>
-        <span class="freq-pill">Weekly</span>
-      </div>
-      <div class="store-subnote" style="margin:-4px 0 8px;">No separate Washroom checklist runs at Rohru, so there is nothing to combine here.</div>
-      <div class="audit-card pass">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">Housekeeping — VJ Rohru</div>
-            <div class="meta">13 weeks tracked</div>
-          </div>
-          <div class="score"><span class="pct">91.8%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Week</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Jul"><td>04 Jul 2026</td><td>14</td><td>82.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>08 Jul 2026</td><td>15</td><td>88.2%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>16 Jul 2026</td><td>14</td><td>82.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>25 Jul 2026</td><td>16</td><td>94.1%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>01 Aug 2026</td><td>16</td><td>94.1%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>08 Aug 2026</td><td>15</td><td>88.2%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>14 Aug 2026</td><td>15</td><td>88.2%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>19 Aug 2026</td><td>17</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>30 Aug 2026</td><td>14</td><td>82.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>06 Sep 2026</td><td>17</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>13 Sep 2026</td><td>17</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>14 Sep 2026</td><td>16</td><td>94.1%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>27 Sep 2026</td><td>17</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>91.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <footer>
   <div class="rule"></div>
-  VERMA JEWELLERS — CONFIDENTIAL &nbsp;|&nbsp; Process Excellence &nbsp;|&nbsp; Data source: Taqtics audit checklists, 01 Jul – 30 Sep 2026
+  VERMA JEWELLERS — CONFIDENTIAL &nbsp;|&nbsp; Process Excellence &nbsp;|&nbsp; Data source: Google Sheets → Apps Script API
 </footer>
 
 <script>
-  document.querySelectorAll('.store-tab').forEach(tab=>{
-    tab.addEventListener('click', ()=>{
-      document.querySelectorAll('.store-tab').forEach(t=>t.classList.remove('active'));
-      document.querySelectorAll('.store-panel').forEach(p=>p.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById('panel-'+tab.dataset.store).classList.add('active');
+const API_URL = 'https://script.google.com/macros/s/AKfycbzu-LJ_EXJwbCuK0zhc52C6Ptg41ORpID3JrDdbkqH1A-zAE4S1bazx1b1ZNeUA6J9a/exec';
+
+const AUDIT_CONFIG = {
+  solan: [
+    { title:'SOP / Process Audit', label:'SOP / Process Audit Checklist', category:'SOP Audit – Solan', tier:'tier1', tierText:'MOST IMPORTANT', freq:'Weekly', type:'weekly' },
+    { title:'Selection SOP Audit', label:'Selection SOP Audit', category:'Selection SOP Audit – Solan', tier:'tier2', tierText:'SECOND PRIORITY', freq:'Weekly', type:'weekly' },
+    { title:'Housekeeping & Washroom — Combined (Gold Section)', label:'Housekeeping & Washroom — Combined (Gold Section)', combined:true, tier:'tier3', tierText:'LEAST IMPORTANT', freq:'Weekly', type:'weekly' },
+    { title:'Housekeeping — Silver Section', label:'Housekeeping — Silver Section', categories:['Housekeeping – Silver Branch'], tier:'tier3', tierText:'LEAST IMPORTANT', freq:'Weekly', type:'weekly' }
+  ],
+  rohru: [
+    { title:'SOP / Process Audit', label:'SOP / Process Audit Checklist (Monthly)', category:'SOP Audit – Rohru', tier:'tier1', tierText:'MOST IMPORTANT', freq:'Monthly', type:'monthly' },
+    { title:'Housekeeping', label:'Housekeeping — VJ Rohru', categories:['Housekeeping – Rohru'], tier:'tier3', tierText:'LEAST IMPORTANT', freq:'Weekly', type:'weekly' }
+  ]
+};
+
+const GOLD_CATEGORIES = [
+  'Housekeeping – GF','Housekeeping – 1st Floor','Housekeeping – 2nd Floor',
+  'Housekeeping – 3rd Floor','Housekeeping – 4th + 5th Floor','Washroom Audit – Solan'
+];
+
+let allRecords = [];
+let loadedMonths = [];
+let currentMonth = 'all';
+let currentStore = 'solan';
+
+function esc(value){
+  return String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+}
+
+function monthKey(dateValue){
+  const d = new Date(dateValue);
+  if (isNaN(d)) return '';
+  return d.toLocaleString('en-US',{month:'short'});
+}
+
+function monthLabel(key){
+  const map = {Jan:'January',Feb:'February',Mar:'March',Apr:'April',May:'May',Jun:'June',Jul:'July',Aug:'August',Sep:'September',Oct:'October',Nov:'November',Dec:'December'};
+  return map[key] || key;
+}
+
+function formatDate(value, type='weekly'){
+  const d = new Date(value);
+  if (isNaN(d)) return esc(value);
+  if (type === 'monthly') return d.toLocaleString('en-US',{month:'short',year:'numeric'});
+  return d.toLocaleString('en-US',{day:'2-digit',month:'short',year:'numeric'});
+}
+
+function statusFor(pct){
+  if (pct == null || isNaN(pct)) return 'NO DATA';
+  if (pct >= 76) return 'GREEN';
+  if (pct >= 70) return 'YELLOW';
+  return 'RED';
+}
+
+function statusClass(status){
+  return status === 'NO DATA' ? '' : status.toLowerCase();
+}
+
+function average(records){
+  const vals = records.map(r => Number(r.compliance)).filter(v => Number.isFinite(v));
+  return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
+}
+
+function filteredRecords(categories){
+  return allRecords.filter(r => {
+    if (!categories.includes(r.category)) return false;
+    if (currentMonth === 'all') return true;
+    return monthKey(r.date) === currentMonth;
+  });
+}
+
+function renderNormalCard(cfg){
+  const categories = cfg.categories || [cfg.category];
+  const records = filteredRecords(categories).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const avg = average(records);
+  const status = statusFor(avg);
+  const meta = records.length ? `${records.length} ${cfg.type === 'monthly' ? 'months' : 'weeks'} shown` : 'No submission for selected month';
+
+  const rows = records.length ? records.map(r => `
+    <tr>
+      <td>${formatDate(r.date,cfg.type)}</td>
+      <td>${esc(r.score)}</td>
+      <td>${Number.isFinite(Number(r.compliance)) ? Number(r.compliance).toFixed(1)+'%' : '—'}</td>
+      <td><span class="status-pill ${statusClass(statusFor(Number(r.compliance)))}">${statusFor(Number(r.compliance))}</span></td>
+    </tr>`).join('') : `<tr><td colspan="4" class="no-data">No data</td></tr>`;
+
+  return `<div class="audit-card ${status==='GREEN'?'pass':''}">
+    <div class="row" onclick="toggle(this)">
+      <div><div class="name">${esc(cfg.label)}</div><div class="meta">${meta}</div></div>
+      <div class="score"><span class="pct">${avg == null ? '—' : avg.toFixed(1)+'%'}</span><span class="chevron">▾</span></div>
+    </div>
+    <div class="detail"><table>
+      <tr><th>${cfg.type === 'monthly' ? 'Month' : 'Week'}</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
+      ${rows}
+      <tr class="avg-row"><td>Average</td><td></td><td>${avg == null ? '—' : avg.toFixed(1)+'%'}</td><td><span class="status-pill ${statusClass(status)}">${status}</span></td></tr>
+    </table></div>
+  </div>`;
+}
+
+function renderCombinedCard(cfg){
+  const records = filteredRecords(GOLD_CATEGORIES);
+  const grouped = {};
+  records.forEach(r => {
+    const key = new Date(r.date).toISOString().slice(0,10);
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(r);
+  });
+
+  const combined = Object.entries(grouped).map(([date, rows]) => {
+    let score = 0, possible = 0;
+    rows.forEach(r => {
+      const s = Number(r.score), p = Number(r.compliance);
+      if (Number.isFinite(s) && Number.isFinite(p) && p > 0) {
+        score += s;
+        possible += s / (p/100);
+      }
     });
-  });
+    const compliance = possible ? (score/possible)*100 : null;
+    return {date, score, possible, compliance};
+  }).filter(x => x.compliance != null).sort((a,b)=>new Date(a.date)-new Date(b.date));
 
-  function toggle(rowEl){
-    rowEl.parentElement.classList.toggle('open');
-  }
+  const avg = combined.length ? combined.reduce((a,b)=>a+b.score,0) / combined.reduce((a,b)=>a+b.possible,0) * 100 : null;
+  const status = statusFor(avg);
+  const rows = combined.length ? combined.map(r=>`<tr>
+    <td>${formatDate(r.date,'weekly')}</td><td>${r.score.toFixed(0)}/${r.possible.toFixed(0)}</td><td>—</td><td>${r.compliance.toFixed(1)}%</td>
+    <td><span class="status-pill ${statusClass(statusFor(r.compliance))}">${statusFor(r.compliance)}</span></td>
+  </tr>`).join('') : `<tr><td colspan="5" class="no-data">No data</td></tr>`;
 
-  function toggleDropdown(){
-    document.getElementById('filter-toggle').classList.toggle('open');
-    document.getElementById('filter-dropdown').classList.toggle('open');
-  }
+  return `<div class="audit-card ${status==='GREEN'?'pass':''}">
+    <div class="row" onclick="toggle(this)">
+      <div><div class="name">${esc(cfg.label)}</div><div class="meta">${combined.length ? combined.length+' weeks shown' : 'No submission for selected month'}</div></div>
+      <div class="score"><span class="pct">${avg == null ? '—' : avg.toFixed(1)+'%'}</span><span class="chevron">▾</span></div>
+    </div>
+    <div class="detail">
+      <div class="combine-note">Housekeeping (5 areas) and Washroom scores are merged by audit date using the points and compliance returned by the API.</div>
+      <table><tr><th>Week</th><th>Combined Score</th><th>Washroom</th><th>Combined</th><th>Status</th></tr>${rows}
+      <tr class="avg-row"><td>Average</td><td></td><td></td><td>${avg == null ? '—' : avg.toFixed(1)+'%'}</td><td><span class="status-pill ${statusClass(status)}">${status}</span></td></tr></table>
+    </div>
+  </div>`;
+}
 
-  function setFilter(month){
-  document.querySelectorAll('.filter-option').forEach(b=>{
-    b.classList.toggle('active', b.dataset.month === month);
-  });
+function renderStore(store){
+  const panel = document.getElementById('dashboard-content');
+  document.querySelector('#panel-solan .store-heading').textContent = store === 'solan' ? 'VJ Solan' : 'VJ Rohru';
+  document.querySelector('#panel-solan .store-subnote').textContent = store === 'solan' ? 'Covers the Gold and Silver sections of the Solan store. Live audit data is loaded from the Google Sheets API.' : 'Audits below are ordered by criticality. Live audit data is loaded from the Google Sheets API.';
+  panel.innerHTML = AUDIT_CONFIG[store].map(cfg => `
+    <div class="priority-group">
+      <div class="priority-heading"><span class="priority-tag ${cfg.tier}">${cfg.tierText}</span><span class="tier-label">${cfg.title}</span><span class="freq-pill">${cfg.freq}</span></div>
+      ${cfg.combined ? renderCombinedCard(cfg) : renderNormalCard(cfg)}
+    </div>`).join('');
+}
 
-  const labels = {
-    all: '— All Months',
-    Jul: '— July 2026',
-    Aug: '— August 2026',
-    Sep: '— September 2026',
-    Oct: '— October 2026'
-  };
+function renderTabs(){
+  document.querySelectorAll('.store-tab').forEach(t=>t.classList.toggle('active',t.dataset.store===currentStore));
+}
 
-  document.getElementById('filter-current').textContent =
-    labels[month] || '— ' + month;
-
+function setFilter(month){
+  currentMonth = month;
+  document.querySelectorAll('.filter-option').forEach(b=>b.classList.toggle('active',b.dataset.month===month));
+  document.getElementById('filter-current').textContent = month === 'all' ? '— All Months' : `— ${monthLabel(month)} 2026`;
   document.getElementById('filter-toggle').classList.remove('open');
   document.getElementById('filter-dropdown').classList.remove('open');
+  renderStore(currentStore);
+  document.getElementById('filter-note').textContent = month === 'all' ? 'Showing all available API records.' : `Showing ${monthLabel(month)} 2026 only. Audits with no submission show "No data".`;
+}
 
-  document.querySelectorAll('.audit-card').forEach(card=>{
-    const table = card.querySelector('table');
-    if (!table) return;
+function toggle(rowEl){ rowEl.parentElement.classList.toggle('open'); }
+function toggleDropdown(){
+  document.getElementById('filter-toggle').classList.toggle('open');
+  document.getElementById('filter-dropdown').classList.toggle('open');
+}
 
-    const rows = Array.from(table.querySelectorAll('tr[data-month]'));
-    const isCombined =
-      rows.length > 0 && rows[0].hasAttribute('data-a');
-
-    let sum = 0;
-    let count = 0;
-
-    let numA = 0, denA = 0;
-    let numB = 0, denB = 0;
-
-    rows.forEach(r=>{
-      const show =
-        month === 'all' ||
-        r.dataset.month === month;
-
-      r.style.display = show ? '' : 'none';
-
-      if (show){
-
-        if (isCombined){
-
-          const a = parseFloat(r.dataset.a);
-          const atot = parseFloat(r.dataset.atot);
-          const b = parseFloat(r.dataset.b);
-          const btot = parseFloat(r.dataset.btot);
-
-          if (!isNaN(a) && !isNaN(atot)){
-            numA += a;
-            denA += atot;
-          }
-
-          if (!isNaN(b) && !isNaN(btot)){
-            numB += b;
-            denB += btot;
-          }
-
-        } else {
-
-          const pctText =
-            r.children[2]?.textContent.trim() || '';
-
-          const pct = parseFloat(pctText);
-
-          if (!isNaN(pct)){
-            sum += pct;
-            count++;
-          }
-        }
-      }
-    });
-
-    const avgRow = table.querySelector('.avg-row');
-
-    if (!avgRow) return;
-
-    const combinedCellIndex = isCombined ? 3 : 2;
-    const pctCell = avgRow.children[combinedCellIndex];
-
-    const statusCell =
-      avgRow.querySelector('.status-pill');
-
-    const headerPct =
-      card.querySelector('.pct');
-
-    let avg = null;
-
-    if (isCombined){
-
-      const totalDen = denA + denB;
-
-      if (totalDen > 0){
-        avg =
-          ((numA + numB) / totalDen) * 100;
-      }
-
-    } else if (count > 0){
-
-      avg = sum / count;
-    }
-
-    if (avg === null){
-
-      pctCell.textContent = '—';
-
-      if (headerPct){
-        headerPct.textContent = '—';
-      }
-
-      if (statusCell){
-
-        statusCell.textContent = 'NO DATA';
-        statusCell.className = 'status-pill';
-
-        statusCell.style.background = '#EFE8D9';
-        statusCell.style.color = 'var(--warmgray)';
-      }
-
-      card.classList.remove('pass');
-
-    } else {
-
-      const avgStr = avg.toFixed(1) + '%';
-
-      /*
-       Compliance Status:
-       0–69   = RED
-       70–75  = YELLOW
-       76–100 = GREEN
-      */
-
-      let status = 'RED';
-
-      if (avg >= 76){
-        status = 'GREEN';
-      } else if (avg >= 70){
-        status = 'YELLOW';
-      }
-
-      pctCell.textContent = avgStr;
-
-      if (headerPct){
-        headerPct.textContent = avgStr;
-      }
-
-      if (statusCell){
-
-        statusCell.textContent = status;
-
-        statusCell.className =
-          'status-pill ' + status.toLowerCase();
-
-        statusCell.style.background = '';
-        statusCell.style.color = '';
-      }
-
-      card.classList.toggle(
-        'pass',
-        status === 'GREEN'
-      );
-    }
-  });
-
-  const note =
-    document.getElementById('filter-note');
-
-  if (month === 'all'){
-
-    note.textContent =
-      'Showing all available months.';
-
-  } else {
-
-    note.textContent =
-      'Showing ' +
-      (labels[month] || month).replace('— ', '') +
-      ' only. Audits with no submission show "No data".';
+async function loadApi(){
+  const note = document.getElementById('filter-note');
+  note.textContent = 'Loading live audit data…';
+  try {
+    const months = buildMonthList(new Date(2026,6,1), new Date());
+    const responses = await Promise.all(months.map(m => fetch(`${API_URL}?month=${m.key}`).then(r=>r.json())));
+    allRecords = responses.flatMap(res => (res.plan || []).flatMap(item => (item.records || []).map(r => ({...r, category:item.category}))));
+    loadedMonths = months.map(m=>m.key);
+    buildMonthDropdown(months);
+    renderStore(currentStore);
+    setFilter('all');
+    note.textContent = `Live API connected · ${allRecords.length} audit records loaded.`;
+  } catch(err){
+    console.error(err);
+    note.textContent = 'Unable to load live API data. Please refresh the dashboard.';
   }
 }
-  setFilter('all');
-</script>
 
+function buildMonthList(start,end){
+  const out=[];
+  let d=new Date(start.getFullYear(),start.getMonth(),1);
+  const last=new Date(end.getFullYear(),end.getMonth(),1);
+  while(d<=last){
+    out.push({key:d.toLocaleString('en-US',{month:'short'}), year:d.getFullYear()});
+    d.setMonth(d.getMonth()+1);
+  }
+  return out;
+}
+
+function buildMonthDropdown(months){
+  const dd=document.getElementById('filter-dropdown');
+  dd.innerHTML='<button class="filter-option active" data-month="all" onclick="setFilter(\'all\')">All Months</button>' +
+    months.map(m=>`<button class="filter-option" data-month="${m.key}" onclick="setFilter('${m.key}')">${monthLabel(m.key)} ${m.year}</button>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.store-tab').forEach(tab=>tab.addEventListener('click',()=>{
+    currentStore=tab.dataset.store;
+    renderTabs();
+    renderStore(currentStore);
+  }));
+  renderStore(currentStore);
+  loadApi();
+});
+</script>
 </body>
 </html>
