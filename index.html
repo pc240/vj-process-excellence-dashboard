@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Verma Jewellers — Store-wise Compliance Dashboard</title>
 <style>
   :root{
@@ -35,46 +35,20 @@
   header .top-row{
     display:flex;
     align-items:center;
-    gap:14px;
+    gap:12px;
   }
-
-  /* Exact Claude style Box Emblem */
-  .vj-emblem{
-    width:52px;
-    height:52px;
-    border:1.5px solid var(--gold);
+  header .logo{
+    width:46px;
+    height:46px;
     border-radius:6px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,0.03);
     flex-shrink:0;
-    box-shadow:inset 0 0 0 1.5px rgba(184, 150, 46, 0.3);
   }
-  .vj-emblem .main-txt{
-    font-family:Cambria, Georgia, serif;
-    font-size:12px;
-    font-weight:bold;
-    letter-spacing:1px;
-    color:var(--gold);
-    line-height:1;
-  }
-  .vj-emblem .sub-txt{
-    font-size:7px;
-    color:var(--champagne);
-    letter-spacing:1px;
-    margin-top:2px;
-    text-transform:uppercase;
-  }
-
   header .brand{
     font-family:Cambria, Georgia, serif;
     color:var(--gold);
     font-size:22px;
     font-weight:bold;
     letter-spacing:0.5px;
-    line-height:1.2;
   }
   header .tagline{
     color:var(--champagne);
@@ -166,7 +140,6 @@
     overflow:hidden;
     background:var(--white);
     width:220px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.12);
   }
   .filter-dropdown.open{ display:flex; }
   .filter-option{
@@ -346,24 +319,49 @@
     .store-tab{ font-size:12px; min-width:90px; }
     header h1{ font-size:16px; }
   }
+
+  html{ color-scheme:light; }
+  body{ background:var(--cream); }
+  header{ padding-top:calc(20px + env(safe-area-inset-top, 0px)); }
+  footer{ padding-bottom:calc(30px + env(safe-area-inset-bottom, 0px)); }
+  .filter-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .import-btn{
+    font-family:Calibri, sans-serif; font-size:13px; font-weight:bold;
+    padding:9px 16px; border-radius:8px; border:1.5px solid var(--gold);
+    background:var(--champagne); color:var(--dark); cursor:pointer;
+  }
+  .import-panel{ max-width:900px; margin:12px auto 0; padding:0 16px; }
+  .import-panel > *{ }
+  .import-panel{ }
+  .import-msg{ background:var(--green-bg); color:var(--green); border-left:4px solid var(--green); padding:10px 14px; font-size:13px; border-radius:4px; margin-bottom:8px; }
+  .import-title{ font-family:Cambria, Georgia, serif; font-weight:bold; color:var(--dark); font-size:15px; margin:6px 0; }
+  .import-file{ background:var(--white); border:1px solid #E3D9C6; border-radius:8px; padding:10px 12px; margin-bottom:8px; font-size:12px; }
+  .import-file .fname{ font-weight:bold; color:var(--charcoal); word-break:break-all; }
+  .import-file .fmeta{ color:var(--warmgray); margin:2px 0 6px; }
+  .import-file select{ font-family:Calibri, sans-serif; font-size:12.5px; padding:5px 8px; border-radius:6px; border:1px solid #D9CDB4; margin-bottom:6px; }
+  .irow{ font-size:11.5px; color:var(--charcoal); padding:2px 0; }
+  .irow.bad{ color:var(--red); }
+  .import-actions{ display:flex; gap:14px; align-items:center; margin:8px 0 4px; }
+  .import-go{ font-family:Calibri, sans-serif; font-size:13px; font-weight:bold; padding:9px 18px; border-radius:8px; border:none; background:var(--dark); color:var(--white); cursor:pointer; }
+  .import-go:disabled{ opacity:.4; cursor:not-allowed; }
+  .link-btn{ background:none; border:none; color:var(--dark); font-family:Calibri, sans-serif; font-size:12.5px; font-weight:bold; cursor:pointer; padding:4px 0; text-decoration:underline; }
+  .imported-box{ max-width:900px; margin:0 auto; padding:0 16px 10px; font-size:12px; }
+  .imported-box table{ margin-top:6px; background:var(--white); }
+  .del-btn{ font-size:11px; border:1px solid #D9CDB4; background:var(--white); border-radius:6px; padding:3px 8px; cursor:pointer; color:var(--red); }
+  .filter-note{ min-height:16px; }
 </style>
 </head>
 <body>
-
 <header>
   <div class="top-row">
-    <!-- Clean, Code-based Gold Box Emblem -->
-    <div class="vj-emblem">
-      <div class="main-txt">VERMA</div>
-      <div class="sub-txt">JEWELLERS</div>
-    </div>
+    <img class="logo" src="data:image/png;base64,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" alt="Verma Jewellers logo">
     <div>
       <div class="brand">VERMA JEWELLERS</div>
       <div class="tagline">Est. 1967 · Solan, Himachal Pradesh</div>
     </div>
   </div>
   <h1>Store-wise Monthly Compliance Dashboard</h1>
-  <div class="period">Period: 01 Jul 2026 – 31 Oct 2026 &nbsp;·&nbsp; Prepared by: Vandana Katoch, Process Coordinator</div>
+  <div class="period"><span id="period"></span> &nbsp;·&nbsp; Prepared by: Vandana Katoch, Process Coordinator</div>
 </header>
 
 <div class="store-tabs">
@@ -371,368 +369,367 @@
   <button class="store-tab" data-store="rohru">VJ Rohru<span class="sub">2 audits</span></button>
 </div>
 
-<div class="filter-bar">
-  <button class="filter-toggle" id="filter-toggle" onclick="toggleDropdown()">
-    Filter <span class="current" id="filter-current">— All (Jul–Oct)</span> <span class="arrow">▾</span>
-  </button>
-  <div class="filter-dropdown" id="filter-dropdown">
-    <button class="filter-option active" data-month="all" onclick="setFilter('all')">All (Jul–Oct)</button>
-    <button class="filter-option" data-month="Jul" onclick="setFilter('Jul')">July 2026</button>
-    <button class="filter-option" data-month="Aug" onclick="setFilter('Aug')">August 2026</button>
-    <button class="filter-option" data-month="Sep" onclick="setFilter('Sep')">September 2026</button>
-    <button class="filter-option" data-month="Oct" onclick="setFilter('Oct')">October 2026</button>
-  </div>
-  <div class="filter-note" id="filter-note"></div>
-</div>
+<div class="filter-bar" id="filter-area"></div>
+<input type="file" id="csv-input" accept=".csv,text/csv" multiple style="display:none">
+<div id="import-area"></div>
 
-<main>
-
-  <!-- SOLAN -->
-  <section class="store-panel active" id="panel-solan">
-    <div class="store-heading">VJ Solan</div>
-    <div class="store-subnote">Covers both the Gold and Silver sections of the Solan store. Audits below are ordered by criticality, not blended into one score — each checks a different risk and shouldn't be averaged together.</div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier1">MOST IMPORTANT</span>
-        <span class="tier-label">SOP / Process Audit</span>
-        <span class="freq-pill">Weekly</span>
-      </div>
-      <div class="audit-card">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">SOP / Process Audit Checklist</div>
-            <div class="meta">10 weeks tracked</div>
-          </div>
-          <div class="score"><span class="pct">53.0%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Week</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Jul"><td>10 Jul 2026</td><td>60</td><td>63.2%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Jul"><td>17 Jul 2026</td><td>50</td><td>52.6%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Jul"><td>24 Jul 2026</td><td>50</td><td>52.6%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Jul"><td>31 Jul 2026</td><td>55</td><td>57.9%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>07 Aug 2026</td><td>55</td><td>57.9%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>13 Aug 2026</td><td>60</td><td>63.2%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>21 Aug 2026</td><td>55</td><td>64.7%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>29 Aug 2026</td><td>45</td><td>52.9%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep"><td>03 Sep 2026</td><td>35</td><td>41.2%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep"><td>29 Sep 2026</td><td>20</td><td>23.5%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>53.0%</td><td><span class="status-pill red">RED</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier2">SECOND PRIORITY</span>
-        <span class="tier-label">Selection SOP Audit</span>
-        <span class="freq-pill">Weekly</span>
-      </div>
-      <div class="audit-card">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">Selection SOP Audit</div>
-            <div class="meta">7 weeks tracked</div>
-          </div>
-          <div class="score"><span class="pct">48.6%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Week</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Aug"><td>03 Aug 2026</td><td>40</td><td>80.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>10 Aug 2026</td><td>30</td><td>60.0%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>17 Aug 2026</td><td>15</td><td>27.3%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>24 Aug 2026</td><td>25</td><td>45.5%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Aug"><td>31 Aug 2026</td><td>25</td><td>45.5%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep"><td>15 Sep 2026</td><td>25</td><td>45.5%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep"><td>24 Sep 2026</td><td>20</td><td>36.4%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>48.6%</td><td><span class="status-pill red">RED</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier3">LEAST IMPORTANT</span>
-        <span class="tier-label">Housekeeping</span>
-        <span class="freq-pill">Weekly</span>
-      </div>
-      <div class="audit-card pass">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">Housekeeping &amp; Washroom — Combined (Gold Section)</div>
-            <div class="meta">11 weeks tracked</div>
-          </div>
-          <div class="score"><span class="pct">83.5%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <div class="combine-note">Housekeeping (5 areas) and Washroom Housekeeping scores merged — points from both added together each week.</div>
-          <table>
-            <tr><th>Week</th><th>HK Score</th><th>Washroom Score</th><th>Combined</th><th>Status</th></tr>
-            <tr data-month="Jul" data-a="58" data-atot="69" data-b="10" data-btot="12"><td>02 Jul 2026</td><td>58/69</td><td>10/12</td><td>83.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul" data-a="56" data-atot="68" data-b="12" data-btot="12"><td>09 Jul 2026</td><td>56/68</td><td>12/12</td><td>85.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul" data-a="60" data-atot="67" data-b="10" data-btot="12"><td>16 Jul 2026</td><td>60/67</td><td>10/12</td><td>88.6%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul" data-a="63" data-atot="69" data-b="11" data-btot="12"><td>23 Jul 2026</td><td>63/69</td><td>11/12</td><td>91.4%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul" data-a="64" data-atot="69" data-b="12" data-btot="12"><td>30 Jul 2026</td><td>64/69</td><td>12/12</td><td>93.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug" data-a="54" data-atot="69" data-b="10" data-btot="12"><td>04 Aug 2026</td><td>54/69</td><td>10/12</td><td>79.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug" data-a="57" data-atot="67" data-b="9" data-btot="12"><td>13 Aug 2026</td><td>57/67</td><td>9/12</td><td>83.5%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug" data-a="56" data-atot="68" data-b="9" data-btot="12"><td>19 Aug 2026</td><td>56/68</td><td>9/12</td><td>81.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug" data-a="54" data-atot="67" data-b="11" data-btot="12"><td>25 Aug 2026</td><td>54/67</td><td>11/12</td><td>82.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep" data-a="45" data-atot="67" data-b="11" data-btot="12"><td>01 Sep 2026</td><td>45/67</td><td>11/12</td><td>70.9%</td><td><span class="status-pill red">RED</span></td></tr>
-            <tr data-month="Sep" data-a="51" data-atot="68" data-b="12" data-btot="12"><td>11 Sep 2026</td><td>51/68</td><td>12/12</td><td>78.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td></td><td>83.5%</td><td><span class="status-pill green">GREEN</span></td></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="audit-card pass">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">Housekeeping — Silver Section</div>
-            <div class="meta">11 weeks tracked · no separate Washroom checklist here, so nothing to combine</div>
-          </div>
-          <div class="score"><span class="pct">93.8%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Week</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Jul"><td>02 Jul 2026</td><td>13</td><td>92.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>09 Jul 2026</td><td>14</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>16 Jul 2026</td><td>12</td><td>92.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>23 Jul 2026</td><td>14</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>30 Jul 2026</td><td>13</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>04 Aug 2026</td><td>13</td><td>92.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>13 Aug 2026</td><td>12</td><td>92.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>19 Aug 2026</td><td>13</td><td>92.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>25 Aug 2026</td><td>12</td><td>92.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>01 Sep 2026</td><td>12</td><td>85.7%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>11 Sep 2026</td><td>10</td><td>90.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>93.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ROHRU -->
-  <section class="store-panel" id="panel-rohru">
-    <div class="store-heading">VJ Rohru</div>
-    <div class="store-subnote">Audits below are ordered by criticality, not blended into one score.</div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier1">MOST IMPORTANT</span>
-        <span class="tier-label">SOP / Process Audit</span>
-        <span class="freq-pill">Monthly</span>
-      </div>
-      <div class="audit-card pass">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">SOP / Process Audit Checklist (Monthly)</div>
-            <div class="meta">2 months tracked so far</div>
-          </div>
-          <div class="score"><span class="pct">81.8%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Month</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Jul"><td>Jul 2026</td><td>72</td><td>75.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>Sep 2026</td><td>145</td><td>87.9%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>81.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="priority-group">
-      <div class="priority-heading">
-        <span class="priority-tag tier3">LEAST IMPORTANT</span>
-        <span class="tier-label">Housekeeping</span>
-        <span class="freq-pill">Weekly</span>
-      </div>
-      <div class="store-subnote" style="margin:-4px 0 8px;">No separate Washroom checklist runs at Rohru, so there is nothing to combine here.</div>
-      <div class="audit-card pass">
-        <div class="row" onclick="toggle(this)">
-          <div>
-            <div class="name">Housekeeping — VJ Rohru</div>
-            <div class="meta">13 weeks tracked</div>
-          </div>
-          <div class="score"><span class="pct">91.8%</span><span class="chevron">▾</span></div>
-        </div>
-        <div class="detail">
-          <table>
-            <tr><th>Week</th><th>Score</th><th>Compliance</th><th>Status</th></tr>
-            <tr data-month="Jul"><td>04 Jul 2026</td><td>14</td><td>82.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>08 Jul 2026</td><td>15</td><td>88.2%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>16 Jul 2026</td><td>14</td><td>82.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Jul"><td>25 Jul 2026</td><td>16</td><td>94.1%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>01 Aug 2026</td><td>16</td><td>94.1%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>08 Aug 2026</td><td>15</td><td>88.2%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>14 Aug 2026</td><td>15</td><td>88.2%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>19 Aug 2026</td><td>17</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Aug"><td>30 Aug 2026</td><td>14</td><td>82.3%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>06 Sep 2026</td><td>17</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>13 Sep 2026</td><td>17</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>14 Sep 2026</td><td>16</td><td>94.1%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr data-month="Sep"><td>27 Sep 2026</td><td>17</td><td>100.0%</td><td><span class="status-pill green">GREEN</span></td></tr>
-            <tr class="avg-row"><td>Average</td><td></td><td>91.8%</td><td><span class="status-pill green">GREEN</span></td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
+<main><section class="store-panel active" id="panel"></section></main>
+<div id="imported-area"></div>
 
 <footer>
   <div class="rule"></div>
-  VERMA JEWELLERS — CONFIDENTIAL &nbsp;|&nbsp; Process Excellence &nbsp;|&nbsp; Data source: Taqtics audit checklists, 01 Jul – 31 Oct 2026
+  VERMA JEWELLERS — CONFIDENTIAL &nbsp;|&nbsp; Process Excellence &nbsp;|&nbsp; Data source: Taqtics audit checklists, <span id="foot-period"></span>
 </footer>
 
 <script>
-  document.querySelectorAll('.store-tab').forEach(tab=>{
-    tab.addEventListener('click', ()=>{
-      document.querySelectorAll('.store-tab').forEach(t=>t.classList.remove('active'));
-      document.querySelectorAll('.store-panel').forEach(p=>p.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById('panel-'+tab.dataset.store).classList.add('active');
-    });
+// ---------- Baseline history (Jul–Sep 2026, from Taqtics exports) ----------
+// [kind, store, date, score, total, flag]   flag "m" = month-only entry
+const LEGACY = [
+ ["sop","solan","2026-07-10",60,95],["sop","solan","2026-07-17",50,95],["sop","solan","2026-07-24",50,95],["sop","solan","2026-07-31",55,95],
+ ["sop","solan","2026-08-07",55,95],["sop","solan","2026-08-13",60,95],["sop","solan","2026-08-21",55,85],["sop","solan","2026-08-29",45,85],
+ ["sop","solan","2026-09-03",35,85],["sop","solan","2026-09-29",20,85],
+ ["sel","solan","2026-08-03",40,50],["sel","solan","2026-08-10",30,50],["sel","solan","2026-08-17",15,55],["sel","solan","2026-08-24",25,55],
+ ["sel","solan","2026-08-31",25,55],["sel","solan","2026-09-15",25,55],["sel","solan","2026-09-24",20,55],
+ ["hk","solan","2026-07-02",58,69],["hk","solan","2026-07-09",56,68],["hk","solan","2026-07-16",60,67],["hk","solan","2026-07-23",63,69],["hk","solan","2026-07-30",64,69],
+ ["hk","solan","2026-08-04",54,69],["hk","solan","2026-08-13",57,67],["hk","solan","2026-08-19",56,68],["hk","solan","2026-08-25",54,67],
+ ["hk","solan","2026-09-01",45,67],["hk","solan","2026-09-11",51,68],
+ ["wash","solan","2026-07-02",10,12],["wash","solan","2026-07-09",12,12],["wash","solan","2026-07-16",10,12],["wash","solan","2026-07-23",11,12],["wash","solan","2026-07-30",12,12],
+ ["wash","solan","2026-08-04",10,12],["wash","solan","2026-08-13",9,12],["wash","solan","2026-08-19",9,12],["wash","solan","2026-08-25",11,12],
+ ["wash","solan","2026-09-01",11,12],["wash","solan","2026-09-11",12,12],
+ ["hk","silver","2026-07-02",13,14],["hk","silver","2026-07-09",14,14],["hk","silver","2026-07-16",12,13],["hk","silver","2026-07-23",14,14],["hk","silver","2026-07-30",13,13],
+ ["hk","silver","2026-08-04",13,14],["hk","silver","2026-08-13",12,13],["hk","silver","2026-08-19",13,14],["hk","silver","2026-08-25",12,13],
+ ["hk","silver","2026-09-01",12,14],["hk","silver","2026-09-11",10,11],
+ ["sop","rohru","2026-07-01",72,95,"m"],["sop","rohru","2026-09-14",145,165],
+ ["hk","rohru","2026-07-04",14,17],["hk","rohru","2026-07-08",15,17],["hk","rohru","2026-07-16",14,17],["hk","rohru","2026-07-25",16,17],
+ ["hk","rohru","2026-08-01",16,17],["hk","rohru","2026-08-08",15,17],["hk","rohru","2026-08-14",15,17],["hk","rohru","2026-08-19",17,17],["hk","rohru","2026-08-30",14,17],
+ ["hk","rohru","2026-09-06",17,17],["hk","rohru","2026-09-13",17,17],["hk","rohru","2026-09-14",16,17],["hk","rohru","2026-09-27",17,17]
+];
+
+const KIND_LABEL = {sop:"SOP / Process Audit", sel:"Selection SOP Audit", hk:"Housekeeping", wash:"Washroom"};
+const STORE_LABEL = {solan:"VJ Gold Solan", rohru:"VJ Rohru", silver:"VJ Silver Branch"};
+const VALID = {sop:["solan","rohru"], sel:["solan"], hk:["solan","rohru","silver"], wash:["solan"]};
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONFULL = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+// Layout of cards per store, in priority order
+const LAYOUT = {
+  solan: {
+    title: "VJ Solan",
+    note: "Covers both the Gold and Silver sections of the Solan store. Audits below are ordered by criticality, not blended into one score \u2014 each checks a different risk and shouldn't be averaged together.",
+    groups: [
+      {tier:1, tag:"MOST IMPORTANT", label:"SOP / Process Audit", freq:"Weekly", cards:[{id:"sop-solan", type:"simple", kind:"sop", store:"solan", name:"SOP / Process Audit Checklist"}]},
+      {tier:2, tag:"SECOND PRIORITY", label:"Selection SOP Audit", freq:"Weekly", cards:[{id:"sel-solan", type:"simple", kind:"sel", store:"solan", name:"Selection SOP Audit"}]},
+      {tier:3, tag:"LEAST IMPORTANT", label:"Housekeeping", freq:"Weekly", cards:[
+        {id:"hkw-solan", type:"combo", store:"solan", name:"Housekeeping & Washroom \u2014 Combined (Gold Section)"},
+        {id:"hk-silver", type:"simple", kind:"hk", store:"silver", name:"Housekeeping \u2014 Silver Section", extra:"no separate Washroom checklist here, so nothing to combine"}
+      ]}
+    ]
+  },
+  rohru: {
+    title: "VJ Rohru",
+    note: "Audits below are ordered by criticality, not blended into one score.",
+    groups: [
+      {tier:1, tag:"MOST IMPORTANT", label:"SOP / Process Audit", freq:"Monthly", cards:[{id:"sop-rohru", type:"simple", kind:"sop", store:"rohru", name:"SOP / Process Audit Checklist (Monthly)", monthly:true}]},
+      {tier:3, tag:"LEAST IMPORTANT", label:"Housekeeping", freq:"Weekly", note:"No separate Washroom checklist runs at Rohru, so there is nothing to combine here.", cards:[{id:"hk-rohru", type:"simple", kind:"hk", store:"rohru", name:"Housekeeping \u2014 VJ Rohru"}]}
+    ]
+  }
+};
+
+// ---------- State ----------
+let db = null, canWrite = false, dbRows = [], dbReady = false;
+const view = {store:"solan", month:"all", open:new Set(), dropdown:false, showImported:false};
+let pending = null, importMsg = "", confirmDel = null;
+
+// ---------- Helpers ----------
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtDate = (d) => { const [y,m,dd] = d.split("-"); return dd + " " + MON[+m-1] + " " + y; };
+const fmtMonth = (k) => { const [y,m] = k.split("-"); return MON[+m-1] + " " + y; };
+const monthLabel = (k) => { const [y,m] = k.split("-"); return MONFULL[+m-1] + " " + y; };
+const pctStr = (v) => v.toFixed(1) + "%";
+const isGreen = (v) => v >= 75;
+
+// ---------- Data assembly ----------
+function allEntries(){
+  const out = [];
+  const dbKeys = new Set(dbRows.map(r => r.kind + "|" + r.store + "|" + r.date));
+  LEGACY.forEach((r,i) => {
+    if (dbKeys.has(r[0] + "|" + r[1] + "|" + r[2])) return;       // imported data replaces baseline for that date
+    out.push({kind:r[0], store:r[1], date:r[2], score:r[3], total:r[4], monthOnly:r[5]==="m", src:"base", id:"base"+i});
   });
+  dbRows.forEach(r => out.push({kind:r.kind, store:r.store, date:r.date, score:+r.score, total:+r.total, monthOnly:false, src:"db", id:r.id, sid:r.sid}));
+  return out;
+}
+function aggregate(list){           // sum areas submitted on the same date (housekeeping / washroom)
+  const m = new Map();
+  list.forEach(e => {
+    const k = e.date;
+    if (!m.has(k)) m.set(k, {date:e.date, score:0, total:0, monthOnly:e.monthOnly});
+    const g = m.get(k); g.score += e.score; g.total += e.total;
+  });
+  return [...m.values()].sort((a,b) => a.date.localeCompare(b.date));
+}
+function simpleRows(entries, kind, store){
+  let list = entries.filter(e => e.kind===kind && e.store===store);
+  if (kind==="hk" || kind==="wash") return aggregate(list).map(r => ({...r, pct:r.score/r.total*100}));
+  return list.sort((a,b) => a.date.localeCompare(b.date)).map(e => ({date:e.date, score:e.score, total:e.total, monthOnly:e.monthOnly, pct:e.score/e.total*100}));
+}
+function comboRows(entries, store){
+  const hk = aggregate(entries.filter(e => e.kind==="hk" && e.store===store));
+  const wa = aggregate(entries.filter(e => e.kind==="wash" && e.store===store));
+  const dates = [...new Set([...hk.map(r=>r.date), ...wa.map(r=>r.date)])].sort();
+  return dates.map(d => {
+    const a = hk.find(r => r.date===d), b = wa.find(r => r.date===d);
+    const num = (a?a.score:0) + (b?b.score:0), den = (a?a.total:0) + (b?b.total:0);
+    return {date:d, a, b, pct:num/den*100, num, den};
+  });
+}
+function monthsAvailable(entries){
+  return [...new Set(entries.map(e => e.date.slice(0,7)))].sort();
+}
+const inMonth = (r) => view.month==="all" || r.date.slice(0,7)===view.month;
 
-  function toggle(rowEl){
-    rowEl.parentElement.classList.toggle('open');
+// ---------- Rendering ----------
+function statusPill(v){ return '<span class="status-pill ' + (isGreen(v)?"green":"red") + '">' + (isGreen(v)?"GREEN":"RED") + '</span>'; }
+
+function renderCard(card, entries){
+  const open = view.open.has(card.id);
+  let allRows, rows, avg = null, head, body = "";
+  if (card.type==="combo"){
+    allRows = comboRows(entries, card.store);
+    rows = allRows.filter(inMonth);
+    if (rows.length){ const n = rows.reduce((s,r)=>s+r.num,0), d = rows.reduce((s,r)=>s+r.den,0); avg = n/d*100; }
+    head = "<tr><th>Week</th><th>HK Score</th><th>Washroom Score</th><th>Combined</th><th>Status</th></tr>";
+    body = rows.map(r => "<tr><td>" + fmtDate(r.date) + "</td><td>" + (r.a ? r.a.score+"/"+r.a.total : "\u2014") + "</td><td>" + (r.b ? r.b.score+"/"+r.b.total : "\u2014") + "</td><td>" + pctStr(r.pct) + "</td><td>" + statusPill(r.pct) + "</td></tr>").join("");
+  } else {
+    allRows = simpleRows(entries, card.kind, card.store);
+    rows = allRows.filter(inMonth);
+    if (rows.length) avg = rows.reduce((s,r)=>s+r.pct,0)/rows.length;
+    head = "<tr><th>" + (card.monthly ? "Month" : "Week") + "</th><th>Score</th><th>Compliance</th><th>Status</th></tr>";
+    body = rows.map(r => "<tr><td>" + (r.monthOnly ? fmtMonth(r.date.slice(0,7)) : fmtDate(r.date)) + "</td><td>" + r.score + "</td><td>" + pctStr(r.pct) + "</td><td>" + statusPill(r.pct) + "</td></tr>").join("");
   }
+  const ncols = card.type==="combo" ? 5 : 4;
+  if (!rows.length) body = '<tr><td colspan="' + ncols + '" style="color:var(--warmgray)">No audit recorded in this period.</td></tr>';
+  const avgCell = avg===null ? "\u2014" : pctStr(avg);
+  const avgPill = avg===null ? '<span class="status-pill" style="background:#EFE8D9;color:var(--warmgray)">NO DATA</span>' : statusPill(avg);
+  const avgRow = card.type==="combo"
+    ? '<tr class="avg-row"><td>Average</td><td></td><td></td><td>' + avgCell + '</td><td>' + avgPill + '</td></tr>'
+    : '<tr class="avg-row"><td>Average</td><td></td><td>' + avgCell + '</td><td>' + avgPill + '</td></tr>';
+  const unit = card.monthly ? "month" : "week";
+  const n = allRows.length;
+  const meta = n + " " + unit + (n===1?"":"s") + " tracked" + (card.extra ? " \u00B7 " + card.extra : "") + (n ? " \u00B7 latest " + fmtDate(allRows[n-1].date) : "");
+  const pass = avg!==null && isGreen(avg);
+  const note = card.type==="combo" ? '<div class="combine-note">Housekeeping (all areas) and Washroom Housekeeping scores merged \u2014 points from both added together each week.</div>' : "";
+  return '<div class="audit-card' + (pass?" pass":"") + (open?" open":"") + '">' +
+    '<div class="row" data-toggle="' + card.id + '"><div><div class="name">' + esc(card.name) + '</div><div class="meta">' + esc(meta) + '</div></div>' +
+    '<div class="score"><span class="pct">' + avgCell + '</span><span class="chevron">\u25BE</span></div></div>' +
+    '<div class="detail">' + note + '<table>' + head + body + avgRow + '</table></div></div>';
+}
 
-  function toggleDropdown(){
-    document.getElementById('filter-toggle').classList.toggle('open');
-    document.getElementById('filter-dropdown').classList.toggle('open');
+function renderPanel(entries){
+  const L = LAYOUT[view.store];
+  let h = '<div class="store-heading">' + L.title + '</div><div class="store-subnote">' + L.note + '</div>';
+  L.groups.forEach(g => {
+    h += '<div class="priority-group"><div class="priority-heading"><span class="priority-tag tier' + g.tier + '">' + g.tag + '</span><span class="tier-label">' + g.label + '</span><span class="freq-pill">' + g.freq + '</span></div>';
+    if (g.note) h += '<div class="store-subnote" style="margin:-4px 0 8px;">' + g.note + '</div>';
+    g.cards.forEach(c => { h += renderCard(c, entries); });
+    h += '</div>';
+  });
+  return h;
+}
+
+function renderFilter(entries){
+  const months = monthsAvailable(entries);
+  if (view.month!=="all" && !months.includes(view.month)) view.month = "all";
+  const allLabel = months.length>1 ? "All (" + MON[+months[0].slice(5)-1] + "\u2013" + MON[+months[months.length-1].slice(5)-1] + ")" : "All";
+  const cur = view.month==="all" ? allLabel : monthLabel(view.month);
+  let h = '<div class="filter-row"><button class="filter-toggle' + (view.dropdown?" open":"") + '" data-act="dd">Filter <span class="current">\u2014 ' + esc(cur) + '</span> <span class="arrow">\u25BE</span></button>';
+  if (db && canWrite) h += '<button class="import-btn" data-act="import">\uFF0B Import audits (CSV)</button>';
+  h += '</div>';
+  if (view.dropdown){
+    h += '<div class="filter-dropdown open"><button class="filter-option' + (view.month==="all"?" active":"") + '" data-month="all">' + esc(allLabel) + '</button>';
+    months.forEach(m => { h += '<button class="filter-option' + (view.month===m?" active":"") + '" data-month="' + m + '">' + monthLabel(m) + '</button>'; });
+    h += '</div>';
   }
+  h += '<div class="filter-note">' + (view.month==="all" ? "Showing all months. New months appear here automatically as audits are imported." : "Showing " + monthLabel(view.month) + " only. Audits with no submission that month show \u201CNo data\u201D.") + '</div>';
+  return h;
+}
 
-  const monthNames = {
-    Jan: 'January', Feb: 'February', Mar: 'March', Apr: 'April',
-    May: 'May', Jun: 'June', Jul: 'July', Aug: 'August',
-    Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December'
-  };
-
-  const monthOrder = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-  function syncNewMonths(){
-    const dropdown = document.getElementById('filter-dropdown');
-    const existingButtons = Array.from(dropdown.querySelectorAll('.filter-option')).map(b => b.dataset.month);
-    const rows = document.querySelectorAll('tr[data-month]');
-    const newMonths = new Set();
-
-    rows.forEach(r => {
-      const m = r.dataset.month;
-      if(m && !existingButtons.includes(m)){
-        newMonths.add(m);
-      }
-    });
-
-    Array.from(newMonths).sort((a,b) => monthOrder.indexOf(a) - monthOrder.indexOf(b)).forEach(m => {
-      const btn = document.createElement('button');
-      btn.className = 'filter-option';
-      btn.dataset.month = m;
-      btn.textContent = `${monthNames[m] || m} 2026`;
-      btn.onclick = () => setFilter(m);
-      dropdown.appendChild(btn);
-    });
+function renderImported(){
+  if (!db || !dbRows.length) return "";
+  let h = '<div class="imported-box"><button class="link-btn" data-act="toggleImported">' + (view.showImported?"\u25BE":"\u25B8") + ' Imported audits (' + dbRows.length + ')</button>';
+  if (view.showImported){
+    const rows = [...dbRows].sort((a,b) => b.date.localeCompare(a.date));
+    h += '<table><tr><th>Date</th><th>Store</th><th>Audit</th><th>Score</th>' + (canWrite?"<th></th>":"") + '</tr>' +
+      rows.map(r => '<tr><td>' + fmtDate(r.date) + '</td><td>' + esc(STORE_LABEL[r.store]||r.store) + '</td><td>' + esc(KIND_LABEL[r.kind]||r.kind) + '</td><td>' + r.score + '/' + r.total + '</td>' +
+        (canWrite ? '<td><button class="del-btn" data-del="' + esc(r.id) + '">' + (confirmDel===r.id?"Sure? Remove":"Remove") + '</button></td>' : "") + '</tr>').join("") + '</table>';
   }
+  return h + '</div>';
+}
 
-  function setFilter(month){
-    document.querySelectorAll('.filter-option').forEach(b=>{
-      b.classList.toggle('active', b.dataset.month === month);
+function renderImportPanel(){
+  if (!pending && !importMsg) return "";
+  let h = '<div class="import-panel">';
+  if (importMsg) h += '<div class="import-msg">' + importMsg + '</div>';
+  if (pending){
+    h += '<div class="import-title">Review before adding</div>';
+    pending.files.forEach((f,i) => {
+      const valid = f.rows.filter(r => r.ok).length;
+      h += '<div class="import-file"><div class="fname">' + esc(f.name) + '</div><div class="fmeta">' + f.rows.length + ' row(s) \u00B7 ' + valid + ' valid</div>' +
+        '<select data-kindsel="' + i + '">' + [["sop","SOP / Process Audit"],["sel","Selection SOP Audit"],["hk","Housekeeping"],["wash","Washroom"],["","Skip this file"]].map(o => '<option value="' + o[0] + '"' + (f.kind===o[0]?" selected":"") + '>' + o[1] + '</option>').join("") + '</select>';
+      f.rows.forEach(r => { h += '<div class="irow ' + (r.ok?"":"bad") + '">' + (r.date?fmtDate(r.date):"?") + ' \u00B7 ' + esc(r.storeRaw||"?") + ' \u00B7 ' + (r.ok ? r.score + "/" + r.total : esc(r.why)) + '</div>'; });
+      h += '</div>';
     });
-
-    const labels = { 
-      all: '— All (Jul–Oct)', 
-      Jul: '— July 2026', 
-      Aug: '— August 2026', 
-      Sep: '— September 2026',
-      Oct: '— October 2026'
-    };
-    
-    document.getElementById('filter-current').textContent = labels[month] || `— ${monthNames[month] || month} 2026`;
-    document.getElementById('filter-toggle').classList.remove('open');
-    document.getElementById('filter-dropdown').classList.remove('open');
-
-    document.querySelectorAll('.audit-card').forEach(card=>{
-      const table = card.querySelector('table');
-      const rows = Array.from(table.querySelectorAll('tr[data-month]'));
-      const isCombined = rows.length > 0 && rows[0].hasAttribute('data-a');
-      let sum = 0, count = 0;       
-      let numA = 0, denA = 0, numB = 0, denB = 0; 
-
-      rows.forEach(r=>{
-        const show = (month === 'all' || r.dataset.month === month);
-        r.style.display = show ? '' : 'none';
-        if (show){
-          if (isCombined){
-            numA += parseFloat(r.dataset.a || 0); denA += parseFloat(r.dataset.atot || 0);
-            numB += parseFloat(r.dataset.b || 0); denB += parseFloat(r.dataset.btot || 0);
-          } else {
-            const pctText = r.children[2].textContent.trim();
-            const pct = parseFloat(pctText);
-            if(!isNaN(pct)){ sum += pct; count++; }
-          }
-        }
-      });
-
-      const avgRow = table.querySelector('.avg-row');
-      const combinedCellIndex = isCombined ? 3 : 2;
-      const pctCell = avgRow.children[combinedCellIndex];
-      const statusCell = avgRow.querySelector('.status-pill');
-      const headerPct = card.querySelector('.pct');
-
-      let avg = null;
-      if (isCombined){
-        const totalDen = denA + denB;
-        if (totalDen > 0) avg = ((numA + numB) / totalDen) * 100;
-      } else if (count > 0){
-        avg = sum / count;
-      }
-
-      if (avg === null){
-        pctCell.textContent = '—';
-        headerPct.textContent = '—';
-        if (statusCell){
-          statusCell.textContent = 'NO DATA';
-          statusCell.className = 'status-pill';
-          statusCell.style.background = '#EFE8D9';
-          statusCell.style.color = 'var(--warmgray)';
-        }
-        card.classList.remove('pass');
-      } else {
-        const avgStr = avg.toFixed(1) + '%';
-        const isGreen = avg >= 75;
-        pctCell.textContent = avgStr;
-        headerPct.textContent = avgStr;
-        if (statusCell){
-          statusCell.textContent = isGreen ? 'GREEN' : 'RED';
-          statusCell.className = 'status-pill ' + (isGreen ? 'green' : 'red');
-          statusCell.style.background = '';
-          statusCell.style.color = '';
-        }
-        card.classList.toggle('pass', isGreen);
-      }
-    });
-
-    const note = document.getElementById('filter-note');
-    if (month === 'all'){
-      note.textContent = 'Showing combined July + August + September + October 2026 data.';
-    } else {
-      const fullMonth = monthNames[month] || month;
-      note.textContent = `Showing ${fullMonth} 2026 only. Audits with no ${fullMonth} submission show "NO DATA".`;
-    }
+    const total = pending.files.reduce((s,f) => s + f.rows.filter(r=>r.ok).length, 0);
+    h += '<div class="import-actions"><button class="import-go" data-act="commit"' + (total? "":" disabled") + '>Add ' + total + ' audit' + (total===1?"":"s") + ' to dashboard</button><button class="link-btn" data-act="cancel">Cancel</button></div>';
+  } else {
+    h += '<div class="import-actions"><button class="link-btn" data-act="cancel">Close</button></div>';
   }
+  return h + '</div>';
+}
 
-  syncNewMonths();
-  setFilter('all');
+function render(){
+  const entries = allEntries();
+  $("filter-area").innerHTML = renderFilter(entries);
+  $("import-area").innerHTML = renderImportPanel();
+  $("panel").innerHTML = renderPanel(entries);
+  $("imported-area").innerHTML = renderImported();
+  document.querySelectorAll(".store-tab").forEach(t => t.classList.toggle("active", t.dataset.store===view.store));
+  const ds = entries.map(e => e.date).sort();
+  const span = fmtDate(ds[0]) + " \u2013 " + fmtDate(ds[ds.length-1]);
+  $("period").textContent = "Period: " + span;
+  $("foot-period").textContent = span;
+}
+
+// ---------- CSV import ----------
+function parseCSV(text){
+  text = text.replace(/^\uFEFF/, "");
+  const rows = []; let row = [], cur = "", q = false;
+  for (let i=0;i<text.length;i++){
+    const c = text[i];
+    if (q){ if (c==='"'){ if (text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else if (c==='"') q=true;
+    else if (c===",") { row.push(cur); cur=""; }
+    else if (c==="\n" || c==="\r"){ if (c==="\r" && text[i+1]==="\n") i++; row.push(cur); cur=""; if (row.length>1 || row[0]!=="") rows.push(row); row=[]; }
+    else cur+=c;
+  }
+  if (cur!=="" || row.length){ row.push(cur); rows.push(row); }
+  return rows;
+}
+function guessKind(name){
+  const n = name.toLowerCase();
+  if (n.includes("washroom")) return "wash";
+  if (n.includes("selection")) return "sel";
+  if (n.includes("housek")) return "hk";
+  if (n.includes("audit") || n.includes("sop") || n.includes("checklist")) return "sop";
+  return "";
+}
+function mapStore(s){
+  s = (s||"").toLowerCase();
+  if (s.includes("silver")) return "silver";
+  if (s.includes("rohru")) return "rohru";
+  if (s.includes("solan")) return "solan";
+  return "";
+}
+function parseDate(s){
+  s = (s||"").trim(); let m;
+  if ((m = s.match(/(\d{1,2})\s+([A-Za-z]{3})[A-Za-z]*\s+(\d{4})/))){ const mi = MON.findIndex(x => x.toLowerCase()===m[2].toLowerCase()); if (mi>=0) return m[3] + "-" + String(mi+1).padStart(2,"0") + "-" + m[1].padStart(2,"0"); }
+  if ((m = s.match(/(\d{4})-(\d{2})-(\d{2})/))) return m[0];
+  if ((m = s.match(/(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/))) return m[3] + "-" + m[2].padStart(2,"0") + "-" + m[1].padStart(2,"0");
+  return "";
+}
+function knownTotal(kind, store){
+  const t = allEntries().filter(e => e.kind===kind && e.store===store).map(e => e.total);
+  return t.length ? Math.max(...t) : null;
+}
+function buildRows(f){
+  f.rows = f.raw.map(o => {
+    const r = {sid:o.sid, storeRaw:o.store, date:parseDate(o.date), store:mapStore(o.store), score:parseFloat(o.score), comp:parseFloat(o.comp), ok:false, why:""};
+    if (!f.kind){ r.why = "file skipped"; return r; }
+    if (!r.sid){ r.why = "no Submission Id"; return r; }
+    if (!r.date){ r.why = "date not readable"; return r; }
+    if (!r.store){ r.why = "unknown store"; return r; }
+    if (!VALID[f.kind].includes(r.store)){ r.why = (STORE_LABEL[r.store]||r.store) + " has no " + KIND_LABEL[f.kind] + " card yet"; return r; }
+    if (isNaN(r.score)){ r.why = "score missing"; return r; }
+    let total = r.comp>0 ? Math.round(r.score*100/r.comp) : knownTotal(f.kind, r.store);
+    if (!total){ r.why = "max score unknown (0%)"; return r; }
+    r.total = total; r.ok = true; return r;
+  });
+}
+async function readFiles(fileList){
+  const files = [];
+  for (const file of fileList){
+    const rows = parseCSV(await file.text());
+    if (rows.length < 2){ files.push({name:file.name, kind:"", raw:[], rows:[]}); continue; }
+    const hdr = rows[0].map(h => h.trim().toLowerCase());
+    const ix = (n) => hdr.indexOf(n);
+    const iS = ix("submission id"), iD = ix("submitted for"), iT = ix("store"), iSc = ix("total score"), iC = ix("compliance");
+    const raw = rows.slice(1).map(r => ({sid:(r[iS]||"").trim(), date:r[iD]||"", store:(r[iT]||"").trim(), score:r[iSc], comp:r[iC]}));
+    const f = {name:file.name, kind:guessKind(file.name), raw, rows:[]};
+    if (iS<0 || iD<0 || iT<0 || iSc<0 || iC<0){ f.kind = ""; f.raw = []; }
+    buildRows(f); files.push(f);
+  }
+  pending = {files}; importMsg = ""; render();
+}
+async function commit(){
+  const entriesBefore = monthsAvailable(allEntries());
+  const jobs = [];
+  pending.files.forEach(f => f.rows.filter(r => r.ok).forEach(r => jobs.push({kind:f.kind, r})));
+  let done = 0, failed = 0, code = "";
+  importMsg = "Adding " + jobs.length + " audit(s)\u2026"; pending = null; render();
+  for (const j of jobs){
+    const id = (j.kind + "-" + j.r.sid).replace(/[^A-Za-z0-9_\-.~:@+]/g, "_");
+    try { await db.collection("submissions").doc(id).set({kind:j.kind, store:j.r.store, date:j.r.date, score:j.r.score, total:j.r.total, sid:j.r.sid, src:"csv"}); done++; }
+    catch (e) { failed++; code = (e && e.code) || ""; }
+  }
+  const monthsAfter = [...new Set([...entriesBefore, ...jobs.map(j => j.r.date.slice(0,7))])].sort();
+  const added = monthsAfter.filter(m => !entriesBefore.includes(m));
+  importMsg = "\u2714 " + done + " audit" + (done===1?"":"s") + " added." + (added.length ? " New month on dashboard: " + added.map(monthLabel).join(", ") + "." : "") + (failed ? " \u26A0 " + failed + " could not be saved" + (code? " (" + code + ")" : "") + "." : "");
+  render();
+}
+
+// ---------- Events ----------
+document.addEventListener("click", async (ev) => {
+  const t = ev.target.closest("[data-toggle],[data-act],[data-month],[data-del],.store-tab");
+  if (!t) return;
+  if (t.classList.contains("store-tab")){ view.store = t.dataset.store; render(); return; }
+  if (t.dataset.toggle){ const id = t.dataset.toggle; view.open.has(id) ? view.open.delete(id) : view.open.add(id); render(); return; }
+  if (t.dataset.month){ view.month = t.dataset.month; view.dropdown = false; render(); return; }
+  if (t.dataset.del){
+    if (confirmDel !== t.dataset.del){ confirmDel = t.dataset.del; render(); return; }
+    confirmDel = null;
+    try { await db.collection("submissions").doc(t.dataset.del).delete(); } catch (e) { importMsg = "Could not remove that entry."; render(); }
+    return;
+  }
+  const a = t.dataset.act;
+  if (a==="dd"){ view.dropdown = !view.dropdown; render(); }
+  else if (a==="import"){ $("csv-input").value = ""; $("csv-input").click(); }
+  else if (a==="toggleImported"){ view.showImported = !view.showImported; confirmDel = null; render(); }
+  else if (a==="cancel"){ pending = null; importMsg = ""; render(); }
+  else if (a==="commit"){ commit(); }
+});
+document.addEventListener("change", (ev) => {
+  const t = ev.target;
+  if (t.id==="csv-input"){ if (t.files && t.files.length) readFiles(Array.from(t.files)); return; }
+  if (t.dataset && t.dataset.kindsel!==undefined){ const f = pending.files[+t.dataset.kindsel]; f.kind = t.value; buildRows(f); render(); }
+});
+
+// ---------- Boot ----------
+render();
+(async () => {
+  try {
+    if (!(window.claude && window.claude.use)) return;
+    db = await window.claude.use("db");
+    if (!db) return;
+    try { const user = await window.claude.use("user"); if (user) { const c = await user.can("data.write"); canWrite = c !== false; } else canWrite = true; } catch (e) { canWrite = true; }
+    db.collection("submissions").onSnapshot((snap) => {
+      dbRows = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(r => r.kind && r.store && r.date && r.total);
+      dbReady = true; render();
+    }, () => { dbRows = []; render(); });
+    render();
+  } catch (e) { /* page still works with baseline data */ }
+})();
+
 </script>
-
 </body>
 </html>
