@@ -370,11 +370,8 @@
 </div>
 
 <div class="filter-bar" id="filter-area"></div>
-<input type="file" id="csv-input" accept=".csv,text/csv" multiple style="display:none">
-<div id="import-area"></div>
 
 <main><section class="store-panel active" id="panel"></section></main>
-<div id="imported-area"></div>
 
 <footer>
   <div class="rule"></div>
@@ -444,12 +441,8 @@ const LAYOUT = {
 
 // ---------- State ----------
 let sheetRows = [], sheetStatus = "", sheetBusy = false;
-let db = null, canWrite = false, dbRows = [], dbReady = false, localMode = false;
-const LS_KEY = "vj_compliance_submissions_v1";
-function lsLoad(){ try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); } catch (e) { return []; } }
-function lsSave(){ try { localStorage.setItem(LS_KEY, JSON.stringify(dbRows)); return true; } catch (e) { return false; } }
-const view = {store:"solan", month:"all", open:new Set(), dropdown:false, showImported:false};
-let pending = null, importMsg = "", confirmDel = null;
+let dbRows = [];
+const view = {store:"solan", month:"all", open:new Set(), dropdown:false};
 
 // ---------- Helpers ----------
 const $ = (id) => document.getElementById(id);
@@ -556,58 +549,21 @@ function renderFilter(entries){
   const allLabel = months.length>1 ? "All (" + MON[+months[0].slice(5)-1] + "\u2013" + MON[+months[months.length-1].slice(5)-1] + ")" : "All";
   const cur = view.month==="all" ? allLabel : monthLabel(view.month);
   let h = '<div class="filter-row"><button class="filter-toggle' + (view.dropdown?" open":"") + '" data-act="dd">Filter <span class="current">\u2014 ' + esc(cur) + '</span> <span class="arrow">\u25BE</span></button>';
-  if (((db && canWrite) || localMode)) h += '<button class="import-btn" data-act="import">\uFF0B Import audits (CSV)</button>';
   h += '</div>';
   if (view.dropdown){
     h += '<div class="filter-dropdown open"><button class="filter-option' + (view.month==="all"?" active":"") + '" data-month="all">' + esc(allLabel) + '</button>';
     months.forEach(m => { h += '<button class="filter-option' + (view.month===m?" active":"") + '" data-month="' + m + '">' + monthLabel(m) + '</button>'; });
     h += '</div>';
   }
-  if (SHEET_CSV_URL) h += '<div class="filter-note sheet-line">\uD83D\uDFE2 ' + esc(sheetStatus || "Connecting to Google Sheet\u2026") + ' <button class="link-btn" data-act="refresh">Refresh now</button></div>';
-  if (localMode) h += '<div class="filter-note" style="color:var(--gold)">Offline mode: imported audits are saved in this browser only (not shared with others).</div>';
-  h += '<div class="filter-note">' + (view.month==="all" ? "Showing all months. New months appear here automatically as audits are imported." : "Showing " + monthLabel(view.month) + " only. Audits with no submission that month show \u201CNo data\u201D.") + '</div>';
+  if (SHEET_CSV_URL) h += '<div class="filter-note sheet-line">' + (sheetStatus.indexOf("Could not")===0 ? "\uD83D\uDD34 " : "\uD83D\uDFE2 ") + esc(sheetStatus || "Connecting to Google Sheet\u2026") + ' <button class="link-btn" data-act="refresh">Refresh now</button></div>';
+  h += '<div class="filter-note">' + (view.month==="all" ? "Showing all months. New months appear here automatically as audits are added in the Google Sheet." : "Showing " + monthLabel(view.month) + " only. Audits with no submission that month show \u201CNo data\u201D.") + '</div>';
   return h;
-}
-
-function renderImported(){
-  if ((!db && !localMode) || !dbRows.length) return "";
-  let h = '<div class="imported-box"><button class="link-btn" data-act="toggleImported">' + (view.showImported?"\u25BE":"\u25B8") + ' Imported audits (' + dbRows.length + ')</button>';
-  if (view.showImported){
-    const rows = [...dbRows].sort((a,b) => b.date.localeCompare(a.date));
-    h += '<table><tr><th>Date</th><th>Store</th><th>Audit</th><th>Score</th>' + (canWrite?"<th></th>":"") + '</tr>' +
-      rows.map(r => '<tr><td>' + fmtDate(r.date) + '</td><td>' + esc(STORE_LABEL[r.store]||r.store) + '</td><td>' + esc(KIND_LABEL[r.kind]||r.kind) + '</td><td>' + r.score + '/' + r.total + '</td>' +
-        (canWrite ? '<td><button class="del-btn" data-del="' + esc(r.id) + '">' + (confirmDel===r.id?"Sure? Remove":"Remove") + '</button></td>' : "") + '</tr>').join("") + '</table>';
-  }
-  return h + '</div>';
-}
-
-function renderImportPanel(){
-  if (!pending && !importMsg) return "";
-  let h = '<div class="import-panel">';
-  if (importMsg) h += '<div class="import-msg">' + importMsg + '</div>';
-  if (pending){
-    h += '<div class="import-title">Review before adding</div>';
-    pending.files.forEach((f,i) => {
-      const valid = f.rows.filter(r => r.ok).length;
-      h += '<div class="import-file"><div class="fname">' + esc(f.name) + '</div><div class="fmeta">' + f.rows.length + ' row(s) \u00B7 ' + valid + ' valid</div>' +
-        '<select data-kindsel="' + i + '">' + [["sop","SOP / Process Audit"],["sel","Selection SOP Audit"],["hk","Housekeeping"],["wash","Washroom"],["","Skip this file"]].map(o => '<option value="' + o[0] + '"' + (f.kind===o[0]?" selected":"") + '>' + o[1] + '</option>').join("") + '</select>';
-      f.rows.forEach(r => { h += '<div class="irow ' + (r.ok?"":"bad") + '">' + (r.date?fmtDate(r.date):"?") + ' \u00B7 ' + esc(r.storeRaw||"?") + ' \u00B7 ' + (r.ok ? r.score + "/" + r.total : esc(r.why)) + '</div>'; });
-      h += '</div>';
-    });
-    const total = pending.files.reduce((s,f) => s + f.rows.filter(r=>r.ok).length, 0);
-    h += '<div class="import-actions"><button class="import-go" data-act="commit"' + (total? "":" disabled") + '>Add ' + total + ' audit' + (total===1?"":"s") + ' to dashboard</button><button class="link-btn" data-act="cancel">Cancel</button></div>';
-  } else {
-    h += '<div class="import-actions"><button class="link-btn" data-act="cancel">Close</button></div>';
-  }
-  return h + '</div>';
 }
 
 function render(){
   const entries = allEntries();
   $("filter-area").innerHTML = renderFilter(entries);
-  $("import-area").innerHTML = renderImportPanel();
   $("panel").innerHTML = renderPanel(entries);
-  $("imported-area").innerHTML = renderImported();
   document.querySelectorAll(".store-tab").forEach(t => t.classList.toggle("active", t.dataset.store===view.store));
   const ds = entries.map(e => e.date).sort();
   const span = fmtDate(ds[0]) + " \u2013 " + fmtDate(ds[ds.length-1]);
@@ -615,7 +571,7 @@ function render(){
   $("foot-period").textContent = span;
 }
 
-// ---------- CSV import ----------
+// ---------- Helpers for the Google Sheet feed ----------
 function parseCSV(text){
   text = text.replace(/^\uFEFF/, "");
   const rows = []; let row = [], cur = "", q = false;
@@ -629,14 +585,6 @@ function parseCSV(text){
   }
   if (cur!=="" || row.length){ row.push(cur); rows.push(row); }
   return rows;
-}
-function guessKind(name){
-  const n = name.toLowerCase();
-  if (n.includes("washroom")) return "wash";
-  if (n.includes("selection")) return "sel";
-  if (n.includes("housek")) return "hk";
-  if (n.includes("audit") || n.includes("sop") || n.includes("checklist")) return "sop";
-  return "";
 }
 function mapStore(s){
   s = (s||"").toLowerCase();
@@ -652,85 +600,17 @@ function parseDate(s){
   if ((m = s.match(/(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/))) return m[3] + "-" + m[2].padStart(2,"0") + "-" + m[1].padStart(2,"0");
   return "";
 }
-function knownTotal(kind, store){
-  const t = allEntries().filter(e => e.kind===kind && e.store===store).map(e => e.total);
-  return t.length ? Math.max(...t) : null;
-}
-function buildRows(f){
-  f.rows = f.raw.map(o => {
-    const r = {sid:o.sid, storeRaw:o.store, date:parseDate(o.date), store:mapStore(o.store), score:parseFloat(o.score), comp:parseFloat(o.comp), ok:false, why:""};
-    if (!f.kind){ r.why = "file skipped"; return r; }
-    if (!r.sid){ r.why = "no Submission Id"; return r; }
-    if (!r.date){ r.why = "date not readable"; return r; }
-    if (!r.store){ r.why = "unknown store"; return r; }
-    if (!VALID[f.kind].includes(r.store)){ r.why = (STORE_LABEL[r.store]||r.store) + " has no " + KIND_LABEL[f.kind] + " card yet"; return r; }
-    if (isNaN(r.score)){ r.why = "score missing"; return r; }
-    let total = r.comp>0 ? Math.round(r.score*100/r.comp) : knownTotal(f.kind, r.store);
-    if (!total){ r.why = "max score unknown (0%)"; return r; }
-    r.total = total; r.ok = true; return r;
-  });
-}
-async function readFiles(fileList){
-  const files = [];
-  for (const file of fileList){
-    const rows = parseCSV(await file.text());
-    if (rows.length < 2){ files.push({name:file.name, kind:"", raw:[], rows:[]}); continue; }
-    const hdr = rows[0].map(h => h.trim().toLowerCase());
-    const ix = (n) => hdr.indexOf(n);
-    const iS = ix("submission id"), iD = ix("submitted for"), iT = ix("store"), iSc = ix("total score"), iC = ix("compliance");
-    const raw = rows.slice(1).map(r => ({sid:(r[iS]||"").trim(), date:r[iD]||"", store:(r[iT]||"").trim(), score:r[iSc], comp:r[iC]}));
-    const f = {name:file.name, kind:guessKind(file.name), raw, rows:[]};
-    if (iS<0 || iD<0 || iT<0 || iSc<0 || iC<0){ f.kind = ""; f.raw = []; }
-    buildRows(f); files.push(f);
-  }
-  pending = {files}; importMsg = ""; render();
-}
-async function commit(){
-  const entriesBefore = monthsAvailable(allEntries());
-  const jobs = [];
-  pending.files.forEach(f => f.rows.filter(r => r.ok).forEach(r => jobs.push({kind:f.kind, r})));
-  let done = 0, failed = 0, code = "";
-  importMsg = "Adding " + jobs.length + " audit(s)\u2026"; pending = null; render();
-  for (const j of jobs){
-    const id = (j.kind + "-" + j.r.sid).replace(/[^A-Za-z0-9_\-.~:@+]/g, "_");
-    const body = {kind:j.kind, store:j.r.store, date:j.r.date, score:j.r.score, total:j.r.total, sid:j.r.sid, src:"csv"};
-    if (localMode){ dbRows = dbRows.filter(x => x.id !== id); dbRows.push({id, ...body}); done++; continue; }
-    try { await db.collection("submissions").doc(id).set(body); done++; }
-    catch (e) { failed++; code = (e && e.code) || ""; }
-  }
-  const monthsAfter = [...new Set([...entriesBefore, ...jobs.map(j => j.r.date.slice(0,7))])].sort();
-  const added = monthsAfter.filter(m => !entriesBefore.includes(m));
-  if (localMode && !lsSave()){ failed = done; done = 0; code = "browser storage blocked"; }
-  importMsg = "\u2714 " + done + " audit" + (done===1?"":"s") + " added." + (added.length ? " New month on dashboard: " + added.map(monthLabel).join(", ") + "." : "") + (failed ? " \u26A0 " + failed + " could not be saved" + (code? " (" + code + ")" : "") + "." : "");
-  render();
-}
 
 // ---------- Events ----------
-document.addEventListener("click", async (ev) => {
-  const t = ev.target.closest("[data-toggle],[data-act],[data-month],[data-del],.store-tab");
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("[data-toggle],[data-act],[data-month],.store-tab");
   if (!t) return;
   if (t.classList.contains("store-tab")){ view.store = t.dataset.store; render(); return; }
   if (t.dataset.toggle){ const id = t.dataset.toggle; view.open.has(id) ? view.open.delete(id) : view.open.add(id); render(); return; }
   if (t.dataset.month){ view.month = t.dataset.month; view.dropdown = false; render(); return; }
-  if (t.dataset.del){
-    if (confirmDel !== t.dataset.del){ confirmDel = t.dataset.del; render(); return; }
-    confirmDel = null;
-    if (localMode){ dbRows = dbRows.filter(x => x.id !== t.dataset.del); lsSave(); render(); return; }
-    try { await db.collection("submissions").doc(t.dataset.del).delete(); } catch (e) { importMsg = "Could not remove that entry."; render(); }
-    return;
-  }
   const a = t.dataset.act;
   if (a==="dd"){ view.dropdown = !view.dropdown; render(); }
-  else if (a==="import"){ $("csv-input").value = ""; $("csv-input").click(); }
-  else if (a==="toggleImported"){ view.showImported = !view.showImported; confirmDel = null; render(); }
   else if (a==="refresh"){ loadSheet(); }
-  else if (a==="cancel"){ pending = null; importMsg = ""; render(); }
-  else if (a==="commit"){ commit(); }
-});
-document.addEventListener("change", (ev) => {
-  const t = ev.target;
-  if (t.id==="csv-input"){ if (t.files && t.files.length) readFiles(Array.from(t.files)); return; }
-  if (t.dataset && t.dataset.kindsel!==undefined){ const f = pending.files[+t.dataset.kindsel]; f.kind = t.value; buildRows(f); render(); }
 });
 
 // ---------- Google Sheet live feed ----------
@@ -785,23 +665,9 @@ async function loadSheet(){
 }
 
 // ---------- Boot ----------
-function startLocal(){ localMode = true; dbRows = lsLoad().filter(r => r.kind && r.store && r.date && r.total); render(); }
 render();
 loadSheet();
 if (SHEET_CSV_URL) setInterval(loadSheet, SHEET_REFRESH_MINUTES * 60000);
-(async () => {
-  try {
-    if (!(window.claude && window.claude.use)) { startLocal(); return; }
-    db = await window.claude.use("db");
-    if (!db) { startLocal(); return; }
-    try { const user = await window.claude.use("user"); if (user) { const c = await user.can("data.write"); canWrite = c !== false; } else canWrite = true; } catch (e) { canWrite = true; }
-    db.collection("submissions").onSnapshot((snap) => {
-      dbRows = snap.docs.map(d => ({id:d.id, ...d.data()})).filter(r => r.kind && r.store && r.date && r.total);
-      dbReady = true; render();
-    }, () => { dbRows = []; render(); });
-    render();
-  } catch (e) { startLocal(); }
-})();
 </script>
 </body>
 </html>
