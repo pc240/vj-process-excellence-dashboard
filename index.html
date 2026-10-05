@@ -586,7 +586,13 @@
       b.classList.toggle('active', b.dataset.month===month);
     });
 
-    const labels = { all:'— All (Jul–Sep)', Jul:'— July 2026', Aug:'— August 2026', Sep:'— September 2026' };
+    const labels = {
+  all: '— All Months',
+  Jul: '— July 2026',
+  Aug: '— August 2026',
+  Sep: '— September 2026',
+  Oct: '— October 2026'
+};
     document.getElementById('filter-current').textContent = labels[month];
 
     document.getElementById('filter-toggle').classList.remove('open');
