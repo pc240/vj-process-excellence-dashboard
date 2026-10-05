@@ -345,11 +345,12 @@
     Filter <span class="current" id="filter-current">— All (Jul–Sep)</span> <span class="arrow">▾</span>
   </button>
   <div class="filter-dropdown" id="filter-dropdown">
-    <button class="filter-option active" data-month="all" onclick="setFilter('all')">All (Jul–Sep)</button>
+    <button class="filter-option active" data-month="all" onclick="setFilter('all')">All Months</button>
     <button class="filter-option" data-month="Jul" onclick="setFilter('Jul')">July 2026</button>
     <button class="filter-option" data-month="Aug" onclick="setFilter('Aug')">August 2026</button>
     <button class="filter-option" data-month="Sep" onclick="setFilter('Sep')">September 2026</button>
-  </div>
+    <button class="filter-option" data-month="Oct" onclick="setFilter('Oct')">October 2026</button>
+</div>
   <div class="filter-note" id="filter-note"></div>
 </div>
 
@@ -605,6 +606,7 @@
           if (isCombined){
             numA += parseFloat(r.dataset.a); denA += parseFloat(r.dataset.atot);
             numB += parseFloat(r.dataset.b); denB += parseFloat(r.dataset.btot);
+            
           } else {
             const pctText = r.children[2].textContent.trim();
             const pct = parseFloat(pctText);
