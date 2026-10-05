@@ -582,96 +582,186 @@
   }
 
   function setFilter(month){
-    document.querySelectorAll('.filter-option').forEach(b=>{
-      b.classList.toggle('active', b.dataset.month===month);
-    });
+  document.querySelectorAll('.filter-option').forEach(b=>{
+    b.classList.toggle('active', b.dataset.month === month);
+  });
 
-    const labels = {
-  all: '— All Months',
-  Jul: '— July 2026',
-  Aug: '— August 2026',
-  Sep: '— September 2026',
-  Oct: '— October 2026'
-};
-    document.getElementById('filter-current').textContent = labels[month];
+  const labels = {
+    all: '— All Months',
+    Jul: '— July 2026',
+    Aug: '— August 2026',
+    Sep: '— September 2026',
+    Oct: '— October 2026'
+  };
 
-    document.getElementById('filter-toggle').classList.remove('open');
-    document.getElementById('filter-dropdown').classList.remove('open');
+  document.getElementById('filter-current').textContent =
+    labels[month] || '— ' + month;
 
-    document.querySelectorAll('.audit-card').forEach(card=>{
-      const table = card.querySelector('table');
-      const rows = Array.from(table.querySelectorAll('tr[data-month]'));
-      const isCombined = rows.length > 0 && rows[0].hasAttribute('data-a');
-      let sum = 0, count = 0;       // for simple compliance-% average
-      let numA = 0, denA = 0, numB = 0, denB = 0; // for combined HK+Washroom
+  document.getElementById('filter-toggle').classList.remove('open');
+  document.getElementById('filter-dropdown').classList.remove('open');
 
-      rows.forEach(r=>{
-        const show = month === 'all' || r.dataset.month === month;
-        r.style.display = show ? '' : 'none';
-        if (show){
-          if (isCombined){
-            numA += parseFloat(r.dataset.a); denA += parseFloat(r.dataset.atot);
-            numB += parseFloat(r.dataset.b); denB += parseFloat(r.dataset.btot);
-            
-          } else {
-            const pctText = r.children[2].textContent.trim();
-            const pct = parseFloat(pctText);
-            if(!isNaN(pct)){ sum += pct; count++; }
+  document.querySelectorAll('.audit-card').forEach(card=>{
+    const table = card.querySelector('table');
+    if (!table) return;
+
+    const rows = Array.from(table.querySelectorAll('tr[data-month]'));
+    const isCombined =
+      rows.length > 0 && rows[0].hasAttribute('data-a');
+
+    let sum = 0;
+    let count = 0;
+
+    let numA = 0, denA = 0;
+    let numB = 0, denB = 0;
+
+    rows.forEach(r=>{
+      const show =
+        month === 'all' ||
+        r.dataset.month === month;
+
+      r.style.display = show ? '' : 'none';
+
+      if (show){
+
+        if (isCombined){
+
+          const a = parseFloat(r.dataset.a);
+          const atot = parseFloat(r.dataset.atot);
+          const b = parseFloat(r.dataset.b);
+          const btot = parseFloat(r.dataset.btot);
+
+          if (!isNaN(a) && !isNaN(atot)){
+            numA += a;
+            denA += atot;
+          }
+
+          if (!isNaN(b) && !isNaN(btot)){
+            numB += b;
+            denB += btot;
+          }
+
+        } else {
+
+          const pctText =
+            r.children[2]?.textContent.trim() || '';
+
+          const pct = parseFloat(pctText);
+
+          if (!isNaN(pct)){
+            sum += pct;
+            count++;
           }
         }
-      });
-
-      const avgRow = table.querySelector('.avg-row');
-      const combinedCellIndex = isCombined ? 3 : 2;
-      const pctCell = avgRow.children[combinedCellIndex];
-      const statusCell = avgRow.querySelector('.status-pill');
-      const headerPct = card.querySelector('.pct');
-
-      let avg = null;
-      if (isCombined){
-        const totalDen = denA + denB;
-        if (totalDen > 0) avg = ((numA + numB) / totalDen) * 100;
-      } else if (count > 0){
-        avg = sum / count;
-      }
-
-      if (avg === null){
-        pctCell.textContent = '—';
-        headerPct.textContent = '—';
-        if (statusCell){
-          statusCell.textContent = 'NO DATA';
-          statusCell.className = 'status-pill';
-          statusCell.style.background = '#EFE8D9';
-          statusCell.style.color = 'var(--warmgray)';
-        }
-        card.classList.remove('pass');
-      } else {
-        const avgStr = avg.toFixed(1) + '%';
-        const isGreen = avg >= 75;
-        pctCell.textContent = avgStr;
-        headerPct.textContent = avgStr;
-        if (statusCell){
-          statusCell.textContent = isGreen ? 'GREEN' : 'RED';
-          statusCell.className = 'status-pill ' + (isGreen ? 'green' : 'red');
-          statusCell.style.background = '';
-          statusCell.style.color = '';
-        }
-        card.classList.toggle('pass', isGreen);
       }
     });
 
-    const note = document.getElementById('filter-note');
-    if (month === 'all'){
-      note.textContent = 'Showing combined July + August + September 2026 data.';
-    } else if (month === 'Jul'){
-      note.textContent = 'Showing July 2026 only. Audits with no July submission show "No data".';
-    } else if (month === 'Aug'){
-      note.textContent = 'Showing August 2026 only. Audits with no August submission show "No data".';
-    } else {
-      note.textContent = 'Showing September 2026 only. Audits with no September submission show "No data".';
-    }
-  }
+    const avgRow = table.querySelector('.avg-row');
 
+    if (!avgRow) return;
+
+    const combinedCellIndex = isCombined ? 3 : 2;
+    const pctCell = avgRow.children[combinedCellIndex];
+
+    const statusCell =
+      avgRow.querySelector('.status-pill');
+
+    const headerPct =
+      card.querySelector('.pct');
+
+    let avg = null;
+
+    if (isCombined){
+
+      const totalDen = denA + denB;
+
+      if (totalDen > 0){
+        avg =
+          ((numA + numB) / totalDen) * 100;
+      }
+
+    } else if (count > 0){
+
+      avg = sum / count;
+    }
+
+    if (avg === null){
+
+      pctCell.textContent = '—';
+
+      if (headerPct){
+        headerPct.textContent = '—';
+      }
+
+      if (statusCell){
+
+        statusCell.textContent = 'NO DATA';
+        statusCell.className = 'status-pill';
+
+        statusCell.style.background = '#EFE8D9';
+        statusCell.style.color = 'var(--warmgray)';
+      }
+
+      card.classList.remove('pass');
+
+    } else {
+
+      const avgStr = avg.toFixed(1) + '%';
+
+      /*
+       Compliance Status:
+       0–69   = RED
+       70–75  = YELLOW
+       76–100 = GREEN
+      */
+
+      let status = 'RED';
+
+      if (avg >= 76){
+        status = 'GREEN';
+      } else if (avg >= 70){
+        status = 'YELLOW';
+      }
+
+      pctCell.textContent = avgStr;
+
+      if (headerPct){
+        headerPct.textContent = avgStr;
+      }
+
+      if (statusCell){
+
+        statusCell.textContent = status;
+
+        statusCell.className =
+          'status-pill ' + status.toLowerCase();
+
+        statusCell.style.background = '';
+        statusCell.style.color = '';
+      }
+
+      card.classList.toggle(
+        'pass',
+        status === 'GREEN'
+      );
+    }
+  });
+
+  const note =
+    document.getElementById('filter-note');
+
+  if (month === 'all'){
+
+    note.textContent =
+      'Showing all available months.';
+
+  } else {
+
+    note.textContent =
+      'Showing ' +
+      (labels[month] || month).replace('— ', '') +
+      ' only. Audits with no submission show "No data".';
+  }
+}
   setFilter('all');
 </script>
 
